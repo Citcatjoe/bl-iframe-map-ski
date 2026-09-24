@@ -1,0 +1,66 @@
+[
+  {
+    "id": "zermatt",
+    "name": "Zermatt",
+    "canton": "Valais",
+    "cantonCode": "VS",
+    "coordinates": [7.7491, 46.0207],
+    "link": "https://www.zermatt.ch"
+  },
+  {
+    "id": "verbier",
+    "name": "Verbier",
+    "canton": "Valais",
+    "cantonCode": "VS",
+    "coordinates": [7.2286, 46.0964],
+    "link": "https://www.verbier.ch"
+  },
+  {
+    "id": "davos",
+    "name": "Davos",
+    "canton": "Grisons",
+    "cantonCode": "GR",
+    "coordinates": [9.8360, 46.8027],
+    "link": "https://www.davos.ch"
+  },
+  {
+    "id": "st-moritz",
+    "name": "St. Moritz",
+    "canton": "Grisons",
+    "cantonCode": "GR",
+    "coordinates": [9.8355, 46.4908],
+    "link": "https://www.stmoritz.ch"
+  },
+  {
+    "id": "gstaad",
+    "name": "Gstaad",
+    "canton": "Berne",
+    "cantonCode": "BE",
+    "coordinates": [7.2853, 46.4718],
+    "link": "https://www.gstaad.ch"
+  },
+  {
+    "id": "villars",
+    "name": "Villars-sur-Ollon",
+    "canton": "Vaud",
+    "cantonCode": "VD",
+    "coordinates": [7.0554, 46.2989],
+    "link": "https://www.villars.ch"
+  },
+  {
+    "id": "andermatt",
+    "name": "Andermatt",
+    "canton": "Uri",
+    "cantonCode": "UR",
+    "coordinates": [8.5941, 46.6335],
+    "link": "https://www.andermatt.ch"
+  },
+  {
+    "id": "engelberg",
+    "name": "Engelberg",
+    "canton": "Obwald",
+    "cantonCode": "OW",
+    "coordinates": [8.4054, 46.8203],
+    "link": "https://www.engelberg.ch"
+  }
+]
