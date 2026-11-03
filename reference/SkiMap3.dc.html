@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/blick-design-system-bfb8e5b6-ff14-4c6d-b5af-3890fcf8b371/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/blick-design-system-bfb8e5b6-ff14-4c6d-b5af-3890fcf8b371/tokens/colors.css">
+<link rel="stylesheet" href="_ds/blick-design-system-bfb8e5b6-ff14-4c6d-b5af-3890fcf8b371/tokens/typography.css">
+<link rel="stylesheet" href="_ds/blick-design-system-bfb8e5b6-ff14-4c6d-b5af-3890fcf8b371/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/blick-design-system-bfb8e5b6-ff14-4c6d-b5af-3890fcf8b371/tokens/effects.css">
+<link rel="stylesheet" href="_ds/blick-design-system-bfb8e5b6-ff14-4c6d-b5af-3890fcf8b371/tokens/base.css">
+<link rel="stylesheet" href="_ds/blick-design-system-bfb8e5b6-ff14-4c6d-b5af-3890fcf8b371/styles/components.css">
+<link rel="stylesheet" href="_ds/blick-design-system-bfb8e5b6-ff14-4c6d-b5af-3890fcf8b371/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<script src="_ds/blick-design-system-bfb8e5b6-ff14-4c6d-b5af-3890fcf8b371/_ds_bundle.js"></script>
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<style>.maplibregl-cooperative-gesture-screen{font-family:'Inter Variable',sans-serif;font-size:14px;font-weight:700}</style>
+</helmet>
+<div ref="{{ rootRef }}" style="position:absolute;inset:0;display:flex;flex-direction:column;background:var(--color-fill-default);color:var(--color-text-default);font-family:var(--font-body);overflow:hidden">
+  <header style="display:flex;flex-direction:column;gap:5px;padding:{{ headPad }};border-bottom:1px solid var(--color-stroke-weak);flex:none">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <span style="font-weight:700;font-size:11px;line-height:1;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-text-brand);white-space:nowrap">Hiver · Domaines skiables</span>
+      <span style="display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:500;line-height:1;color:var(--color-text-weak);white-space:nowrap"><span style="width:7px;height:7px;border-radius:50%;background:{{ wxDot }}"></span>{{ wxStamp }}</span>
+    </div>
+    <h2 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:{{ titleSize }};line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Où trouver le plus de neige fraîche ?</h2>
+  </header>
+  <div style="{{ bodyStyle }}">
+    <aside style="{{ panelStyle }}">
+      <div style="position:relative;flex:1;min-height:0;overflow:hidden">
+      <div style="display:flex;width:200%;height:100%;transform:{{ trackX }};transition:transform .34s cubic-bezier(.2,.7,.2,1)">
+        <div style="width:50%;height:100%;display:flex;flex-direction:column;min-height:0">
+      <sc-if value="{{ showPanelHead }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px 0 16px;flex:none">
+          <span style="font-family:var(--font-display);font-weight:700;font-size:19px">Tous les domaines</span>
+          <x-import component-from-global-scope="BlickDesignSystem_bfb8e5.IconButton" icon="fa-solid fa-xmark" color="transparent" size="sm" aria-label="Fermer la liste" onClick="{{ closePanel }}" hint-size="36px,36px"></x-import>
+        </div>
+      </sc-if>
+      <div style="display:flex;flex-direction:column;gap:10px;padding:{{ searchPad }};flex:none">
+        <div style="display:flex;gap:8px;align-items:center">
+          <div style="position:relative;flex:1;min-width:0">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--color-icon-weak);z-index:1;pointer-events:none"></i>
+            <input type="search" value="{{ q }}" onChange="{{ onQuery }}" onFocus="{{ onSearchFocus }}" placeholder="Rechercher un domaine" aria-label="Rechercher un domaine" style="width:100%;height:{{ inputH }};padding:0 14px 0 38px;border:1px solid var(--color-stroke-weak);border-radius:var(--radius-pill);background:var(--color-fill-weak);font-family:var(--font-body);font-size:16px;color:var(--color-text-default);outline:none" style-focus="border-color:var(--color-stroke-strong);background:var(--color-fill-default)">
+          </div>
+          <sc-if value="{{ showListBtn }}" hint-placeholder-val="{{ false }}">
+            <x-import component-from-global-scope="BlickDesignSystem_bfb8e5.IconButton" icon="fa-solid fa-list" color="grey" size="sm" aria-label="Voir tous les domaines" onClick="{{ openPanel }}" hint-size="36px,36px"></x-import>
+          </sc-if>
+        </div>
+      </div>
+      <sc-if value="{{ showChips }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:4px 16px 8px;flex:none">
+          <span style="font-size:11px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-text-weak);white-space:nowrap">{{ countLabel }}</span>
+          <div style="display:flex;gap:4px;align-items:center">
+            <sc-for list="{{ sorts }}" as="s" hint-placeholder-count="2">
+              <button type="button" onClick="{{ s.onClick }}" style="border:none;background:transparent;padding:4px 6px;cursor:pointer;font-family:var(--font-body);font-size:12px;font-weight:700;white-space:nowrap;color:{{ s.color }};text-decoration:{{ s.deco }};text-underline-offset:4px;text-decoration-thickness:2px">{{ s.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+      <div style="flex:1;min-height:0;overflow-y:auto;border-top:1px solid var(--color-stroke-weak)">
+        <sc-for list="{{ rows }}" as="r" hint-placeholder-count="6">
+          <button type="button" onClick="{{ r.onClick }}" onMouseEnter="{{ r.onEnter }}" onMouseLeave="{{ r.onLeave }}" style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;width:100%;padding:{{ rowPad }};border:none;border-bottom:1px solid var(--color-stroke-weak);background:{{ r.bg }};text-align:left;cursor:pointer;font-family:var(--font-body);color:var(--color-text-default);transition:background-color .15s ease" style-hover="background:var(--color-fill-weak)">
+            <span style="font-family:var(--font-display);font-weight:700;font-size:16px;line-height:1.2;color:{{ r.nameColor }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.name }}</span>
+            <span style="font-size:12px;line-height:1.2;color:var(--color-text-weak);white-space:nowrap">{{ r.cantonName }}</span>
+          </button>
+        </sc-for>
+        <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:0;padding:20px 16px;font-size:14px;color:var(--color-text-weak)">Aucun domaine trouvé. Essaie un autre nom ou canton.</p>
+        </sc-if>
+      </div>
+        </div>
+        <div style="width:50%;height:100%;display:flex;flex-direction:column;min-height:0">
+          <sc-if value="{{ showFocusPage }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;height:52px;padding:0 8px 0 6px;border-bottom:1px solid var(--color-stroke-weak);flex:none">
+              <button type="button" onClick="{{ clearSel }}" style="display:flex;align-items:center;gap:8px;height:40px;padding:0 10px;border:none;background:transparent;border-radius:var(--radius-pill);cursor:pointer;font-family:var(--font-body);font-size:14px;font-weight:700;color:var(--color-text-default);transition:background-color .15s ease" style-hover="background:var(--color-fill-weak)"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>Tous les domaines</button>
+              <sc-if value="{{ isMid }}" hint-placeholder-val="{{ false }}">
+                <x-import component-from-global-scope="BlickDesignSystem_bfb8e5.IconButton" icon="fa-solid fa-xmark" color="transparent" size="sm" aria-label="Fermer le panneau" onClick="{{ closePanel }}" hint-size="36px,36px"></x-import>
+              </sc-if>
+            </div>
+            <div style="flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:18px;padding:18px 16px 16px">
+              <div style="display:flex;flex-direction:column;gap:5px">
+                <span style="font-size:11px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-text-brand)">{{ det.cantonName }}</span>
+                <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:28px;line-height:1.1;text-wrap:balance">{{ det.name }}</h3>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px">
+                <i class="{{ det.icon }}" aria-hidden="true" style="font-size:28px;color:{{ det.iconColor }};width:34px;text-align:center"></i>
+                <span style="font-family:var(--font-display);font-weight:700;font-size:40px;line-height:1">{{ det.temp }}</span>
+                <span style="display:flex;flex-direction:column;gap:2px;font-size:13px;line-height:1.35"><strong>{{ det.desc }}</strong><span style="color:var(--color-text-weak)">Vent {{ det.wind }}</span></span>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--color-stroke-weak);border-radius:var(--radius-md);overflow:hidden">
+                <sc-for list="{{ det.days }}" as="d" hint-placeholder-count="3">
+                  <div style="display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 4px;border-right:1px solid var(--color-stroke-weak);margin-right:-1px">
+                    <span style="font-size:11px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-text-weak)">{{ d.label }}</span>
+                    <i class="{{ d.icon }}" aria-hidden="true" style="font-size:16px;color:{{ d.iconColor }}"></i>
+                    <span style="font-size:13px;font-weight:700">{{ d.range }}</span>
+                    <span style="font-size:12px;color:var(--color-text-weak);white-space:nowrap"><i class="fa-regular fa-snowflake" aria-hidden="true" style="margin-right:3px"></i>{{ d.snow }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+                <x-import component-from-global-scope="BlickDesignSystem_bfb8e5.Button" color="red" size="sm" iconRight="fa-solid fa-arrow-up-right-from-square" onClick="{{ openSite }}" hint-size="150px,36px">Site officiel</x-import>
+                <span style="font-size:11px;color:var(--color-text-weak)">{{ det.host }}</span>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+      </div>
+    </aside>
+    <div style="position:relative;flex:1;min-width:0;min-height:0;order:1">
+      <div ref="{{ mapRef }}" style="position:absolute;inset:0;background:#EEEDEA"></div>
+      <div style="position:absolute;top:10px;right:10px;display:flex;flex-direction:column;gap:6px;z-index:2">
+        <sc-if value="{{ showZoomBtns }}" hint-placeholder-val="{{ true }}">
+          <x-import component-from-global-scope="BlickDesignSystem_bfb8e5.IconButton" icon="fa-solid fa-plus" color="white" size="sm" aria-label="Zoom avant" onClick="{{ zoomIn }}" hint-size="36px,36px"></x-import>
+          <x-import component-from-global-scope="BlickDesignSystem_bfb8e5.IconButton" icon="fa-solid fa-minus" color="white" size="sm" aria-label="Zoom arrière" onClick="{{ zoomOut }}" hint-size="36px,36px"></x-import>
+        </sc-if>
+        <x-import component-from-global-scope="BlickDesignSystem_bfb8e5.IconButton" icon="fa-solid fa-expand" color="white" size="sm" aria-label="Afficher toute la Suisse" onClick="{{ resetView }}" hint-size="36px,36px"></x-import>
+      </div>
+      <sc-if value="{{ showListToggle }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;top:12px;left:12px;z-index:2">
+          <x-import component-from-global-scope="BlickDesignSystem_bfb8e5.Button" color="black" size="sm" iconLeft="fa-solid fa-list" onClick="{{ openPanel }}" hint-size="120px,36px">{{ listToggleLabel }}</x-import>
+        </div>
+      </sc-if>
+    </div>
+    <sc-if value="{{ showDetailDock }}" hint-placeholder-val="{{ false }}">
+      <div style="order:3;flex:none;height:{{ dockH }};display:flex;flex-direction:column;gap:10px;padding:12px 16px 12px;border-top:1px solid var(--color-stroke-weak);background:var(--color-fill-default)">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+          <div style="display:flex;flex-direction:column;gap:3px;min-width:0">
+            <span style="font-size:10.5px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-text-brand)">{{ det.cantonName }}</span>
+            <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:20px;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ det.name }}</h3>
+          </div>
+          <x-import component-from-global-scope="BlickDesignSystem_bfb8e5.IconButton" icon="fa-solid fa-xmark" color="grey" size="sm" aria-label="Fermer" onClick="{{ clearSel }}" hint-size="36px,36px"></x-import>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+          <div style="display:flex;align-items:center;gap:8px;min-width:0">
+            <i class="{{ det.icon }}" aria-hidden="true" style="font-size:20px;color:{{ det.iconColor }};width:24px;text-align:center"></i>
+            <span style="font-family:var(--font-display);font-weight:700;font-size:28px;line-height:1">{{ det.temp }}</span>
+            <span style="display:flex;flex-direction:column;font-size:11.5px;line-height:1.3;min-width:0"><strong style="white-space:nowrap">{{ det.desc }}</strong><span style="color:var(--color-text-weak);white-space:nowrap">Vent {{ det.wind }}</span></span>
+          </div>
+          <div style="display:flex;gap:10px;flex:none">
+            <sc-for list="{{ det.days }}" as="d" hint-placeholder-count="3">
+              <div style="display:flex;flex-direction:column;align-items:center;gap:3px">
+                <span style="font-size:10px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-text-weak)">{{ d.short }}</span>
+                <i class="{{ d.icon }}" aria-hidden="true" style="font-size:13px;color:{{ d.iconColor }}"></i>
+                <span style="font-size:11px;font-weight:700;white-space:nowrap">{{ d.snow }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto">
+          <x-import component-from-global-scope="BlickDesignSystem_bfb8e5.Button" color="red" size="sm" iconRight="fa-solid fa-arrow-up-right-from-square" onClick="{{ openSite }}" hint-size="140px,36px">Site officiel</x-import>
+          <span style="font-size:11px;color:var(--color-text-weak);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ det.host }}</span>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+  <footer style="flex:none;display:flex;justify-content:space-between;gap:12px;padding:6px 16px;border-top:1px solid var(--color-stroke-weak);font-size:10.5px;line-height:1.4;color:var(--color-text-weak);white-space:nowrap;overflow:hidden">
+    <span style="overflow:hidden;text-overflow:ellipsis">{{ footLeft }}</span>
+    <span style="overflow:hidden;text-overflow:ellipsis">{{ footRight }}</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:964,&quot;height&quot;:600},&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;stress&quot;,&quot;real&quot;],&quot;default&quot;:&quot;stress&quot;,&quot;tsType&quot;:&quot;'stress'|'real'&quot;},&quot;cooperative&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const SEEDS = [
+  { id: 'zermatt', tier: 1, name: 'Zermatt', canton: 'VS', lat: 46.020, lng: 7.749, url: 'https://www.zermatt.ch' },
+  { id: 'saasfee', tier: 2, name: 'Saas-Fee', canton: 'VS', lat: 46.108, lng: 7.927, url: 'https://www.saas-fee.ch' },
+  { id: 'verbier', tier: 1, name: 'Verbier', canton: 'VS', lat: 46.096, lng: 7.228, url: 'https://www.verbier.ch' },
+  { id: 'crans', tier: 2, name: 'Crans-Montana', canton: 'VS', lat: 46.311, lng: 7.481, url: 'https://www.crans-montana.ch' },
+  { id: 'laax', tier: 1, name: 'Laax', canton: 'GR', lat: 46.806, lng: 9.258, url: 'https://www.laax.com' },
+  { id: 'davos', tier: 1, name: 'Davos Klosters', canton: 'GR', lat: 46.800, lng: 9.836, url: 'https://www.davos.ch' },
+  { id: 'stmoritz', tier: 1, name: 'St. Moritz', canton: 'GR', lat: 46.498, lng: 9.838, url: 'https://www.stmoritz.com' },
+  { id: 'arosa', tier: 2, name: 'Arosa Lenzerheide', canton: 'GR', lat: 46.779, lng: 9.679, url: 'https://arosalenzerheide.swiss' },
+  { id: 'engelberg', tier: 1, name: 'Engelberg-Titlis', canton: 'OW', lat: 46.821, lng: 8.401, url: 'https://www.engelberg.ch' },
+  { id: 'andermatt', tier: 2, name: 'Andermatt', canton: 'UR', lat: 46.636, lng: 8.594, url: 'https://www.andermatt.ch' },
+  { id: 'grindelwald', tier: 1, name: 'Grindelwald', canton: 'BE', lat: 46.624, lng: 8.041, url: 'https://www.grindelwald.swiss' },
+  { id: 'adelboden', tier: 2, name: 'Adelboden', canton: 'BE', lat: 46.492, lng: 7.560, url: 'https://www.adelboden.ch' },
+  { id: 'gstaad', tier: 1, name: 'Gstaad', canton: 'BE', lat: 46.475, lng: 7.286, url: 'https://www.gstaad.ch' },
+  { id: 'flumserberg', tier: 1, name: 'Flumserberg', canton: 'SG', lat: 47.093, lng: 9.285, url: 'https://www.flumserberg.ch' },
+  { id: 'villars', tier: 2, name: 'Villars', canton: 'VD', lat: 46.298, lng: 7.055, url: 'https://www.villars.ch' },
+  { id: 'soerenberg', tier: 2, name: 'Sörenberg', canton: 'LU', lat: 46.822, lng: 8.036, url: 'https://www.soerenberg.ch' },
+];
+const CANTONS = { VS: 'Valais', GR: 'Grisons', BE: 'Berne', OW: 'Obwald', UR: 'Uri', SG: 'Saint-Gall', VD: 'Vaud', LU: 'Lucerne' };
+const CH_BOUNDS = [[5.95, 45.82], [10.49, 47.81]];
+const SEP = '§';
+
+function rng(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function gauss(r) { let u = 0, v = 0; while (!u) u = r(); while (!v) v = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+let STRESS = null;
+function stressPoints() {
+  if (STRESS) return STRESS;
+  const r = rng(42); STRESS = []; let n = 1;
+  SEEDS.forEach(s => { for (let i = 0; i < 14; i++) { STRESS.push({ id: 't' + n, name: 'Domaine test ' + String(n).padStart(3, '0'), canton: s.canton, lat: +(s.lat + gauss(r) * 0.1).toFixed(3), lng: +(s.lng + gauss(r) * 0.15).toFixed(3), url: null, test: true, tier: r() < 0.3 ? 2 : 3 }); n++; } });
+  return STRESS;
+}
+
+function wmo(code) {
+  if (code == null) return { icon: 'fa-solid fa-circle-question', desc: 'Pas de données', color: 'var(--color-icon-weak)' };
+  if (code === 0) return { icon: 'fa-solid fa-sun', desc: 'Ensoleillé', color: '#E0A800' };
+  if (code <= 2) return { icon: 'fa-solid fa-cloud-sun', desc: 'Peu nuageux', color: '#E0A800' };
+  if (code === 3) return { icon: 'fa-solid fa-cloud', desc: 'Couvert', color: 'var(--color-icon-weak)' };
+  if (code === 45 || code === 48) return { icon: 'fa-solid fa-smog', desc: 'Brouillard', color: 'var(--color-icon-weak)' };
+  if ((code >= 71 && code <= 77) || code === 85 || code === 86) return { icon: 'fa-regular fa-snowflake', desc: 'Chutes de neige', color: '#2E7BD6' };
+  if (code >= 95) return { icon: 'fa-solid fa-cloud-bolt', desc: 'Orage', color: 'var(--color-icon-default)' };
+  if (code >= 80) return { icon: 'fa-solid fa-cloud-showers-heavy', desc: 'Averses', color: 'var(--color-icon-default)' };
+  return { icon: 'fa-solid fa-cloud-rain', desc: 'Pluie', color: 'var(--color-icon-default)' };
+}
+const fmtT = t => (t == null || isNaN(t) ? '–' : `${Math.round(t)}°`.replace('-', '−'));
+const fmtS = s => (s == null ? '–' : `${Math.round(s)} cm`);
+
+function loadWx(list) {
+  window.__skiWxCache = window.__skiWxCache || {};
+  const key = String(list.length);
+  if (!window.__skiWxCache[key]) {
+    window.__skiWxCache[key] = (async () => {
+      const LS = 'skimap2_wx_' + key;
+      try { const c = JSON.parse(localStorage.getItem(LS) || 'null'); if (c && Date.now() - c.at < 30 * 60 * 1000) return c.data; } catch (e) {}
+      const wx = {}; let time = null;
+      for (let i = 0; i < list.length; i += 80) {
+        const ch = list.slice(i, i + 80);
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${ch.map(r => r.lat).join(',')}&longitude=${ch.map(r => r.lng).join(',')}&current=temperature_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,snowfall_sum&forecast_days=3&timezone=Europe%2FZurich`;
+        const res = await fetch(url); if (!res.ok) throw new Error('wx ' + res.status);
+        const d = await res.json(); const arr = Array.isArray(d) ? d : [d];
+        arr.forEach((x, k) => {
+          const r = ch[k]; if (!r || !x.current) return;
+          const days = x.daily.time.map((t, j) => ({ date: t, code: x.daily.weather_code[j], max: x.daily.temperature_2m_max[j], min: x.daily.temperature_2m_min[j], snow: x.daily.snowfall_sum[j] }));
+          wx[r.id] = { t: x.current.temperature_2m, code: x.current.weather_code, wind: x.current.wind_speed_10m, days, snow3: days.reduce((a, b) => a + (b.snow || 0), 0) };
+        });
+        if (!time && arr[0] && arr[0].current) time = arr[0].current.time;
+      }
+      const data = { wx, time };
+      try { localStorage.setItem(LS, JSON.stringify({ at: Date.now(), data })); } catch (e) {}
+      return data;
+    })().catch(e => { delete window.__skiWxCache[key]; throw e; });
+  }
+  return window.__skiWxCache[key];
+}
+
+const LF = { 1: '700 14px "Blick Variable", "Arial Narrow", sans-serif', 2: '600 11.5px "Inter Variable", sans-serif', 3: '500 11px "Inter Variable", sans-serif' };
+let MCTX = null;
+function tw(text, font) { MCTX = MCTX || document.createElement('canvas').getContext('2d'); MCTX.font = font; return MCTX.measureText(String(text)).width; }
+function drawLabel(p) {
+  const [, tierS, hovS, name] = p; const tier = +tierS || 3, hov = hovS === '1';
+  const font = hov && tier > 1 ? '700 12px "Inter Variable", sans-serif' : LF[tier];
+  const k = 2, H = tier === 1 ? 22 : 18, W = Math.ceil(tw(name, font) + 10);
+  const c = document.createElement('canvas'); c.width = W * k; c.height = H * k;
+  const x = c.getContext('2d'); x.scale(k, k); x.font = font; x.textBaseline = 'middle';
+  x.lineJoin = 'round'; x.lineWidth = 4; x.strokeStyle = 'rgba(255,255,255,0.95)'; x.strokeText(name, 5, H / 2 + 0.5);
+  x.fillStyle = hov ? '#E20000' : tier === 1 ? '#121010' : tier === 2 ? '#3B3535' : '#504949'; x.fillText(name, 5, H / 2 + 0.5);
+  return { data: x.getImageData(0, 0, c.width, c.height), k };
+}
+function drawPin() {
+  const k = 2, W = 34, H = 46, c = document.createElement('canvas'); c.width = W * k; c.height = H * k;
+  const x = c.getContext('2d'); x.scale(k, k);
+  const cx = 17, cy = 15, r = 12, tip = 41;
+  x.save(); x.shadowColor = 'rgba(18,16,16,0.35)'; x.shadowBlur = 5; x.shadowOffsetY = 2;
+  x.beginPath(); x.moveTo(cx, tip); x.quadraticCurveTo(cx - r, cy + r * 0.95, cx - r, cy); x.arc(cx, cy, r, Math.PI, 0); x.quadraticCurveTo(cx + r, cy + r * 0.95, cx, tip); x.closePath();
+  x.fillStyle = '#E20000'; x.fill(); x.restore();
+  x.beginPath(); x.arc(cx, cy, 4.8, 0, Math.PI * 2); x.fillStyle = '#FFFFFF'; x.fill();
+  x.beginPath(); x.ellipse(cx, tip + 1.5, 4, 1.5, 0, 0, Math.PI * 2); x.fillStyle = 'rgba(18,16,16,0.25)'; x.fill();
+  return { data: x.getImageData(0, 0, c.width, c.height), k };
+}
+const pt = (lng, lat, properties) => ({ type: 'Feature', geometry: { type: 'Point', coordinates: [lng, lat] }, properties });
+
+class Component extends DCLogic {
+  state = { w: 964, q: '', canton: 'Alle', sort: 'snow', sel: null, hover: null, panelOpen: false, wx: {}, wxStatus: 'loading', wxTime: null };
+  rootRef = React.createRef();
+  mapRef = React.createRef();
+
+  componentDidMount() {
+    this.ro = new ResizeObserver(([e]) => {
+      const w = Math.round(e.contentRect.width);
+      if (w && w !== this.state.w) this.setState({ w });
+      if (this.map) this.map.resize();
+    });
+    this.waitLib = setInterval(() => {
+      const root = this.rootRef.current, mapEl = this.mapRef.current;
+      if (root && !this.observed) { this.observed = true; this.ro.observe(root); const w = Math.round(root.getBoundingClientRect().width); if (w && w !== this.state.w) this.setState({ w }); }
+      if (window.maplibregl && mapEl && mapEl.clientWidth > 0 && mapEl.clientHeight > 0 && this.observed) { clearInterval(this.waitLib); this.startIO(); }
+    }, 80);
+    loadWx(this.resorts()).then(({ wx, time }) => this.setState({ wx, wxStatus: 'ok', wxTime: time })).catch(() => this.setState({ wxStatus: 'error' }));
+  }
+  componentWillUnmount() { this.io && this.io.disconnect(); clearTimeout(this._ioT); clearInterval(this.waitLib); this.ro && this.ro.disconnect(); this.destroyMap(); }
+  componentDidUpdate() {
+    try {
+      if (this.map && this._lastW !== this.state.w) {
+        this._lastW = this.state.w;
+        requestAnimationFrame(() => { if (!this.map) return; this.map.resize(); this.map.fitBounds(CH_BOUNDS, { padding: this.fitPad(), duration: 0 }); });
+      }
+      this.sync();
+    } catch (e) { console.warn(e); }
+  }
+
+  isStress() { return (this.props.density ?? 'stress') === 'stress'; }
+  resorts() { return this.isStress() ? SEEDS.concat(stressPoints()) : SEEDS; }
+  mode() { const w = this.state.w; return w >= 860 ? 'wide' : w >= 520 ? 'mid' : 'mobile'; }
+  fitPad() {
+    const m = this.mode();
+    if (m === 'mobile') return { top: 24, bottom: 16, left: 16, right: 50 };
+    if (m === 'mid') return { top: 56, bottom: 24, left: 24, right: 56 };
+    return { top: 40, bottom: 30, left: 30, right: 60 };
+  }
+
+  startIO() {
+    const root = this.rootRef.current; if (!root) return;
+    this.io = new IntersectionObserver(([e]) => {
+      clearTimeout(this._ioT);
+      if (e.isIntersecting) { if (!this.map) this._ioT = setTimeout(() => { if (!this.map && this.mapRef.current) this.initMap(); }, 120); }
+      else if (this.map) this._ioT = setTimeout(() => this.destroyMap(), 600);
+    }, { rootMargin: '200px' });
+    this.io.observe(root);
+  }
+  destroyMap() {
+    if (!this.map) return;
+    try { this.map.remove(); } catch (e) {}
+    this.map = null; this.layersReady = false; this._key = ''; this._lastW = undefined;
+  }
+
+  initMap() {
+    const gl = window.maplibregl;
+    const map = new gl.Map({
+      container: this.mapRef.current, style: 'https://tiles.openfreemap.org/styles/positron',
+      bounds: CH_BOUNDS, fitBoundsOptions: { padding: this.fitPad() }, attributionControl: false,
+      dragRotate: false, pitchWithRotate: false, touchPitch: false, cooperativeGestures: this.props.cooperative ?? true,
+      maxBounds: [[4.5, 45.2], [11.8, 48.4]],
+    });
+    map.touchZoomRotate.disableRotation();
+    this.map = map;
+    this._lastW = this.state.w;
+    map.on('webglcontextlost', () => { this.destroyMap(); setTimeout(() => { if (!this.map && this.mapRef.current) this.initMap(); }, 300); });
+    map.on('styleimagemissing', e => this.drawImage(e.id));
+    map.on('load', () => {
+      map.resize(); map.fitBounds(CH_BOUNDS, { padding: this.fitPad(), duration: 0 });
+      try {
+        map.getStyle().layers.forEach(l => {
+          if (l.type !== 'symbol') return;
+          if (/country/i.test(l.id)) { map.setLayoutProperty(l.id, 'visibility', 'none'); return; }
+          const tf = map.getLayoutProperty(l.id, 'text-field');
+          if (tf && /name/.test(JSON.stringify(tf))) map.setLayoutProperty(l.id, 'text-field', ['coalesce', ['get', 'name:fr'], ['get', 'name']]);
+        });
+        const PL = ['label_city_capital', 'label_city', 'label_town', 'label_village', 'label_other', 'label_state'].filter(id => map.getLayer(id));
+        if (map.getLayer('label_city') && map.getLayer('label_city_capital')) {
+          ['text-size', 'text-font'].forEach(p => { const v = map.getLayoutProperty('label_city', p); if (v !== undefined) map.setLayoutProperty('label_city_capital', p, v); });
+          try { map.setLayoutProperty('label_city_capital', 'icon-image', ''); } catch (e) {}
+        }
+        PL.forEach(id => { map.setPaintProperty(id, 'text-color', '#A5A1A1'); map.setPaintProperty(id, 'text-halo-color', 'rgba(255,255,255,0.9)'); map.setPaintProperty(id, 'text-halo-width', 1.2); });
+        fetch('data/ch.geojson').then(r => r.json()).then(geom => {
+          if (!this.map || this.map !== map) return;
+          PL.forEach(id => { const f = map.getFilter(id); try { map.setFilter(id, f ? ['all', f, ['within', geom]] : ['within', geom]); } catch (e) { console.warn('filter', id, e); } });
+        }).catch(() => {});
+        map.addSource('dem', { type: 'raster-dem', tiles: ['https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'], encoding: 'terrarium', tileSize: 256, maxzoom: 12 });
+        const firstSymbol = (map.getStyle().layers.find(l => l.type === 'symbol') || {}).id;
+        map.addLayer({ id: 'hill', type: 'hillshade', source: 'dem', paint: { 'hillshade-shadow-color': '#6A6262', 'hillshade-highlight-color': '#FFFFFF', 'hillshade-accent-color': '#A5A1A1', 'hillshade-exaggeration': 0.3, 'hillshade-illumination-direction': 315 } }, firstSymbol);
+      } catch (e) {}
+      this.setupLayers();
+    });
+    map.on('mousemove', e => {
+      const id = this.pick(e.point, 7);
+      map.getCanvas().style.cursor = id ? 'pointer' : '';
+      if (id !== this.state.hover) this.setState({ hover: id });
+    });
+    map.on('mouseout', () => { if (this.state.hover) this.setState({ hover: null }); });
+    map.on('click', e => { const id = this.pick(e.point, this.mode() === 'mobile' ? 16 : 9); if (id) this.select(id); });
+  }
+
+  pick(pnt, tol) {
+    if (!this.map || !this.layersReady) return null;
+    const fs = this.map.queryRenderedFeatures([[pnt.x - tol, pnt.y - tol], [pnt.x + tol, pnt.y + tol]], { layers: ['dots', 'lab1', 'lab2', 'labh', 'pin'] });
+    let best = null, bd = 1e9;
+    fs.forEach(f => {
+      const id = f.properties.id; if (!id) return;
+      const c = f.geometry.coordinates, p = this.map.project(c);
+      const isLabel = f.layer.id !== 'dots' && f.layer.id !== 'pin';
+      const d = Math.hypot(p.x - pnt.x, p.y - pnt.y) * (isLabel ? 0.6 : 1) - (f.properties.tier === 1 ? 3 : 0);
+      if (d < bd) { bd = d; best = id; }
+    });
+    return best;
+  }
+
+  async setupLayers() {
+    const map = this.map;
+    try { await Promise.all(['700 14px "Blick Variable"', '600 11.5px "Inter Variable"', '500 11px "Inter Variable"', '700 12px "Inter Variable"'].map(f => document.fonts.load(f))); } catch (e) {}
+    if (!this.map) return;
+    map.addSource('pts', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+    const rad = (a, b, c, extra) => ['match', ['get', 'tier'], 1, a + extra, 2, b + extra, c + extra];
+    map.addLayer({ id: 'dots', type: 'circle', source: 'pts', filter: ['!=', ['get', 'sel'], true], paint: {
+      'circle-radius': ['interpolate', ['linear'], ['zoom'],
+        6, ['case', ['get', 'hov'], rad(6.5, 5, 4.2, 0), rad(4.6, 3.2, 2.4, 0)],
+        10, ['case', ['get', 'hov'], rad(9.5, 8, 7, 0), rad(7.5, 6, 4.8, 0)]],
+      'circle-color': ['case', ['get', 'hov'], '#E20000', ['==', ['get', 'tier'], 1], '#121010', ['==', ['get', 'tier'], 2], '#3B3535', '#6A6262'],
+      'circle-stroke-color': '#FFFFFF',
+      'circle-stroke-width': ['match', ['get', 'tier'], 1, 2, 1.5],
+    } });
+    const lab = { 'icon-image': ['get', 'lab'], 'icon-anchor': 'left', 'icon-offset': [5, 0], 'icon-allow-overlap': false, 'icon-padding': 1, 'symbol-sort-key': ['get', 'tier'] };
+    map.addLayer({ id: 'lab2', type: 'symbol', source: 'pts', minzoom: 8.2, filter: ['all', ['>=', ['get', 'tier'], 2], ['!=', ['get', 'sel'], true], ['!=', ['get', 'hov'], true]], layout: { ...lab, 'icon-offset': [4, 0] } });
+    map.addLayer({ id: 'lab1', type: 'symbol', source: 'pts', filter: ['all', ['==', ['get', 'tier'], 1], ['!=', ['get', 'sel'], true], ['!=', ['get', 'hov'], true]], layout: lab });
+    map.addLayer({ id: 'labh', type: 'symbol', source: 'pts', filter: ['all', ['==', ['get', 'hov'], true], ['!=', ['get', 'sel'], true]], layout: { ...lab, 'icon-image': ['get', 'labH'], 'icon-offset': [6, 0], 'icon-allow-overlap': true, 'icon-ignore-placement': true } });
+    map.addLayer({ id: 'pin', type: 'symbol', source: 'pts', filter: ['==', ['get', 'sel'], true], layout: { 'icon-image': 'pin', 'icon-anchor': 'bottom', 'icon-offset': [0, 4], 'icon-allow-overlap': true, 'icon-ignore-placement': false } });
+    map.addLayer({ id: 'pinlab', type: 'symbol', source: 'pts', filter: ['==', ['get', 'sel'], true], layout: { 'icon-image': ['get', 'labS'], 'icon-anchor': 'left', 'icon-offset': [12, -16], 'icon-allow-overlap': true, 'icon-ignore-placement': false } });
+    this.layersReady = true; this._key = '';
+    this.sync();
+  }
+
+  drawImage(id) {
+    if (!this.map || this.map.hasImage(id)) return;
+    let out = null;
+    try { out = id === 'pin' ? drawPin() : id.startsWith('lab' + SEP) ? drawLabel(id.split(SEP)) : null; } catch (e) { console.warn(e); }
+    if (out) this.map.addImage(id, out.data, { pixelRatio: out.k });
+  }
+
+  sync() {
+    if (!this.map || !this.layersReady) return;
+    const list = this.filtered(), { sel, hover } = this.state;
+    const key = [sel, hover, list.map(r => r.id).join(',')].join('|');
+    if (key === this._key) return;
+    this._key = key;
+    const feats = list.slice().sort((a, b) => (b.tier || 3) - (a.tier || 3)).map(r => pt(r.lng, r.lat, {
+      id: r.id, tier: r.tier || 3, sel: r.id === sel, hov: r.id === hover,
+      lab: ['lab', r.tier || 3, 0, r.name].join(SEP), labH: ['lab', r.tier || 3, 1, r.name].join(SEP), labS: ['lab', 1, 0, r.name].join(SEP),
+    }));
+    const src = this.map.getSource('pts'); if (src) src.setData({ type: 'FeatureCollection', features: feats });
+  }
+
+  filtered() {
+    const q = this.state.q.trim().toLowerCase();
+    let list = this.resorts().filter(r => (this.state.canton === 'Alle' || r.canton === this.state.canton) &&
+      (!q || r.name.toLowerCase().includes(q) || CANTONS[r.canton].toLowerCase().includes(q) || r.canton.toLowerCase() === q));
+    const wx = this.state.wx;
+    if (this.state.sort === 'snow') list = list.slice().sort((a, b) => ((wx[b.id] || {}).snow3 || 0) - ((wx[a.id] || {}).snow3 || 0) || (a.tier || 3) - (b.tier || 3) || a.name.localeCompare(b.name));
+    else list = list.slice().sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+    return list;
+  }
+
+  select(id) {
+    const m = this.mode();
+    const r = this.resorts().find(x => x.id === id);
+    this.setState({ sel: id, hover: null, panelOpen: m === 'mid' });
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    if (!this.map || !r) return;
+    const offset = m === 'mid' ? [156, 0] : [0, 0];
+    this.map.flyTo({ center: [r.lng, r.lat], zoom: Math.max(this.map.getZoom(), 9.2), offset, speed: 1.1, curve: 1.5, essential: true });
+  }
+
+  resetMap() {
+    if (!this.map) return;
+    const cam = this.map.cameraForBounds(CH_BOUNDS, { padding: this.fitPad() });
+    if (cam) this.map.flyTo({ ...cam, speed: 1.1, curve: 1.5, essential: true });
+  }
+
+  renderVals() {
+    const m = this.mode(), isMobile = m === 'mobile', isMid = m === 'mid', isWide = m === 'wide';
+    const { wx, sel, panelOpen } = this.state;
+    const list = this.filtered();
+    const cantonKeys = ['Alle', ...Object.keys(CANTONS).filter(k => this.resorts().some(r => r.canton === k))];
+    const rows = list.map(r => {
+      const w = wx[r.id], i = wmo(w && w.code);
+      return {
+        id: r.id, name: r.name, cantonName: `${CANTONS[r.canton]} · ${r.canton}`, icon: i.icon, iconColor: i.color, temp: fmtT(w && w.t), snow: fmtS(w && w.snow3),
+        bg: r.id === sel ? 'var(--color-fill-weak)' : 'transparent', nameColor: r.id === sel ? 'var(--color-text-brand)' : 'var(--color-text-default)',
+        onClick: () => this.select(r.id),
+        onEnter: () => { if (!isMobile) this.setState({ hover: r.id }); },
+        onLeave: () => { if (!isMobile) this.setState({ hover: null }); },
+      };
+    });
+    if (sel) this.lastSel = sel;
+    const sr = sel ? this.resorts().find(r => r.id === sel) : null;
+    const shown = this.lastSel ? this.resorts().find(r => r.id === this.lastSel) : null;
+    const dockH = '168px';
+    const mobileList = isMobile && panelOpen;
+    const base = { display: 'flex', flexDirection: 'column', background: 'var(--color-fill-default)', overflow: 'hidden', zIndex: 3 };
+    let panelStyle;
+    if (isWide) panelStyle = { ...base, position: 'relative', width: 312, flex: 'none', borderRight: '1px solid var(--color-stroke-weak)' };
+    else if (isMid) panelStyle = { ...base, position: 'absolute', left: 12, top: 12, bottom: 12, width: 300, borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-menu)', transform: panelOpen ? 'translateX(0)' : 'translateX(calc(-100% - 24px))', transition: 'transform .22s ease' };
+    else if (mobileList) panelStyle = { ...base, position: 'absolute', inset: 0, zIndex: 6 };
+    else panelStyle = { ...base, position: 'relative', order: 2, flex: 'none', height: dockH, borderTop: '1px solid var(--color-stroke-weak)', display: sr ? 'none' : 'flex' };
+
+    let det = { days: [] };
+    if (shown) {
+      const sr = shown;
+      const w = wx[sr.id], i = wmo(w && w.code);
+      const lab = (d, k, short) => k === 0 ? (short ? 'Auj.' : 'Aujourd’hui') : k === 1 ? (short ? 'Dem.' : 'Demain') : new Date(d + 'T12:00').toLocaleDateString('fr-CH', { weekday: 'short' }).replace('.', '');
+      det = {
+        name: sr.name, cantonName: `${CANTONS[sr.canton]} · ${sr.canton}`, icon: i.icon, iconColor: i.color, desc: i.desc,
+        temp: fmtT(w && w.t), wind: w ? `${Math.round(w.wind)} km/h` : '–', host: sr.url ? sr.url.replace(/^https?:\/\/(www\.)?/, '') : 'Point test · pas de site',
+        days: (w ? w.days : [null, null, null]).map((d, k) => { const di = wmo(d && d.code); return { label: d ? lab(d.date, k, false) : '–', short: d ? lab(d.date, k, true) : '–', icon: di.icon, iconColor: di.color, range: d ? `${fmtT(d.max)} / ${fmtT(d.min)}` : '–', snow: fmtS(d && d.snow) }; }),
+      };
+    }
+    const t = this.state.wxTime ? this.state.wxTime.slice(11, 16) : null;
+    const wxStamp = this.state.wxStatus === 'ok' ? (isMobile ? `Direct · ${t}` : `Météo en direct · ${t}`) : this.state.wxStatus === 'error' ? 'Météo indisponible' : 'Chargement météo…';
+    return {
+      rootRef: this.rootRef, mapRef: this.mapRef,
+      headPad: isMobile ? '9px 14px 8px' : '12px 16px 11px', showZoomBtns: !isMobile,
+      footLeft: isMobile ? 'Météo Open-Meteo / MétéoSuisse · © OSM' : 'Météo : MétéoSuisse ICON-CH via Open-Meteo (CC BY 4.0)',
+      titleSize: isMobile ? '18px' : isMid ? '22px' : '26px',
+      wxStamp, wxDot: this.state.wxStatus === 'ok' ? 'var(--color-success)' : this.state.wxStatus === 'error' ? 'var(--color-fill-brand)' : 'var(--color-stroke-weak)',
+      bodyStyle: { position: 'relative', flex: 1, minHeight: 0, display: 'flex', flexDirection: isMobile ? 'column' : 'row' },
+      panelStyle, dockH,
+      showPanelHead: isMid || mobileList,
+      showListBtn: isMobile && !mobileList,
+      showChips: !isMobile || mobileList,
+      searchPad: isMobile && !mobileList ? '12px 16px 10px' : isMid || mobileList ? '10px 16px 4px' : '14px 16px 4px',
+      inputH: isMobile ? '40px' : '44px',
+      rowPad: isMobile && !mobileList ? '12px 16px' : '14px 16px',
+      q: this.state.q,
+      onQuery: e => this.setState({ q: e.target.value }),
+      onSearchFocus: () => { if (isMobile) this.setState({ panelOpen: true, sel: null }); },
+      chips: cantonKeys.map(k => ({ label: k === 'Alle' ? 'Tous' : k, active: this.state.canton === k, onClick: () => this.setState({ canton: k }) })),
+      sorts: [['snow', 'Neige 3 j'], ['az', 'A–Z']].map(([k, l]) => ({ label: l, color: this.state.sort === k ? 'var(--color-text-default)' : 'var(--color-text-weak)', deco: this.state.sort === k ? 'underline' : 'none', onClick: () => this.setState({ sort: k }) })),
+      countLabel: `${list.length} domaines`,
+      rows, isEmpty: rows.length === 0,
+      openPanel: () => this.setState({ panelOpen: true, sel: isMobile ? null : sel }),
+      closePanel: () => { const had = !!this.state.sel; this.setState({ panelOpen: false, sel: null }); if (had) this.resetMap(); },
+      showListToggle: isMid && !panelOpen,
+      listToggleLabel: `Liste · ${list.length}`,
+      showFocusPage: !!shown && !isMobile,
+      trackX: sr && !isMobile ? 'translateX(-50%)' : 'translateX(0)',
+      isMid,
+      showDetailDock: !!sr && isMobile,
+      det,
+      clearSel: () => { this.setState({ sel: null }); this.resetMap(); },
+      openSite: () => { if (sr && sr.url) window.open(sr.url, '_blank', 'noopener'); },
+      zoomIn: () => this.map && this.map.zoomIn(),
+      zoomOut: () => this.map && this.map.zoomOut(),
+      resetView: () => this.map && this.map.fitBounds(CH_BOUNDS, { padding: this.fitPad(), duration: 600 }),
+      footRight: isMobile ? (this.isStress() ? 'Densité simulée' : 'Données d’exemple') : this.isStress() ? `Carte © OpenStreetMap · Densité simulée : 16 réels + ${stressPoints().length} points test` : 'Carte © OpenStreetMap · Données d’exemple',
+    };
+  }
+}
+</script>
+</body>
+</html>

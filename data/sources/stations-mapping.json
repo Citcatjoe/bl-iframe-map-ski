@@ -1,0 +1,1395 @@
+{
+ "_doc": "Correspondances retenues pour chaque station de skiinfo-suisse.json. place = « Nom (CANTON) - Commune » du lieu dans le gazetteer swisstopo (swissNAMES3D) ; osdArea = id du domaine OpenSkiData (null = aucun domaine fiable) ; short = nom sur la carte ; webcams = page webcams de la station ; webcamsSource = officiel | agregateur ; webcamsGroup = nom du domaine, de la société de remontées ou de la destination quand la page webcams est partagée par plusieurs stations (sinon null). Règle de choix de la page webcams : ETAT-DU-PROJET.md D55. Le niveau 1 est dans src/data/stations-niveau-1.json. Utilisé par scripts/build-resorts.mjs, qui vérifie la cohérence des groupes.",
+ "dropped": {
+  "gstaad-saanen-rougemont": "regroupement de Gstaad (doublon)",
+  "engadin-st-moritz": "regroupement de St. Moritz (doublon)"
+ },
+ "stations": {
+  "adelboden": {
+   "place": "Adelboden (BE) - Adelboden",
+   "query": "Adelboden",
+   "osdArea": "42e7619de4170fbbc68d4be51114f7cf54fb0d30",
+   "short": "Adelboden",
+   "webcams": "https://www.adelboden-lenk.ch/fr/Service/Webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "aeschi": {
+   "place": "Aeschi b. Spiez (BE) - Aeschi bei Spiez",
+   "query": "Aeschi",
+   "osdArea": "cdae8f15a1a4998399e9242698f79fa7feab135b",
+   "short": "Aeschi",
+   "webcams": "https://www.aeschi-tourismus.ch/ueber-aeschi/ortsinformationen/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "airolo": {
+   "place": "Airolo (TI) - Airolo",
+   "query": "Airolo",
+   "osdArea": "67a84872331001ee2d7615a03eb9d424c66e6006",
+   "short": "Airolo",
+   "webcams": "https://www.airolo.ch/webcam-airolo.php",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "aletsch-arena": {
+   "place": "Riederalp (VS) - Riederalp",
+   "query": "Riederalp",
+   "osdArea": "17756f8437ab9269dabffdd3f26a4fd045a4ae74",
+   "short": "Aletsch Arena",
+   "webcams": "https://www.aletscharena.ch/fr/ici-maintenant/en-direct/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "amden": {
+   "place": "Amden (SG) - Amden",
+   "query": "Amden",
+   "osdArea": "d5f1881a856237ba5306a46b6b9de657b73cdc3f",
+   "short": "Amden",
+   "webcams": "https://www.amden-weesen.ch/planen-informieren/webcam-wetter",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "andermatt-sedrun": {
+   "place": "Andermatt (UR) - Andermatt",
+   "query": "Andermatt",
+   "osdArea": "eeb2093cd64adef211261520c569179894373a74",
+   "short": "Andermatt",
+   "webcams": "https://www.andermatt-sedrun-disentis.ch/fr/journey/webcams/group/webcams-andermattsedrundisentis",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "anzere": {
+   "place": "Anzère (VS) - Ayent",
+   "query": "Anzère",
+   "osdArea": "5715439988a962bab375e89d7fcaa86583215933",
+   "short": "Anzère",
+   "webcams": "https://www.anzere.ch/fr/webcams-352",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "arolla": {
+   "place": "Arolla (VS) - Evolène",
+   "query": "Arolla",
+   "osdArea": "0ae05d0db0046278c433fc2f19c026e1431d613e",
+   "short": "Arolla",
+   "webcams": "https://www.skiinfo.fr/valais/arolla/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "arosa-lenzerheide": {
+   "place": "Lenzerheide/Lai (GR) - Vaz/Obervaz",
+   "query": "Lenzerheide/Lai",
+   "osdArea": "4ae9b0cba5454d6f0921bf413c33a267f1d63cca",
+   "short": "Arosa Lenzerheide",
+   "webcams": "https://arosalenzerheide.swiss/de/Arosa/Aktuell/Webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "atzmannig-goldingen": {
+   "place": "Atzmännig Schutt (Talstation) (SG) - Eschenbach (SG)",
+   "query": "Atzmännig Schutt",
+   "osdArea": "27c943529e7f72139a749bd67b1a0b621a66840f",
+   "short": "Atzmännig",
+   "webcams": "https://www.atzmaennig.ch/webcam/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "avers": {
+   "place": "Juppa (GR) - Avers",
+   "query": "Juppa",
+   "osdArea": "c9999d9a9dfeeba34753b83f30dc139a82f3c735",
+   "short": "Avers",
+   "webcams": "https://viamala.ch/informieren/aktuelles/webcams.html",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Viamala"
+  },
+  "beatenberg": {
+   "place": "Beatenberg (BE) - Beatenberg",
+   "query": "Beatenberg",
+   "osdArea": "e875d3c5adf4188fb7bed263f97f1460bff54804",
+   "short": "Beatenberg",
+   "webcams": "https://www.skiinfo.fr/oberland-bernois/beatenberg/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "beckenried-klewenalp": {
+   "place": "Beckenried (NW) - Beckenried",
+   "query": "Beckenried",
+   "osdArea": "cc230857c5e1b30400e87df6ecaaf2c47e02aebe",
+   "short": "Klewenalp",
+   "webcams": "https://www.klewenalp.ch/fr/live-am-berg/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "belalp": {
+   "place": "Belalp (VS) - Naters",
+   "query": "Belalp",
+   "osdArea": "e9c0a197353bef2c6ed47d85c268582cae8ad8ea",
+   "short": "Belalp",
+   "webcams": "https://www.belalp.ch/fr/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "bellwald": {
+   "place": "Bellwald (VS) - Bellwald",
+   "query": "Bellwald",
+   "osdArea": "48f49671caa110fdb9c9cc7bd29b42ff16e43a1e",
+   "short": "Bellwald",
+   "webcams": "https://www.bellwald.ch/hier-jetzt/live/wetter-webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "berguen": {
+   "place": "Bergün/Bravuogn (GR) - Bergün Filisur",
+   "query": "Bergün",
+   "osdArea": "57b40dff085a069d2e9c9a974647fe22cbaee1a6",
+   "short": "Bergün",
+   "webcams": "https://www.berguen-filisur.graubuenden.ch/de/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "bivio": {
+   "place": "Bivio Beiva (GR) - Surses",
+   "query": "Bivio",
+   "osdArea": "ae2e22251543887f21ba619b5816511ec9a4081e",
+   "short": "Bivio",
+   "webcams": "https://www.valsurses.ch/de/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Val Surses"
+  },
+  "boltigen": {
+   "place": "Boltigen (BE) - Boltigen",
+   "query": "Boltigen",
+   "osdArea": "37c497392c43bcd2ddd57b50c81eac60ee83385e",
+   "short": "Boltigen",
+   "webcams": "https://www.skiinfo.fr/oberland-bernois/boltigen/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "bosco-gurin": {
+   "place": "Bosco/Gurin (TI) - Bosco/Gurin",
+   "query": "Bosco/Gurin",
+   "osdArea": "84fec65c59cbaf4d37901b0cf65f9539d41a3919",
+   "short": "Bosco Gurin",
+   "webcams": "https://www.skiinfo.fr/tessin/bosco-gurin/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "braunwald": {
+   "place": "Braunwald (GL) - Glarus Süd",
+   "query": "Braunwald",
+   "osdArea": "e18255e7d2167bde2ed8fb9099d3b4e3dfd3f1a3",
+   "short": "Braunwald",
+   "webcams": "https://www.skiinfo.fr/suisse-orientale/braunwald/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "brienz-axalp": {
+   "place": "Axalp (BE) - Brienz (BE)",
+   "query": "Axalp",
+   "osdArea": "e0683a5fb859192c48db792baa445ef24b238036",
+   "short": "Axalp",
+   "webcams": "https://www.axalp.ch/besucherinfo/webcam/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "brigels-breil": {
+   "place": "Breil/Brigels (GR) - Breil/Brigels",
+   "query": "Breil/Brigels",
+   "osdArea": "2826e74d5f33a0bd943b7353dcda7e1419c36ace",
+   "short": "Brigels",
+   "webcams": "https://www.brigels-bergbahnen.ch/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "brunni-holzegg": {
+   "place": "Brunni (SZ) - Alpthal",
+   "query": "Brunni",
+   "osdArea": "11d9e31d7b2cebb64af8cdf21aeee37122a49a31",
+   "short": "Brunni",
+   "webcams": "https://www.brunnialpthal.ch/Wetter.aspx",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "bruson": {
+   "place": "Bruson (VS) - Val de Bagnes",
+   "query": "Bruson",
+   "osdArea": null,
+   "short": "Bruson",
+   "webcams": "https://www.skiinfo.fr/valais/bruson/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "bugnenets-savagnieres": {
+   "place": "Les Bugnenets (NE) - Val-de-Ruz",
+   "query": "Les Bugnenets",
+   "osdArea": "06b6a1bf1760e0705bf964f0a5d4e410de20f279",
+   "short": "Bugnenets",
+   "webcams": "https://www.chasseral-snow.ch/index.php?page=webcam",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "bulle-la-chia": {
+   "place": "La Chia (FR) - Gruyères",
+   "query": "La Chia",
+   "osdArea": "5e220e953ebe75265d6a53fe7624cd7c0b92c7f7",
+   "short": "La Chia",
+   "webcams": "https://www.skiinfo.fr/fribourg/bulle-la-chia/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "bumbach-schangnau": {
+   "place": "Bumbach (BE) - Schangnau",
+   "query": "Bumbach",
+   "osdArea": "dd96ad5d5d027fdc26aa2a86716dfbb71a813cd1",
+   "short": "Bumbach",
+   "webcams": "https://www.bergfex.ch/bumbach-schangnau/webcams/c2627/?archive=1",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "buerchen-toerbel": {
+   "place": "Bürchen (VS) - Bürchen",
+   "query": "Bürchen",
+   "osdArea": "e876d1a921e6e04fed57331a03f9f5298a20e069",
+   "short": "Bürchen",
+   "webcams": "https://www.skiinfo.fr/valais/buerchen-toerbel/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "cari": {
+   "place": "Carì (TI) - Faido",
+   "query": "Cari",
+   "osdArea": "e118091f23fd306fba3b2188da3ac7c14874efe5",
+   "short": "Cari",
+   "webcams": "https://www.skiinfo.fr/tessin/cari/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "champery": {
+   "place": "Champéry (VS) - Champéry",
+   "query": "Champéry",
+   "osdArea": "2e7ded9ef38b3609f561dd89d959e072f9cca157",
+   "short": "Champéry",
+   "webcams": "https://www.regiondentsdumidi.ch/fr/webcams-149/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Région Dents du Midi"
+  },
+  "champex-lac": {
+   "place": "Champex-Lac (VS) - Orsières",
+   "query": "Champex",
+   "osdArea": "a73915aea3f13e82e57ea7fdd357654697af7ded",
+   "short": "Champex",
+   "webcams": "https://www.saint-bernard.ch/fr/pratique/webcams-81/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Pays du Saint-Bernard"
+  },
+  "charmey": {
+   "place": "Charmey (Gruyère) (FR) - Val-de-Charmey",
+   "query": "Charmey",
+   "osdArea": "a10f881088e5a0f7f638228f6be67fcfa2eec94a",
+   "short": "Charmey",
+   "webcams": "https://www.charmey.ch/webcams/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "toggenburg": {
+   "place": "Unterwasser (SG) - Wildhaus-Alt St. Johann",
+   "query": "Unterwasser",
+   "osdArea": "696bb1ffa7c5cbea2123abdb0821791dfaaad100",
+   "short": "Chäserrugg",
+   "webcams": "https://www.chaeserrugg.ch/de/webcam",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "chateau-doex": {
+   "place": "Château-d'Oex (VD) - Château-d'Oex",
+   "query": "Château-d'Oex",
+   "osdArea": "ca33cf0fc24efc2a26e44e2d35a51901b8b3dae9",
+   "short": "Château d'Oex",
+   "webcams": "https://www.skiinfo.fr/oberland-bernois/chateau-doex/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "chur": {
+   "place": "Brambrüesch (GR) - Churwalden",
+   "query": "Brambrüesch",
+   "osdArea": "dcc09d80b8e54996b2b0992ae12be842cab4be40",
+   "short": "Chur",
+   "webcams": "https://www.churbergbahnen.ch/de/Aktuell/Webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "corvatsch": {
+   "place": "Silvaplana-Surlej (GR) - Silvaplana",
+   "query": "Silvaplana-Surlej",
+   "osdArea": "13756027a3c85c2f3e1b8742865baa4f2469a277",
+   "short": "Corvatsch",
+   "webcams": "https://www.corvatsch-diavolezza.ch/aktuelles/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Corvatsch Diavolezza Lagalb"
+  },
+  "crans-montana": {
+   "place": "Crans-Montana (VS) - Crans-Montana",
+   "query": "Crans-Montana",
+   "osdArea": "7764d597cda909bb1bc7fd66a07bbfa6bb8ab695",
+   "short": "Crans Montana",
+   "webcams": "https://www.crans-montana.ch/fr/webcam",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "dallenwil-wirzweli": {
+   "place": "Wirzweli (NW) - Dallenwil",
+   "query": "Wirzweli",
+   "osdArea": "0f11d369a994f4617ebebbb9c7b08c95c25a5c2f",
+   "short": "Wirzweli",
+   "webcams": "https://www.skiinfo.fr/suisse-centrale/dallenwil-wirzweli/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "davos-klosters": {
+   "place": "Davos Platz (GR) - Davos",
+   "query": "Davos Platz",
+   "osdArea": "403c8d67ddd348bfa3f7d02c6c21163479964926",
+   "short": "Davos",
+   "webcams": "https://www.davosklostersmountains.ch/en/mountains/winter/live-info/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "degersheim": {
+   "place": "Degersheim (SG) - Degersheim",
+   "query": "Degersheim",
+   "osdArea": "d5eb86638cb6f906a2958190e3eb29ca215d8695",
+   "short": "Degersheim",
+   "webcams": "https://www.skiinfo.fr/suisse-orientale/degersheim/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "diavolezza-lagalb": {
+   "place": "Diavolezza (GR) - Pontresina",
+   "query": "Diavolezza",
+   "osdArea": "b46b8286189d83f14e1d35e75381a2f4ac231f9b",
+   "short": "Diavolezza",
+   "webcams": "https://www.corvatsch-diavolezza.ch/aktuelles/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Corvatsch Diavolezza Lagalb"
+  },
+  "diemtigtal-grimmialp": {
+   "place": "Grimmialp (BE) - Diemtigen",
+   "query": "Grimmialp",
+   "osdArea": "e9db6a1814c7a0ef68420aad334a2a5f6f2de862",
+   "short": "Grimmialp",
+   "webcams": "https://www.prowebcam.ch/webcam/grimmialp/",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "diemtigtal-springenboden": {
+   "place": "Springenboden (BE) - Diemtigen",
+   "query": "Springenboden",
+   "osdArea": "03afb38e0ea197ad18a15fb38a24df3725d8f0ad",
+   "short": "Springenboden",
+   "webcams": "https://www.diemtigtal.ch/info/offen-oder-zu/livecams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "diemtigtal-wiriehorn": {
+   "place": "Riedli (BE) - Diemtigen",
+   "query": "Riedli",
+   "osdArea": "143bc287b54d322b788c8099bfb0b664cfa2678a",
+   "short": "Wiriehorn",
+   "webcams": "https://www.wiriehorn.ch/fr/info/information/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "disentis-3000": {
+   "place": "Disentis/Mustér (GR) - Disentis/Mustér",
+   "query": "Disentis",
+   "osdArea": "d49fb763370f4ddb93f355430d537911de694958",
+   "short": "Disentis",
+   "webcams": "https://www.skiinfo.fr/les-grisons/disentis-3000/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "ebenalp": {
+   "place": "Wasserauen (AI) - Schwende-Rüte",
+   "query": "Wasserauen",
+   "osdArea": "10400cd9ba66f3c58414ad6746dda13be05be84c",
+   "short": "Ebenalp",
+   "webcams": "https://www.ebenalp.ch/de/webcam",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "ebnat-kappel": {
+   "place": "Ebnat-Kappel (SG) - Ebnat-Kappel",
+   "query": "Ebnat-Kappel",
+   "osdArea": "affc3c462dfab47c405fe81af8fc6ef2effb321b",
+   "short": "Ebnat-Kappel",
+   "webcams": "https://www.skiinfo.fr/suisse-orientale/ebnat-kappel/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "eischoll": {
+   "place": "Eischoll (VS) - Eischoll",
+   "query": "Eischoll",
+   "osdArea": "0ed67f04f2e5d0f8e1b8be3507c577fcfcb60215",
+   "short": "Eischoll",
+   "webcams": "https://www.eischoll.ch/webcams-wetter/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "elm": {
+   "place": "Elm (GL) - Glarus Süd",
+   "query": "Elm",
+   "osdArea": "9b2e119addfc0afa49b11fa80970374732521abb",
+   "short": "Elm",
+   "webcams": "https://sportbahnenelm.ch/de/sportbahnen-elm/webcams.html",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "engelberg": {
+   "place": "Engelberg (OW) - Engelberg",
+   "query": "Engelberg",
+   "osdArea": "97e9df8fc8d999cf9e62628866e49af00598fba0",
+   "short": "Engelberg",
+   "webcams": "https://www.engelberg.ch/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "eriz": {
+   "place": "Eriz (BE) - Eriz",
+   "query": "Eriz",
+   "osdArea": "7608d7db48ec93b3b0d08898a19cc6d573273f92",
+   "short": "Eriz",
+   "webcams": "https://www.skiinfo.fr/oberland-bernois/eriz/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "evolene": {
+   "place": "Evolène (VS) - Evolène",
+   "query": "Evolène",
+   "osdArea": "da74e2b80c8a6a2a6ecfb6190149a23002b3868b",
+   "short": "Evolène",
+   "webcams": "https://www.evolene-region.ch/fr/portail-live-evolene-region",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "fideris": {
+   "place": "Fideris (GR) - Fideris",
+   "query": "Fideris",
+   "osdArea": "edc48a6e5af67b189417264a0a5e8696c4c6ed12",
+   "short": "Fideris",
+   "webcams": "https://www.skiinfo.fr/les-grisons/fideris/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "flumserberg": {
+   "place": "Flumserberg Tannenbodenalp (SG) - Flums",
+   "query": "Flumserberg",
+   "osdArea": "f9d49079770850663f3c200a1956a203489c57ac",
+   "short": "Flumserberg",
+   "webcams": "https://www.flumserberg.ch/webcam",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "frutigen": {
+   "place": "Elsigbach (BE) - Frutigen",
+   "query": "Elsigbach",
+   "osdArea": "6f191d7d668cc5585e972733711d6b72ca99b5db",
+   "short": "Frutigen",
+   "webcams": "https://www.skiinfo.fr/oberland-bernois/frutigen/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "giswil-moerlialp": {
+   "place": "Mörlialp (OW) - Giswil",
+   "query": "Mörlialp",
+   "osdArea": "3bb19df73ba6222a3b117dd6a20a92bfb851b5ab",
+   "short": "Mörlialp",
+   "webcams": "https://www.moerlialp.ch/infos/pistenplan-und-webcam/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "gstaad-glacier-3000": {
+   "place": "Col-du-Pillon (téléphérique) (VD) - Ormont-Dessus",
+   "query": "Col du Pillon",
+   "osdArea": "de62da63231c90907f454ddbd3d8f4a280e219d4",
+   "short": "Glacier 3000",
+   "webcams": "https://www.glacier3000.ch/fr/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "graechen": {
+   "place": "Grächen (VS) - Grächen",
+   "query": "Grächen",
+   "osdArea": "9ea685d2404d5268c6cb02acbda87feb44cb0db4",
+   "short": "Grächen",
+   "webcams": "https://graechen.ch/en/Info-service/Webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "grimentz-zinal": {
+   "place": "Grimentz (VS) - Anniviers",
+   "query": "Grimentz",
+   "osdArea": "7fda1758b582daf60bb505e31bc3b7d5e4ce009b",
+   "short": "Grimentz-Zinal",
+   "webcams": "https://www.valdanniviers.ch/fr/Z21601/noswebcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Val d'Anniviers"
+  },
+  "grindelwald-wengen": {
+   "place": "Grindelwald (BE) - Grindelwald",
+   "query": "Grindelwald",
+   "osdArea": "1d111e0379650f6a9186eaa3d21dadf973340c88",
+   "short": "Grindelwald",
+   "webcams": "https://www.jungfrau.ch/fr-ch/live/webcams/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Région de la Jungfrau"
+  },
+  "gruesch-danusa": {
+   "place": "Grüsch (GR) - Grüsch",
+   "query": "Grüsch",
+   "osdArea": "451134c6cbbe578b3234e79827871ecd81ddf3c3",
+   "short": "Grüsch-Danusa",
+   "webcams": "https://www.gruesch-danusa.ch/webcam",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "gstaad": {
+   "place": "Gstaad (BE) - Saanen",
+   "query": "Gstaad",
+   "osdArea": "c822724e8cea27504e4e84768f0d33ad41cae877",
+   "short": "Gstaad",
+   "webcams": "https://bergbahnen-gstaad.ch/winter/informationen/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Gstaad Mountain Rides"
+  },
+  "gurnigelbad-gantrisch": {
+   "place": "Gurnigelbad (BE) - Riggisberg",
+   "query": "Gurnigelbad",
+   "osdArea": "d011cfc746e834321d4c8f8fd4ffdb21ce106805",
+   "short": "Gurnigelbad",
+   "webcams": "https://www.gantrisch.ch/fr/webcams/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Parc naturel Gantrisch"
+  },
+  "habkern": {
+   "place": "Habkern (BE) - Habkern",
+   "query": "Habkern",
+   "osdArea": "a9c334332416f4de546acbe9bd29444aea3abfbd",
+   "short": "Habkern",
+   "webcams": "https://www.skiinfo.fr/oberland-bernois/habkern/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "heiden-appenzellerland": {
+   "place": "Heiden (AR) - Heiden",
+   "query": "Heiden",
+   "osdArea": "d6e9f6fd44dfae8c16e31830e3ab975a9285ee52",
+   "short": "Heiden",
+   "webcams": "https://heiden.roundshot.com/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "hemberg-bachli": {
+   "place": "Hemberg (SG) - Neckertal",
+   "query": "Hemberg",
+   "osdArea": "f6c2f95dbe679fbdec4de0ded872d4754750dc6b",
+   "short": "Hemberg",
+   "webcams": "https://skilifthemberg.ch/webcam/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "hoch-ybrig": {
+   "place": "Weglosen (SZ) - Unteriberg",
+   "query": "Weglosen",
+   "osdArea": "96ddf9d61d1f1450728348b3c3c4db30e379e6e9",
+   "short": "Hoch-Ybrig",
+   "webcams": "https://www.hoch-ybrig.ch/winter/gebiet/webcams/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "jakobsbad-kronberg": {
+   "place": "Jakobsbad (AI) - Gonten",
+   "query": "Jakobsbad",
+   "osdArea": null,
+   "short": "Jakobsbad",
+   "webcams": "https://kronberg.ch/webcam.html",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "jaun": {
+   "place": "Jaun (FR) - Jaun",
+   "query": "Jaun",
+   "osdArea": "4e5142c99424c78912f24890c8a3b827ade3c82b",
+   "short": "Jaun",
+   "webcams": "https://www.skiinfo.fr/fribourg/jaun/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "kandersteg": {
+   "place": "Kandersteg (BE) - Kandersteg",
+   "query": "Kandersteg",
+   "osdArea": "c2d815c7960d40f5ef2ea4f7e826f2423d97e44e",
+   "short": "Kandersteg",
+   "webcams": "https://adelboden-lenk-kandersteg.ch/fr/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "kiental": {
+   "place": "Kiental (BE) - Reichenbach im Kandertal",
+   "query": "Kiental",
+   "osdArea": "8ba639921edb07a13271bc563475506a4e5e3d9f",
+   "short": "Kiental",
+   "webcams": "https://www.kiental-sesselbahn.ch/fr/webcam",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "wolzenalp": {
+   "place": "Krummenau (SG) - Nesslau",
+   "query": "Krummenau",
+   "osdArea": "b59adc2cb12937bcc452818a9d3c6ae2ad4fb815",
+   "short": "Wolzenalp",
+   "webcams": "https://wolzenalp.ch/de/webcams.html",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "la-berra-la-roche": {
+   "place": "La Roche FR (FR) - La Roche",
+   "query": "La Roche",
+   "osdArea": "06d3de5fdf75d4c67dc8555d73c2238ea97d4a5a",
+   "short": "La Berra",
+   "webcams": "https://www.laberra.ch/fr/webcam",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "la-fouly": {
+   "place": "La Fouly VS (VS) - Orsières",
+   "query": "La Fouly",
+   "osdArea": "98c30b097659e6ac54de536da05bb775c7c6c526",
+   "short": "La Fouly",
+   "webcams": "https://www.saint-bernard.ch/fr/pratique/webcams-81/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Pays du Saint-Bernard"
+  },
+  "la-punt": {
+   "place": "La Punt Chamues-ch (GR) - La Punt Chamues-ch",
+   "query": "La Punt",
+   "osdArea": "c9044985d2b2d6f89b5437b8726977a44e40455e",
+   "short": "La Punt",
+   "webcams": "https://www.engadin.ch/de/berichte/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Engadin"
+  },
+  "la-robella": {
+   "place": "Buttes (NE) - Val-de-Travers",
+   "query": "Buttes",
+   "osdArea": "df6e1e712f83ac6851095e4d138acbc5e8512129",
+   "short": "La Robella",
+   "webcams": "https://www.robella.ch/webcam/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "la-tzoumaz": {
+   "place": "La Tzoumaz (VS) - Riddes",
+   "query": "La Tzoumaz",
+   "osdArea": "fa9477e20c9caa871737f7a1348b911870394799",
+   "short": "La Tzoumaz",
+   "webcams": "https://www.latzoumaz.ch/hiver/domaine-skiable/webcams/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "laax": {
+   "place": "Laax GR Lags (GR) - Laax",
+   "query": "Laax",
+   "osdArea": "d5ff708ce6a4ab382afaeb81310e7317494b6fbb",
+   "short": "Laax",
+   "webcams": "https://www.laax.com/fr/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "le-brassus": {
+   "place": "Le Brassus (VD) - Le Chenit",
+   "query": "Le Brassus",
+   "osdArea": "4284b8c91f35f6378fa013f4e91b41693510922b",
+   "short": "Le Brassus",
+   "webcams": "https://www.myvalleedejoux.ch/fr/Z14758/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "lenk-im-simmental": {
+   "place": "Lenk im Simmental (BE) - Lenk",
+   "query": "Lenk",
+   "osdArea": "351a0b3233b50602a3740734c2941c9f23dadc6d",
+   "short": "Lenk",
+   "webcams": "https://betelberg.ch/fr/webcamsfr/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "les-avants": {
+   "place": "Les Avants (VD) - Montreux",
+   "query": "Les Avants",
+   "osdArea": "ef65534c458d0296e1cbf4c2b6df85071eeac815",
+   "short": "Les Avants",
+   "webcams": "https://www.skiinfo.fr/lac-leman/les-avants/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "les-crosets": {
+   "place": "Les Crosets (VS) - Val-d'Illiez",
+   "query": "Les Crosets",
+   "osdArea": "2e7ded9ef38b3609f561dd89d959e072f9cca157",
+   "short": "Les Crosets",
+   "webcams": "https://www.regiondentsdumidi.ch/fr/webcams-149/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Région Dents du Midi"
+  },
+  "les-diablerets": {
+   "place": "Les Diablerets (VD) - Ormont-Dessus",
+   "query": "Les Diablerets",
+   "osdArea": "b63d5d59b7283cde4430ef60dc439bd31b07214d",
+   "short": "Les Diablerets",
+   "webcams": "https://www.tvgd.ch/webcams/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Villars-Gryon-Les Diablerets"
+  },
+  "les-marecottes-salvan": {
+   "place": "Les Marécottes (VS) - Salvan",
+   "query": "Les Marécottes",
+   "osdArea": "ca6edf6b8029a5937ebdf4eac9107cae9cea16da",
+   "short": "Les Marécottes",
+   "webcams": "https://www.verticalp-lesmarecottes.ch/fr/webcam-telemarecottes",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "les-paccots": {
+   "place": "Les Paccots (FR) - Châtel-Saint-Denis",
+   "query": "Les Paccots",
+   "osdArea": "294f61ad7fdee39ceb26c78317c2606ecea844d0",
+   "short": "Les Paccots",
+   "webcams": "https://fribourg.ch/de/webcams/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "les-pleiades": {
+   "place": "Lally (VD) - Blonay - Saint-Légier",
+   "query": "Lally",
+   "osdArea": "c733395ff9ebf5eb574c0cd839b2bf206e49dd02",
+   "short": "Les Pléiades",
+   "webcams": "https://www.montreuxriviera.com/fr/PA393/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "les-pres-dorvin": {
+   "place": "Les Prés-d'Orvin (BE) - Orvin",
+   "query": "Les Prés-d'Orvin",
+   "osdArea": "303fa1bee41d54b4efd2f4699b3f7fcd31819e5d",
+   "short": "Les Prés d'Orvin",
+   "webcams": "https://www.skiinfo.fr/oberland-bernois/les-pres-dorvin/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "leukerbad": {
+   "place": "Leukerbad Loèche-les-Bains (VS) - Leukerbad",
+   "query": "Leukerbad",
+   "osdArea": "cecc6336ead1c4d3fd9e805c04004885f10e32f2",
+   "short": "Leukerbad",
+   "webcams": "https://leukerbad.ch/fr/webcam",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "leysin": {
+   "place": "Leysin (VD) - Leysin",
+   "query": "Leysin",
+   "osdArea": "9d79e5920594df28c0b7622a17041a3c9bad89aa",
+   "short": "Leysin",
+   "webcams": "https://www.skiinfo.fr/canton-de-vaud/leysin/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "loetschental": {
+   "place": "Wiler (Lötschen) (VS) - Wiler (Lötschen)",
+   "query": "Wiler (Lötschen)",
+   "osdArea": "76fbc6ed10135d6683a91a5b89dbf01fa757b80b",
+   "short": "Lötschental",
+   "webcams": "https://www.loetschental.ch/fr/generalites/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "marbach": {
+   "place": "Marbach LU (LU) - Escholzmatt-Marbach",
+   "query": "Marbach",
+   "osdArea": "1a0552c150a12e05420e272e4a600cb4e34044ae",
+   "short": "Marbach",
+   "webcams": "https://www.marbachegg.ch/de/informationen/webcam",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "meiringen-hasliberg": {
+   "place": "Hasliberg Wasserwendi (BE) - Hasliberg",
+   "query": "Hasliberg",
+   "osdArea": "73a929fdb6f99344480b7fc4e7f2e457e444b217",
+   "short": "Hasliberg",
+   "webcams": "https://meiringen-hasliberg.ch/Infos/webcam",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "melchsee-frutt": {
+   "place": "Melchsee-Frutt (OW) - Kerns",
+   "query": "Melchsee-Frutt",
+   "osdArea": "f04f5c36668c9ba4e5256ccbd611698f3df75688",
+   "short": "Melchsee-Frutt",
+   "webcams": "https://www.skiinfo.fr/suisse-centrale/melchsee-frutt/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "moleson-gruyeres": {
+   "place": "Moléson-sur-Gruyères (FR) - Gruyères",
+   "query": "Moléson-sur-Gruyères",
+   "osdArea": "29034ce295ebfee69385df760fb334123e724fe0",
+   "short": "Moléson",
+   "webcams": "https://www.moleson.ch/webcams/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "morgins": {
+   "place": "Morgins (VS) - Troistorrents",
+   "query": "Morgins",
+   "osdArea": "2e7ded9ef38b3609f561dd89d959e072f9cca157",
+   "short": "Morgins",
+   "webcams": "https://www.regiondentsdumidi.ch/fr/webcams-149/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Région Dents du Midi"
+  },
+  "muerren-schilthorn": {
+   "place": "Mürren (BE) - Lauterbrunnen",
+   "query": "Mürren",
+   "osdArea": "d9ac8983541d7960d801802ce64751267338b5e4",
+   "short": "Mürren",
+   "webcams": "https://www.jungfrau.ch/fr-ch/live/webcams/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Région de la Jungfrau"
+  },
+  "mythenregion": {
+   "place": "Rotenflue (Mythenregion) (SZ) - Schwyz",
+   "query": "Rotenflue",
+   "osdArea": "11d9e31d7b2cebb64af8cdf21aeee37122a49a31",
+   "short": "Mythenregion",
+   "webcams": "https://www.mythenregion.ch/winter/info/webcams/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "nara": {
+   "place": "Leontica (TI) - Acquarossa",
+   "query": "Leontica",
+   "osdArea": "dbf72bafe6c5e03414df9ef1c4d842592dda11da",
+   "short": "Nara",
+   "webcams": "https://nara.ch/webcam/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "nax": {
+   "place": "Nax (VS) - Mont-Noble",
+   "query": "Nax",
+   "osdArea": "2443e6d5755d0c52af63db1476e83f4f6dee52ac",
+   "short": "Nax",
+   "webcams": "https://www.skiinfo.fr/valais/nax/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "nendaz": {
+   "place": "Haute-Nendaz (VS) - Nendaz",
+   "query": "Haute-Nendaz",
+   "osdArea": "fa9477e20c9caa871737f7a1348b911870394799",
+   "short": "Nendaz",
+   "webcams": "https://www.nendaz.ch/fr/Z13326/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "obergoms": {
+   "place": "Oberwald (VS) - Obergoms",
+   "query": "Oberwald",
+   "osdArea": "b8b29d7d91c2ddecc676cf467e9f835924a0c1ec",
+   "short": "Obergoms",
+   "webcams": "https://www.goms.ch/fr/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "obersaxen-mundaun": {
+   "place": "Obersaxen (GR) - Obersaxen Mundaun",
+   "query": "Obersaxen",
+   "osdArea": "df4c0541e78ace196a344e169cb23e9464c26224",
+   "short": "Obersaxen",
+   "webcams": "https://www.obersaxen-mundaun.ch/de/betriebszeiten-berichte/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "ottenleue": {
+   "place": "Ottenleuebad (BE) - Guggisberg",
+   "query": "Ottenleuebad",
+   "osdArea": "7277bf74f039a04436b31319dea2f6d3ee519172",
+   "short": "Ottenleue",
+   "webcams": "https://www.gantrisch.ch/fr/webcams/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Parc naturel Gantrisch"
+  },
+  "ovronnaz": {
+   "place": "Ovronnaz (VS) - Leytron",
+   "query": "Ovronnaz",
+   "osdArea": "a2b33899f2bfeab7e6f73d80520d0bfd5b27a514",
+   "short": "Ovronnaz",
+   "webcams": "https://www.ovronnaz.ch/webcams/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "pizol-heidiland": {
+   "place": "Wangs (SG) - Vilters-Wangs",
+   "query": "Wangs",
+   "osdArea": "3c30eddac708122c98a1ad904d7a67fc8499b342",
+   "short": "Pizol",
+   "webcams": "https://pizol.com/aktuell/webcam/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "ricken": {
+   "place": "Ricken SG (SG) - Gommiswald",
+   "query": "Ricken",
+   "osdArea": "c1590c31c05f0b077c0278ad7336aafa4aef7cac",
+   "short": "Ricken",
+   "webcams": "https://rickenloipe.ch/webcam/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "riffenmatt": {
+   "place": "Riffenmatt (BE) - Guggisberg",
+   "query": "Riffenmatt",
+   "osdArea": null,
+   "short": "Riffenmatt",
+   "webcams": "https://www.skiinfo.fr/region-de-bern/riffenmatt/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "rigi": {
+   "place": "Rigi Kaltbad (LU) - Weggis",
+   "query": "Rigi Kaltbad",
+   "osdArea": "3511a01d518e27a7f41d086c3ba1c7f20a753018",
+   "short": "Rigi",
+   "webcams": "https://www.rigi.ch/informieren/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "rochers-de-naye-caux": {
+   "place": "Caux (VD) - Montreux",
+   "query": "Caux",
+   "osdArea": "abe78a3dbf0434ee19dc6857b1ad64c114652010",
+   "short": "Rochers de Naye",
+   "webcams": "https://www.mob.ch/fr/pages/webcam",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "rossberg-oberwil": {
+   "place": "Oberwil im Simmental (BE) - Oberwil im Simmental",
+   "query": "Oberwil im Simmental",
+   "osdArea": "43e1ed5dd83021e09ce0acebf02eb2365118c39c",
+   "short": "Rossberg",
+   "webcams": "https://www.skiinfo.fr/oberland-bernois/rossberg-oberwil/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "rosswald-brig": {
+   "place": "Rosswald (VS) - Termen",
+   "query": "Rosswald",
+   "osdArea": "0ea9d5ed4b60480e75ece5c35ec3086c8d502076",
+   "short": "Rosswald",
+   "webcams": "https://www.rosswald-bahnen.ch/fr/webcams/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "neusell": {
+   "place": "Rothenthurm (SZ) - Rothenthurm",
+   "query": "Rothenthurm",
+   "osdArea": "fc7f023413af35e2d31ff15d5eeb29a2c518f984",
+   "short": "Rothenthurm",
+   "webcams": "https://www.skiinfo.fr/suisse-centrale/neusell/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "rueschegg-eywald": {
+   "place": "Eywald (BE) - Rüschegg",
+   "query": "Eywald",
+   "osdArea": "a75ba724521506bc66cf2665ccd6cce9cb07c627",
+   "short": "Rüschegg",
+   "webcams": "https://www.gantrisch.ch/fr/webcams/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Parc naturel Gantrisch"
+  },
+  "saanenmoeser": {
+   "place": "Saanenmöser (BE) - Saanen",
+   "query": "Saanenmöser",
+   "osdArea": "7512fc8f0f012bbc88e7e68cb48fdf60b8053429",
+   "short": "Saanenmöser",
+   "webcams": "https://bergbahnen-gstaad.ch/winter/informationen/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Gstaad Mountain Rides"
+  },
+  "saas-almagell": {
+   "place": "Saas-Almagell (VS) - Saas-Almagell",
+   "query": "Saas-Almagell",
+   "osdArea": "3a47b82d85b0253cfe4ee7f14743d03076a7c32a",
+   "short": "Saas Almagell",
+   "webcams": "https://www.saas-fee.ch/fr/webcam",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Vallée de Saas"
+  },
+  "saas-balen": {
+   "place": "Saas-Balen (VS) - Saas-Balen",
+   "query": "Saas-Balen",
+   "osdArea": "7b744a5c7f2824af2b0b614555f5cd06eddb90af",
+   "short": "Saas Balen",
+   "webcams": "https://www.saas-fee.ch/fr/webcam",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Vallée de Saas"
+  },
+  "saas-fee": {
+   "place": "Saas-Fee (VS) - Saas-Fee",
+   "query": "Saas-Fee",
+   "osdArea": "fc37a3084eeca48d1ce164dc7a5862723aaf2013",
+   "short": "Saas Fee",
+   "webcams": "https://www.saas-fee.ch/fr/webcam",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Vallée de Saas"
+  },
+  "saas-grund": {
+   "place": "Saas-Grund (VS) - Saas-Grund",
+   "query": "Saas-Grund",
+   "osdArea": "8556f7c962b73f8cca10ac4ef41b9e40a5d5ae23",
+   "short": "Saas-Grund",
+   "webcams": "https://www.saas-fee.ch/fr/webcam",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Vallée de Saas"
+  },
+  "samedan": {
+   "place": "Samedan (GR) - Samedan",
+   "query": "Samedan",
+   "osdArea": null,
+   "short": "Samedan",
+   "webcams": "https://www.engadin.ch/de/berichte/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Engadin"
+  },
+  "samnaun": {
+   "place": "Samnaun Dorf (GR) - Samnaun",
+   "query": "Samnaun",
+   "osdArea": "7c2f2690d339d9df6f820e7c6e596a9b0ba3dce5",
+   "short": "Samnaun",
+   "webcams": "https://www.ischgl.com/en/plan-your-trip/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "sarn-heinzenberg": {
+   "place": "Sarn (GR) - Cazis",
+   "query": "Sarn",
+   "osdArea": "8bf7c9fc39c2503b3e50953816365eea13d71a05",
+   "short": "Sarn",
+   "webcams": "https://viamala.ch/informieren/aktuelles/webcams.html",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Viamala"
+  },
+  "sattel-hochstuckli": {
+   "place": "Sattel (SZ) - Sattel",
+   "query": "Sattel",
+   "osdArea": "04363b99935eba601ebcb4260527765fd732ebd6",
+   "short": "Sattel",
+   "webcams": "https://www.skiinfo.fr/suisse-centrale/sattel-hochstuckli/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "savognin": {
+   "place": "Savognin (GR) - Surses",
+   "query": "Savognin",
+   "osdArea": "2cbe407409b5340a8a35266314043918b4f7526f",
+   "short": "Savognin",
+   "webcams": "https://www.valsurses.ch/de/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Val Surses"
+  },
+  "schoenengrund": {
+   "place": "Schönengrund (AR) - Schönengrund",
+   "query": "Schönengrund",
+   "osdArea": null,
+   "short": "Schönengrund",
+   "webcams": "https://www.skiinfo.fr/suisse-orientale/schoenengrund/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "schwanden-sigriswil": {
+   "place": "Schwanden (Sigriswil) (BE) - Sigriswil",
+   "query": "Schwanden",
+   "osdArea": "e410120f5240ca332675de666e3f19f08bdc04a5",
+   "short": "Schwanden",
+   "webcams": "https://www.sigriswil.ch/de/ueber-sigriswil/portraet/panorama-webcam/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "schwarzenbuehl-selital": {
+   "place": "Schwarzenbühl (BE) - Rüschegg",
+   "query": "Schwarzenbühl",
+   "osdArea": "d134dedf981a206dc73049f1efbaa71d98b35cf7",
+   "short": "Schwarzenbühl",
+   "webcams": "https://www.gantrisch.ch/fr/webcams/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Parc naturel Gantrisch"
+  },
+  "schwarzsee": {
+   "place": "Schwarzsee (FR) - Plaffeien",
+   "query": "Schwarzsee",
+   "osdArea": "e5f2ecffbec19f6ada9be3680c33c156b3795b68",
+   "short": "Schwarzsee",
+   "webcams": "https://kaisereggbahnen-schwarzsee.ch/fr/webcams/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "schwellbrunn": {
+   "place": "Schwellbrunn (AR) - Schwellbrunn",
+   "query": "Schwellbrunn",
+   "osdArea": "8fc75faf980705ebd3ecd3c873fb86afb391abfb",
+   "short": "Schwellbrunn",
+   "webcams": "https://www.schwellbrunn.ch/webcamwetter",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "schwyz-ibergeregg-mythen": {
+   "place": "Ibergeregg (SZ) - Schwyz",
+   "query": "Ibergeregg",
+   "osdArea": "87d63457793538ebd00cd90bb5de3ec8076943bc",
+   "short": "Ibergeregg",
+   "webcams": "https://www.ibergeregg.ch/sommer/info/webcam/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "scuol": {
+   "place": "Scuol (GR) - Scuol",
+   "query": "Scuol",
+   "osdArea": "c9f7bd1feef91e49dbdae4831ed347243b5dfa33",
+   "short": "Scuol",
+   "webcams": "https://www.engadin.com/fr/webcams-engadin",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "soerenberg": {
+   "place": "Sörenberg (LU) - Flühli",
+   "query": "Sörenberg",
+   "osdArea": "6fc2b7bd9404c7cf68e49ca9fd83600e3de149d4",
+   "short": "Sörenberg",
+   "webcams": "https://www.soerenberg.ch/fr/fr/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "spluegen": {
+   "place": "Splügen (GR) - Rheinwald",
+   "query": "Splügen",
+   "osdArea": "a576a9778987780492fa148fd909b5c38caf0552",
+   "short": "Splügen",
+   "webcams": "https://www.spluegen.ch/bergbahnen/wetter-webcams/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "st-cergue-la-dole": {
+   "place": "St-Cergue (VD) - Saint-Cergue",
+   "query": "St-Cergue",
+   "osdArea": "782ff266d7645a719f98204a3d02f44b4a5c7489",
+   "short": "St Cergue",
+   "webcams": "https://www.st-cergue.ch/webcam1",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "st-luc-chandolin": {
+   "place": "St-Luc (VS) - Anniviers",
+   "query": "St-Luc",
+   "osdArea": "170c8c0d276b50ceeb50658829c7dcd487fcd18c",
+   "short": "St-Luc",
+   "webcams": "https://www.valdanniviers.ch/fr/Z21601/noswebcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Val d'Anniviers"
+  },
+  "st-antoenien": {
+   "place": "St. Antönien (GR) - Luzein",
+   "query": "St. Antönien",
+   "osdArea": "6bf3bc3c072614f9516e18f26c1ad951ad140f3f",
+   "short": "St. Antönien",
+   "webcams": "https://www.praettigau.info/de/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "st-moritz": {
+   "place": "St. Moritz Bad S. Murezzan Bagn (GR) - St. Moritz",
+   "query": "St. Moritz",
+   "osdArea": "f9beaf4e37ef88b422b9ee4aa2ae9224f10afd02",
+   "short": "St. Moritz",
+   "webcams": "https://www.mountains.ch/de/webcam/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "st-peter-hochwang": {
+   "place": "St. Peter (GR) - Arosa",
+   "query": "St. Peter",
+   "osdArea": "324a37b86791a433613850e56e488173bd1e6409",
+   "short": "St. Peter",
+   "webcams": "https://www.skiinfo.fr/les-grisons/st-peter-hochwang/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "ste-croix-les-rasses": {
+   "place": "Les Rasses (VD) - Bullet",
+   "query": "Les Rasses",
+   "osdArea": "59d4e1dfdffd83d31578d19a47f3af38fb7f1e3e",
+   "short": "Ste-Croix",
+   "webcams": "https://www.skiinfo.fr/jura/ste-croix-les-rasses/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "stoos": {
+   "place": "Stoos SZ (SZ) - Morschach",
+   "query": "Stoos",
+   "osdArea": "bc0ee62d23f20f8e6f30661302cd2a2d3ee2a897",
+   "short": "Stoos",
+   "webcams": "https://www.skiinfo.fr/suisse-centrale/stoos/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "thyon-4-vallees": {
+   "place": "Thyon (VS) - Vex",
+   "query": "Thyon",
+   "osdArea": "fa9477e20c9caa871737f7a1348b911870394799",
+   "short": "Thyon",
+   "webcams": "https://www.thyon.ch/ete/en-live/webcam/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "torgon": {
+   "place": "Torgon (VS) - Vionnaz",
+   "query": "Torgon",
+   "osdArea": "44e5bfbfe3e11ad75d642cc4225aaab79a936d91",
+   "short": "Torgon",
+   "webcams": "https://www.torgon.ch/webcams-torgon.html",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "tschappina-heinzenberg": {
+   "place": "Tschappina (GR) - Tschappina",
+   "query": "Tschappina",
+   "osdArea": "60b6c3587cb9094ca8bdb03ce188a1b150e168c6",
+   "short": "Tschappina",
+   "webcams": "https://www.skilifte-tschappina.ch/webcam",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "tschiertschen": {
+   "place": "Tschiertschen (GR) - Chur",
+   "query": "Tschiertschen",
+   "osdArea": "d5e7592301c0a122ea8e807a2659d29a7e21beee",
+   "short": "Tschiertschen",
+   "webcams": "https://www.skiinfo.fr/les-grisons/tschiertschen/webcams",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "unterbach": {
+   "place": "Unterbäch VS (VS) - Unterbäch",
+   "query": "Unterbäch",
+   "osdArea": "0ed67f04f2e5d0f8e1b8be3507c577fcfcb60215",
+   "short": "Unterbäch",
+   "webcams": "https://unterbaech.ch/live-aktuelles/wetter-webcams/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "val-muestair": {
+   "place": "Tschierv (GR) - Val Müstair",
+   "query": "Tschierv",
+   "osdArea": "70a981c18ff19b709d652842602c240b6fac6387",
+   "short": "Val Mustair",
+   "webcams": "https://www.guidle.com/de/webcams/tschierv/webcams/tschierv-minschuns_AAHwS73?relatedCrId=F6hUWf&forceOfferType=WEBCAM_PLAYER",
+   "webcamsSource": "agregateur",
+   "webcamsGroup": null
+  },
+  "vals": {
+   "place": "Vals (GR) - Vals",
+   "query": "Vals",
+   "osdArea": "24863feade13e8e7d0bc8f9427f8bfaace8c11d5",
+   "short": "Vals",
+   "webcams": "https://vals.ch/aktuell/webcam/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "verbier": {
+   "place": "Verbier (VS) - Val de Bagnes",
+   "query": "Verbier",
+   "osdArea": "fa9477e20c9caa871737f7a1348b911870394799",
+   "short": "Verbier",
+   "webcams": "https://www.verbier.ch/pratique/live/webcams/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "vercorin": {
+   "place": "Vercorin (VS) - Chalais",
+   "query": "Vercorin",
+   "osdArea": "d6582b43907eabfba13b7f54f9c96dc569d64e62",
+   "short": "Vercorin",
+   "webcams": "https://www.vercorin.ch/fr/Z15144/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "veysonnaz": {
+   "place": "Veysonnaz (VS) - Veysonnaz",
+   "query": "Veysonnaz",
+   "osdArea": "fa9477e20c9caa871737f7a1348b911870394799",
+   "short": "Veysonnaz",
+   "webcams": "https://www.veysonnaz.ch/fr/Z13615/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "vicheres-liddes": {
+   "place": "Vichères (Liddes) (VS) - Liddes",
+   "query": "Vichères",
+   "osdArea": "f489f040bf9f89b22014d036fc299da95ede8095",
+   "short": "Vichères",
+   "webcams": "https://www.saint-bernard.ch/fr/pratique/webcams-81/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Pays du Saint-Bernard"
+  },
+  "villars-gryon": {
+   "place": "Villars-sur-Ollon (VD) - Ollon",
+   "query": "Villars-sur-Ollon",
+   "osdArea": "b63d5d59b7283cde4430ef60dc439bd31b07214d",
+   "short": "Villars",
+   "webcams": "https://www.tvgd.ch/webcams/",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Villars-Gryon-Les Diablerets"
+  },
+  "wildhaus-toggenburg": {
+   "place": "Wildhaus (SG) - Wildhaus-Alt St. Johann",
+   "query": "Wildhaus",
+   "osdArea": "a044deedf9fb7f84d9cd7c15b0d503403da71c2e",
+   "short": "Wildhaus",
+   "webcams": "https://wildhaus.ch/de/live/webcam.html",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "zermatt": {
+   "place": "Zermatt (VS) - Zermatt",
+   "query": "Zermatt",
+   "osdArea": "10811e37c10a12d51810c68dc7022f23ca4f9970",
+   "short": "Zermatt",
+   "webcams": "https://www.matterhornparadise.ch/fr/information/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": null
+  },
+  "zuoz": {
+   "place": "Zuoz (GR) - Zuoz",
+   "query": "Zuoz",
+   "osdArea": "2d73aefe73288de3bb47f15bdc7475846d7dfa98",
+   "short": "Zuoz",
+   "webcams": "https://www.engadin.ch/de/berichte/webcams",
+   "webcamsSource": "officiel",
+   "webcamsGroup": "Engadin"
+  }
+ }
+}

@@ -1,30 +1,34 @@
 {
   "name": "bl-iframe-map-ski",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.6.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:vps": "vite --mode vps",
     "build": "vite build",
+    "preview": "vite preview",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "weather": "node scripts/fetch-weather.mjs",
+    "skiinfo": "node scripts/fetch-skiinfo-list.mjs",
+    "resorts": "node scripts/build-resorts.mjs"
   },
   "dependencies": {
-    "mapbox-gl": "^3.31.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "@fortawesome/fontawesome-free": "^6.7.2",
+    "mapbox-gl": "^3.32.0",
+    "maplibre-gl": "^5.24.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.22.0",
-    "@tailwindcss/postcss": "^4.1.14",
-    "@types/react": "^19.0.10",
-    "@types/react-dom": "^19.0.4",
-    "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "^9.22.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
-    "globals": "^16.0.0",
-    "tailwindcss": "^4.1.14",
-    "vite": "^6.3.0"
+    "@eslint/js": "^9.39.5",
+    "@tailwindcss/vite": "^4.3.3",
+    "@vitejs/plugin-react": "^6.1.1",
+    "eslint": "^9.39.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.13.0",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.2"
   }
 }

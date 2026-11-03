@@ -1,0 +1,23 @@
+# Site Caddy de la météo du widget (VPS pegasus) : HTTPS automatique, compression, cache, CORS.
+# Installé par deploy/deploy.sh dans /etc/caddy/sites/ ; le Caddyfile principal (dépôt pegasus) importe ce dossier
+# et définit `journal` (journal des requêtes, /var/log/caddy/ski.log).
+# Seul weather.json est servi (jamais weather.json.tmp ni autre chose) ; tout le reste : 404.
+
+ski.citcatlab.ch {
+	import journal ski
+	encode zstd gzip
+
+	handle /weather.json {
+		root * /srv/bl-iframe-map-ski/data
+		# Données relevées chaque heure : 5 min de cache, puis ancienne copie servie pendant la revalidation ;
+		# 24 h de secours si le VPS ne répond plus (cache intermédiaire éventuel).
+		header Cache-Control "public, max-age=300, stale-while-revalidate=600, stale-if-error=86400"
+		# Widget publié sur un autre domaine (FTP Blick) : lecture publique, sans cookies.
+		header Access-Control-Allow-Origin "*"
+		file_server
+	}
+
+	handle {
+		respond 404
+	}
+}

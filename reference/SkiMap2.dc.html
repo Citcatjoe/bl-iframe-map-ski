@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/blick-design-system-bfb8e5b6-ff14-4c6d-b5af-3890fcf8b371/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/blick-design-system-bfb8e5b6-ff14-4c6d-b5af-3890fcf8b371/tokens/colors.css">
+<link rel="stylesheet" href="_ds/blick-design-system-bfb8e5b6-ff14-4c6d-b5af-3890fcf8b371/tokens/typography.css">
+<link rel="stylesheet" href="_ds/blick-design-system-bfb8e5b6-ff14-4c6d-b5af-3890fcf8b371/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/blick-design-system-bfb8e5b6-ff14-4c6d-b5af-3890fcf8b371/tokens/effects.css">
+<link rel="stylesheet" href="_ds/blick-design-system-bfb8e5b6-ff14-4c6d-b5af-3890fcf8b371/tokens/base.css">
+<link rel="stylesheet" href="_ds/blick-design-system-bfb8e5b6-ff14-4c6d-b5af-3890fcf8b371/styles/components.css">
+<link rel="stylesheet" href="_ds/blick-design-system-bfb8e5b6-ff14-4c6d-b5af-3890fcf8b371/styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<script src="_ds/blick-design-system-bfb8e5b6-ff14-4c6d-b5af-3890fcf8b371/_ds_bundle.js"></script>
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<style>.maplibregl-cooperative-gesture-screen{font-family:'Inter Variable',sans-serif;font-size:14px;font-weight:700}</style>
+</helmet>
+<div ref="{{ rootRef }}" style="position:absolute;inset:0;display:flex;flex-direction:column;background:var(--color-fill-default);color:var(--color-text-default);font-family:var(--font-body);overflow:hidden">
+  <header style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:14px 16px 12px;border-bottom:1px solid var(--color-stroke-weak);flex:none">
+    <div style="display:flex;flex-direction:column;gap:5px;min-width:0">
+      <span style="font-family:var(--font-body);font-weight:700;font-size:12px;line-height:1;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-text-brand)">Hiver · Domaines skiables</span>
+      <h2 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:{{ titleSize }};line-height:1.1;text-wrap:balance">Où trouver le plus de neige fraîche ?</h2>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;line-height:1.2;color:var(--color-text-weak);white-space:nowrap;padding-bottom:2px">
+      <span style="width:7px;height:7px;border-radius:50%;background:{{ wxDot }}"></span>{{ wxStamp }}
+    </div>
+  </header>
+  <div style="position:relative;flex:1;min-height:0;display:flex">
+    <aside style="{{ panelStyle }}">
+      <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+        <button type="button" onClick="{{ toggleSheet }}" aria-label="Déplier ou replier la liste" style="flex:none;display:flex;justify-content:center;align-items:center;height:22px;width:100%;border:none;background:transparent;cursor:pointer;padding:0">
+          <span style="width:40px;height:4px;border-radius:999px;background:var(--color-stroke-weak)"></span>
+        </button>
+      </sc-if>
+      <sc-if value="{{ isMid }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 12px 0 16px;flex:none">
+          <span style="font-family:var(--font-display);font-weight:700;font-size:19px">Tous les domaines</span>
+          <x-import component-from-global-scope="BlickDesignSystem_bfb8e5.IconButton" icon="fa-solid fa-xmark" color="transparent" size="sm" aria-label="Fermer la liste" onClick="{{ closePanel }}" hint-size="36px,36px"></x-import>
+        </div>
+      </sc-if>
+      <div style="display:flex;flex-direction:column;gap:10px;padding:{{ searchPad }};flex:none">
+        <div style="position:relative">
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true" style="position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--color-icon-weak);z-index:1;pointer-events:none"></i>
+          <input type="search" value="{{ q }}" onChange="{{ onQuery }}" onFocus="{{ onSearchFocus }}" placeholder="Rechercher un domaine" aria-label="Rechercher un domaine" style="width:100%;height:44px;padding:0 14px 0 38px;border:1px solid var(--color-stroke-weak);border-radius:var(--radius-pill);background:var(--color-fill-weak);font-family:var(--font-body);font-size:16px;color:var(--color-text-default);outline:none" style-focus="border-color:var(--color-stroke-strong);background:var(--color-fill-default)">
+        </div>
+        <div style="display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 16px">
+          <sc-for list="{{ chips }}" as="c" hint-placeholder-count="6">
+            <x-import component-from-global-scope="BlickDesignSystem_bfb8e5.Tag" active="{{ c.active }}" onClick="{{ c.onClick }}" hint-size="48px,30px">{{ c.label }}</x-import>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 16px 8px;flex:none">
+        <span style="font-size:11px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-text-weak);white-space:nowrap">{{ countLabel }}</span>
+        <div style="display:flex;gap:4px;align-items:center">
+          
+          <sc-for list="{{ sorts }}" as="s" hint-placeholder-count="2">
+            <button type="button" onClick="{{ s.onClick }}" style="border:none;background:transparent;padding:4px 6px;cursor:pointer;font-family:var(--font-body);font-size:12px;font-weight:700;white-space:nowrap;color:{{ s.color }};text-decoration:{{ s.deco }};text-underline-offset:4px;text-decoration-thickness:2px">{{ s.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="flex:1;min-height:0;overflow-y:auto;border-top:1px solid var(--color-stroke-weak)">
+        <sc-for list="{{ rows }}" as="r" hint-placeholder-count="6">
+          <button type="button" onClick="{{ r.onClick }}" onMouseEnter="{{ r.onEnter }}" onMouseLeave="{{ r.onLeave }}" style="display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:12px;align-items:center;width:100%;padding:10px 16px;border:none;border-bottom:1px solid var(--color-stroke-weak);background:{{ r.bg }};text-align:left;cursor:pointer;font-family:var(--font-body);color:var(--color-text-default);transition:background-color .15s ease" style-hover="background:var(--color-fill-weak)">
+            <span style="width:36px;height:36px;border-radius:50%;background:var(--color-fill-weak);display:flex;align-items:center;justify-content:center;font-size:15px;color:{{ r.iconColor }}"><i class="{{ r.icon }}" aria-hidden="true"></i></span>
+            <span style="display:flex;flex-direction:column;gap:2px;min-width:0">
+              <span style="font-family:var(--font-display);font-weight:700;font-size:17px;line-height:1.15;color:{{ r.nameColor }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.name }}</span>
+              <span style="font-size:13px;line-height:1.3;color:var(--color-text-weak)">{{ r.cantonName }}</span>
+            </span>
+            <span style="display:flex;flex-direction:column;align-items:flex-end;gap:2px">
+              <span style="font-family:var(--font-display);font-weight:700;font-size:19px;line-height:1">{{ r.temp }}</span>
+              <span style="font-size:12px;font-weight:500;color:var(--color-text-weak);white-space:nowrap"><i class="fa-regular fa-snowflake" aria-hidden="true" style="margin-right:4px"></i>{{ r.snow }}</span>
+            </span>
+          </button>
+        </sc-for>
+        <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+          <p style="margin:0;padding:24px 16px;font-size:14px;color:var(--color-text-weak)">Aucun domaine trouvé. Essaie un autre nom ou canton.</p>
+        </sc-if>
+      </div>
+    </aside>
+    <div style="position:relative;flex:1;min-width:0">
+      <div ref="{{ mapRef }}" style="position:absolute;inset:0;background:#EEEDEA"></div>
+      <div style="position:absolute;top:12px;right:12px;display:flex;flex-direction:column;gap:6px;z-index:2">
+        <x-import component-from-global-scope="BlickDesignSystem_bfb8e5.IconButton" icon="fa-solid fa-plus" color="white" size="sm" aria-label="Zoom avant" onClick="{{ zoomIn }}" hint-size="36px,36px"></x-import>
+        <x-import component-from-global-scope="BlickDesignSystem_bfb8e5.IconButton" icon="fa-solid fa-minus" color="white" size="sm" aria-label="Zoom arrière" onClick="{{ zoomOut }}" hint-size="36px,36px"></x-import>
+        <x-import component-from-global-scope="BlickDesignSystem_bfb8e5.IconButton" icon="fa-solid fa-expand" color="white" size="sm" aria-label="Afficher toute la Suisse" onClick="{{ resetView }}" hint-size="36px,36px"></x-import>
+      </div>
+      <sc-if value="{{ showListToggle }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;top:12px;left:12px;z-index:2">
+          <x-import component-from-global-scope="BlickDesignSystem_bfb8e5.Button" color="black" size="sm" iconLeft="fa-solid fa-list" onClick="{{ openPanel }}" hint-size="120px,36px">{{ listToggleLabel }}</x-import>
+        </div>
+      </sc-if>
+      <sc-if value="{{ showZoomHint }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);z-index:2;display:flex;align-items:center;gap:6px;height:30px;padding:0 12px;border-radius:var(--radius-pill);background:var(--color-fill-inverse);color:var(--color-text-inverse);font-size:12px;font-weight:700;white-space:nowrap;pointer-events:none"><i class="{{ hintIcon }}" aria-hidden="true"></i>{{ hintText }}</div>
+      </sc-if>
+      <sc-if value="{{ showTip }}" hint-placeholder-val="{{ false }}">
+        <div style="{{ tipStyle }}">
+          <span style="font-size:11px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-text-brand)">{{ tip.cantonName }}</span>
+          <span style="font-family:var(--font-display);font-weight:700;font-size:17px;line-height:1.15;white-space:nowrap">{{ tip.name }}</span>
+          <span style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--color-text-weak);white-space:nowrap"><i class="{{ tip.icon }}" aria-hidden="true" style="color:{{ tip.iconColor }}"></i><strong style="color:var(--color-text-default)">{{ tip.temp }}</strong>{{ tip.desc }}</span>
+          <sc-if value="{{ tip.hasMore }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;font-weight:700;color:var(--color-text-default);white-space:nowrap">{{ tip.more }}</span></sc-if>
+        </div>
+      </sc-if>
+    </div>
+    <sc-if value="{{ showDetail }}" hint-placeholder-val="{{ false }}">
+      <div style="{{ detailStyle }}">
+        <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;justify-content:center;margin:-6px 0 2px"><span style="width:40px;height:4px;border-radius:999px;background:var(--color-stroke-weak)"></span></div>
+        </sc-if>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+          <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
+            <span style="font-size:11px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-text-brand)">{{ det.cantonName }}</span>
+            <h3 style="margin:0;font-family:var(--font-display);font-weight:700;font-size:24px;line-height:1.1">{{ det.name }}</h3>
+          </div>
+          <x-import component-from-global-scope="BlickDesignSystem_bfb8e5.IconButton" icon="{{ closeIcon }}" color="grey" size="sm" aria-label="Retour à la liste" onClick="{{ clearSel }}" hint-size="36px,36px"></x-import>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <i class="{{ det.icon }}" aria-hidden="true" style="font-size:30px;color:{{ det.iconColor }};width:36px;text-align:center"></i>
+          <span style="font-family:var(--font-display);font-weight:700;font-size:40px;line-height:1">{{ det.temp }}</span>
+          <span style="display:flex;flex-direction:column;gap:2px;font-size:13px;line-height:1.35">
+            <strong>{{ det.desc }}</strong>
+            <span style="color:var(--color-text-weak)">Vent {{ det.wind }}</span>
+          </span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--color-stroke-weak);border-radius:var(--radius-md);overflow:hidden">
+          <sc-for list="{{ det.days }}" as="d" hint-placeholder-count="3">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 4px;border-right:1px solid var(--color-stroke-weak);margin-right:-1px">
+              <span style="font-size:11px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--color-text-weak)">{{ d.label }}</span>
+              <i class="{{ d.icon }}" aria-hidden="true" style="font-size:17px;color:{{ d.iconColor }}"></i>
+              <span style="font-size:13px;font-weight:700">{{ d.range }}</span>
+              <span style="font-size:12px;color:var(--color-text-weak);white-space:nowrap"><i class="fa-regular fa-snowflake" aria-hidden="true" style="margin-right:3px"></i>{{ d.snow }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+          <x-import component-from-global-scope="BlickDesignSystem_bfb8e5.Button" color="red" size="sm" iconRight="fa-solid fa-arrow-up-right-from-square" onClick="{{ openSite }}" hint-size="150px,36px">Site officiel</x-import>
+          <span style="font-size:11px;color:var(--color-text-weak)">{{ det.host }}</span>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+  <footer style="flex:none;display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;padding:7px 16px;border-top:1px solid var(--color-stroke-weak);font-size:11px;line-height:1.4;color:var(--color-text-weak)">
+    <span>Météo : MétéoSuisse ICON-CH via Open-Meteo (CC BY 4.0)</span>
+    <span>{{ footRight }}</span>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:964,&quot;height&quot;:620},&quot;strategy&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;importance&quot;,&quot;priority&quot;,&quot;cluster&quot;,&quot;regions&quot;,&quot;top&quot;],&quot;default&quot;:&quot;priority&quot;,&quot;tsType&quot;:&quot;'priority'|'cluster'|'regions'|'top'&quot;},&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;stress&quot;,&quot;real&quot;],&quot;default&quot;:&quot;stress&quot;,&quot;tsType&quot;:&quot;'stress'|'real'&quot;},&quot;cooperative&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;}}">
+const SEEDS = [
+  { id: 'zermatt', tier: 1, name: 'Zermatt', canton: 'VS', lat: 46.020, lng: 7.749, url: 'https://www.zermatt.ch' },
+  { id: 'saasfee', tier: 2, name: 'Saas-Fee', canton: 'VS', lat: 46.108, lng: 7.927, url: 'https://www.saas-fee.ch' },
+  { id: 'verbier', tier: 1, name: 'Verbier', canton: 'VS', lat: 46.096, lng: 7.228, url: 'https://www.verbier.ch' },
+  { id: 'crans', tier: 2, name: 'Crans-Montana', canton: 'VS', lat: 46.311, lng: 7.481, url: 'https://www.crans-montana.ch' },
+  { id: 'laax', tier: 1, name: 'Laax', canton: 'GR', lat: 46.806, lng: 9.258, url: 'https://www.laax.com' },
+  { id: 'davos', tier: 1, name: 'Davos Klosters', canton: 'GR', lat: 46.800, lng: 9.836, url: 'https://www.davos.ch' },
+  { id: 'stmoritz', tier: 1, name: 'St. Moritz', canton: 'GR', lat: 46.498, lng: 9.838, url: 'https://www.stmoritz.com' },
+  { id: 'arosa', tier: 2, name: 'Arosa Lenzerheide', canton: 'GR', lat: 46.779, lng: 9.679, url: 'https://arosalenzerheide.swiss' },
+  { id: 'engelberg', tier: 1, name: 'Engelberg-Titlis', canton: 'OW', lat: 46.821, lng: 8.401, url: 'https://www.engelberg.ch' },
+  { id: 'andermatt', tier: 2, name: 'Andermatt', canton: 'UR', lat: 46.636, lng: 8.594, url: 'https://www.andermatt.ch' },
+  { id: 'grindelwald', tier: 1, name: 'Grindelwald', canton: 'BE', lat: 46.624, lng: 8.041, url: 'https://www.grindelwald.swiss' },
+  { id: 'adelboden', tier: 2, name: 'Adelboden', canton: 'BE', lat: 46.492, lng: 7.560, url: 'https://www.adelboden.ch' },
+  { id: 'gstaad', tier: 1, name: 'Gstaad', canton: 'BE', lat: 46.475, lng: 7.286, url: 'https://www.gstaad.ch' },
+  { id: 'flumserberg', tier: 1, name: 'Flumserberg', canton: 'SG', lat: 47.093, lng: 9.285, url: 'https://www.flumserberg.ch' },
+  { id: 'villars', tier: 2, name: 'Villars', canton: 'VD', lat: 46.298, lng: 7.055, url: 'https://www.villars.ch' },
+  { id: 'soerenberg', tier: 2, name: 'Sörenberg', canton: 'LU', lat: 46.822, lng: 8.036, url: 'https://www.soerenberg.ch' },
+];
+const CANTONS = { VS: 'Valais', GR: 'Grisons', BE: 'Berne', OW: 'Obwald', UR: 'Uri', SG: 'Saint-Gall', VD: 'Vaud', LU: 'Lucerne' };
+const REGIONS = { VS: 'Valais', GR: 'Grisons', BE: 'Oberland bernois', OW: 'Suisse centrale', UR: 'Suisse centrale', LU: 'Suisse centrale', SG: 'Suisse orientale', VD: 'Alpes vaudoises' };
+const CH_BOUNDS = [[5.95, 45.82], [10.49, 47.81]];
+const SEP = '§';
+
+function rng(a) { return () => { a |= 0; a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function gauss(r) { let u = 0, v = 0; while (!u) u = r(); while (!v) v = r(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+let STRESS = null;
+function stressPoints() {
+  if (STRESS) return STRESS;
+  const r = rng(42); STRESS = []; let n = 1;
+  SEEDS.forEach(s => { for (let i = 0; i < 14; i++) { STRESS.push({ id: 't' + n, name: 'Domaine test ' + String(n).padStart(3, '0'), canton: s.canton, lat: +(s.lat + gauss(r) * 0.1).toFixed(3), lng: +(s.lng + gauss(r) * 0.15).toFixed(3), url: null, test: true, tier: r() < 0.3 ? 2 : 3 }); n++; } });
+  return STRESS;
+}
+
+function wmo(code) {
+  if (code == null) return { icon: 'fa-solid fa-circle-question', desc: 'Pas de données', color: 'var(--color-icon-weak)', hex: '#6A6262', glyph: '\uf059' };
+  if (code === 0) return { icon: 'fa-solid fa-sun', desc: 'Ensoleillé', color: '#E0A800', hex: '#E0A800', glyph: '\uf185' };
+  if (code <= 2) return { icon: 'fa-solid fa-cloud-sun', desc: 'Peu nuageux', color: '#E0A800', hex: '#E0A800', glyph: '\uf6c4' };
+  if (code === 3) return { icon: 'fa-solid fa-cloud', desc: 'Couvert', color: 'var(--color-icon-weak)', hex: '#6A6262', glyph: '\uf0c2' };
+  if (code === 45 || code === 48) return { icon: 'fa-solid fa-smog', desc: 'Brouillard', color: 'var(--color-icon-weak)', hex: '#6A6262', glyph: '\uf75f' };
+  if ((code >= 71 && code <= 77) || code === 85 || code === 86) return { icon: 'fa-regular fa-snowflake', desc: 'Chutes de neige', color: '#2E7BD6', hex: '#2E7BD6', glyph: '\uf2dc', fa: 'r' };
+  if (code >= 95) return { icon: 'fa-solid fa-cloud-bolt', desc: 'Orage', color: 'var(--color-icon-default)', hex: '#121010', glyph: '\uf76c' };
+  if (code >= 80) return { icon: 'fa-solid fa-cloud-showers-heavy', desc: 'Averses', color: 'var(--color-icon-default)', hex: '#121010', glyph: '\uf740' };
+  return { icon: 'fa-solid fa-cloud-rain', desc: 'Pluie', color: 'var(--color-icon-default)', hex: '#121010', glyph: '\uf73d' };
+}
+const fmtT = t => (t == null || t === '' || isNaN(t) ? '–' : `${Math.round(t)}°`.replace('-', '−'));
+const fmtS = s => (s == null ? '–' : `${Math.round(s)} cm`);
+
+function loadWx(list) {
+  window.__skiWxCache = window.__skiWxCache || {};
+  const key = String(list.length);
+  if (!window.__skiWxCache[key]) {
+    window.__skiWxCache[key] = (async () => {
+      const LS = 'skimap2_wx_' + key;
+      try { const c = JSON.parse(localStorage.getItem(LS) || 'null'); if (c && Date.now() - c.at < 30 * 60 * 1000) return c.data; } catch (e) {}
+      const data = await fetchWx(list);
+      try { localStorage.setItem(LS, JSON.stringify({ at: Date.now(), data })); } catch (e) {}
+      return data;
+    })().catch(e => { delete window.__skiWxCache[key]; throw e; });
+  }
+  return window.__skiWxCache[key];
+}
+async function fetchWx(list) {
+  {
+    {
+      const wx = {}; let time = null;
+      for (let i = 0; i < list.length; i += 80) {
+        const ch = list.slice(i, i + 80);
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${ch.map(r => r.lat).join(',')}&longitude=${ch.map(r => r.lng).join(',')}&current=temperature_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,snowfall_sum&forecast_days=3&timezone=Europe%2FZurich`;
+        const res = await fetch(url); if (!res.ok) throw new Error('wx ' + res.status);
+        const d = await res.json(); const arr = Array.isArray(d) ? d : [d];
+        arr.forEach((x, k) => {
+          const r = ch[k]; if (!r || !x.current) return;
+          const days = x.daily.time.map((t, j) => ({ date: t, code: x.daily.weather_code[j], max: x.daily.temperature_2m_max[j], min: x.daily.temperature_2m_min[j], snow: x.daily.snowfall_sum[j] }));
+          wx[r.id] = { t: x.current.temperature_2m, code: x.current.weather_code, wind: x.current.wind_speed_10m, days, snow3: days.reduce((a, b) => a + (b.snow || 0), 0) };
+        });
+        if (!time && arr[0] && arr[0].current) time = arr[0].current.time;
+      }
+      return { wx, time };
+    }
+  }
+}
+
+const F = { t: '700 13px "Inter Variable", sans-serif', n: '500 12px "Inter Variable", sans-serif', b: '700 10px "Inter Variable", sans-serif', e: '700 10.5px "Inter Variable", sans-serif' };
+let MCTX = null;
+function tw(text, font) { MCTX = MCTX || document.createElement('canvas').getContext('2d'); MCTX.font = font; return MCTX.measureText(String(text)).width; }
+function faFont(fa, px) { return (fa === 'r' ? '400 ' : '900 ') + px + 'px "Font Awesome 6 Free"'; }
+function capsule(x, X, Y, W, H, fill, stroke, shadow, radius) {
+  const rad = radius == null ? H / 2 : radius;
+  x.save();
+  if (shadow) { x.shadowColor = 'rgba(18,16,16,0.22)'; x.shadowBlur = 5; x.shadowOffsetY = 1; }
+  x.beginPath(); x.roundRect(X, Y, W, H, rad); x.fillStyle = fill; x.fill(); x.restore();
+  if (stroke) { x.beginPath(); x.roundRect(X + 0.5, Y + 0.5, W - 1, H - 1, Math.max(0, rad - 0.5)); x.strokeStyle = stroke; x.lineWidth = 1; x.stroke(); }
+}
+function pillWidth(temp, name, rank) { return (rank ? 28 : 9) + 19 + tw(temp, F.t) + (name ? tw(name, F.n) + 6 : 0) + 10; }
+function mkCanvas(W, H, k) { const c = document.createElement('canvas'); c.width = Math.ceil(W * k); c.height = Math.ceil(H * k); const x = c.getContext('2d'); x.scale(k, k); x.textBaseline = 'middle'; return { c, x }; }
+
+function drawPill(p) {
+  const [, glyph, fa, hex, temp, selS, name, badge, rank] = p;
+  const sel = selS === '1', k = 2, H = 28, M = 4, TOP = 7;
+  const inner = Math.ceil(pillWidth(temp, name, rank));
+  const bw = badge ? Math.ceil(Math.max(20, tw(badge, F.b) + 10)) : 0;
+  const W = inner + (badge ? bw - 10 : 0);
+  const { c, x } = mkCanvas(W + M * 2, H + M * 2 + TOP, k);
+  const X = M, Y = M + TOP, cy = Y + H / 2 + 0.5;
+  capsule(x, X, Y, inner, H, sel ? '#E20000' : '#FFFFFF', sel ? null : '#C8C6C6', true);
+  let cx = X + (rank ? 4 : 9);
+  if (rank) {
+    x.beginPath(); x.arc(cx + 10, Y + H / 2, 10, 0, Math.PI * 2); x.fillStyle = sel ? '#FFFFFF' : '#E20000'; x.fill();
+    x.font = '700 11px "Inter Variable", sans-serif'; x.textAlign = 'center'; x.fillStyle = sel ? '#E20000' : '#FFFFFF'; x.fillText(rank, cx + 10, cy); x.textAlign = 'left'; cx += 24;
+  }
+  x.font = faFont(fa, 13); x.fillStyle = sel ? '#FFFFFF' : hex; x.fillText(glyph, cx, cy); cx += 19;
+  x.font = F.t; x.fillStyle = sel ? '#FFFFFF' : '#121010'; x.fillText(temp, cx, cy); cx += tw(temp, F.t);
+  if (name) { cx += 6; x.font = F.n; x.fillStyle = sel ? '#FFFFFF' : '#504949'; x.fillText(name, cx, cy); }
+  if (badge) {
+    const bx = X + inner - 10, by = M;
+    x.beginPath(); x.roundRect(bx - 1.5, by - 1.5, bw + 3, 21, 10.5); x.fillStyle = '#FFFFFF'; x.fill();
+    x.beginPath(); x.roundRect(bx, by, bw, 18, 9); x.fillStyle = '#121010'; x.fill();
+    x.font = F.b; x.textAlign = 'center'; x.fillStyle = '#FFFFFF'; x.fillText(badge, bx + bw / 2, by + 9.5); x.textAlign = 'left';
+  }
+  return { data: x.getImageData(0, 0, c.width, c.height), k };
+}
+
+function drawCluster(p) {
+  const [, count, tmin, tmax, smax, hw] = p;
+  const k = 2, H = 30, M = 5, BACK = 4;
+  const range = hw === '0' ? '–' : (tmin === tmax ? fmtT(+tmin) : `${fmtT(+tmin)} à ${fmtT(+tmax)}`);
+  const snow = hw !== '0' && +smax > 0 ? fmtS(+smax) : '';
+  const cf = '700 11px "Inter Variable", sans-serif';
+  const cw = Math.ceil(Math.max(22, tw(count, cf) + 12));
+  const inner = Math.ceil(4 + cw + 8 + tw(range, F.t) + (snow ? 9 + 16 + tw(snow, F.n) : 0) + 12);
+  const { c, x } = mkCanvas(inner + M * 2, H + M * 2 + BACK, k);
+  const X = M, Y = M + BACK, cy = Y + H / 2 + 0.5;
+  x.beginPath(); x.roundRect(X + 7, Y - BACK, inner - 14, H, H / 2); x.fillStyle = '#6A6262'; x.fill();
+  capsule(x, X, Y, inner, H, '#121010', null, true);
+  x.beginPath(); x.roundRect(X + 4, Y + 4, cw, H - 8, (H - 8) / 2); x.fillStyle = '#FFFFFF'; x.fill();
+  x.font = cf; x.textAlign = 'center'; x.fillStyle = '#121010'; x.fillText(count, X + 4 + cw / 2, cy); x.textAlign = 'left';
+  let cx = X + 4 + cw + 8;
+  x.font = F.t; x.fillStyle = '#FFFFFF'; x.fillText(range, cx, cy); cx += tw(range, F.t);
+  if (snow) { cx += 9; x.font = faFont('r', 12); x.fillStyle = '#FFFFFF'; x.fillText('\uf2dc', cx, cy); cx += 16; x.font = F.n; x.fillStyle = '#E1E0E0'; x.fillText(snow, cx, cy); }
+  return { data: x.getImageData(0, 0, c.width, c.height), k };
+}
+
+function regionWidth(name, range, count) { return 14 + tw(name.toUpperCase(), F.e) + name.length * 0.5 + 9 + 19 + tw(range, F.t) + 8 + Math.max(24, tw(count, F.b) + 12) + 5; }
+function regionRange(tmin, tmax) { return tmin === '' ? '–' : (tmin === tmax ? fmtT(+tmin) : `${fmtT(+tmin)} à ${fmtT(+tmax)}`); }
+function drawRegion(p) {
+  const [, name, count, glyph, fa, hex, tmin, tmax] = p;
+  const k = 2, H = 32, M = 5;
+  const label = name.toUpperCase(), range = regionRange(tmin, tmax);
+  const inner = Math.ceil(regionWidth(name, range, count));
+  const { c, x } = mkCanvas(inner + M * 2, H + M * 2, k);
+  const X = M, Y = M, cy = Y + H / 2 + 0.5;
+  capsule(x, X, Y, inner, H, '#FFFFFF', '#C8C6C6', true);
+  let cx = X + 14;
+  x.font = F.e; x.fillStyle = '#E20000'; try { x.letterSpacing = '0.5px'; } catch (e) {} x.fillText(label, cx, cy);
+  try { x.letterSpacing = '0px'; } catch (e) {}
+  cx += tw(label, F.e) + name.length * 0.5 + 9;
+  x.font = faFont(fa, 13); x.fillStyle = hex; x.fillText(glyph, cx, cy); cx += 19;
+  x.font = F.t; x.fillStyle = '#121010'; x.fillText(range, cx, cy); cx += tw(range, F.t) + 8;
+  const cw = Math.max(24, tw(count, F.b) + 12);
+  x.beginPath(); x.roundRect(cx, Y + 6, cw, H - 12, (H - 12) / 2); x.fillStyle = '#F5F5F5'; x.fill();
+  x.font = F.b; x.textAlign = 'center'; x.fillStyle = '#504949'; x.fillText(count, cx + cw / 2, cy); x.textAlign = 'left';
+  return { data: x.getImageData(0, 0, c.width, c.height), k };
+}
+
+const CLU_EXPR = ['concat', 'clu', SEP, ['to-string', ['get', 'point_count']], SEP, ['to-string', ['round', ['get', 'tmin']]], SEP, ['to-string', ['round', ['get', 'tmax']]], SEP, ['to-string', ['round', ['get', 'smax']]], SEP, ['to-string', ['get', 'hw']]];
+const pt = (lng, lat, properties) => ({ type: 'Feature', geometry: { type: 'Point', coordinates: [lng, lat] }, properties });
+const pillId = (i, temp, sel, name, badge, rank) => ['pill', i.glyph, i.fa || 's', i.hex, temp, sel ? 1 : 0, name || '', badge || '', rank || ''].join(SEP);
+
+class Component extends DCLogic {
+  state = { w: 964, q: '', canton: 'Alle', sort: 'snow', sel: null, hover: null, panelOpen: false, sheet: 'peek', zoom: 0, wx: {}, wxStatus: 'loading', wxTime: null };
+  rootRef = React.createRef();
+  mapRef = React.createRef();
+  hiddenCount = {};
+
+  componentDidMount() {
+    this.ro = new ResizeObserver(([e]) => {
+      const w = Math.round(e.contentRect.width);
+      if (w && w !== this.state.w) this.setState({ w });
+      if (this.map) this.map.resize();
+    });
+    this.waitLib = setInterval(() => {
+      const root = this.rootRef.current, mapEl = this.mapRef.current;
+      if (root && !this.observed) { this.observed = true; this.ro.observe(root); const w = Math.round(root.getBoundingClientRect().width); if (w && w !== this.state.w) this.setState({ w }); }
+      if (window.maplibregl && mapEl && mapEl.clientWidth > 0 && mapEl.clientHeight > 0 && this.observed) { clearInterval(this.waitLib); this.startIO(); }
+    }, 80);
+    this.loadWeather();
+  }
+  componentWillUnmount() { this.io && this.io.disconnect(); clearTimeout(this._ioT); clearInterval(this.waitLib); clearTimeout(this._pt); this.ro && this.ro.disconnect(); this.map && this.map.remove(); this.map = null; }
+  componentDidUpdate() {
+    try {
+      if (this._lastDensity !== undefined && this._lastDensity !== this.isStress()) { this.setState({ wx: {}, wxStatus: 'loading', sel: null }); this.loadWeather(); }
+      this._lastDensity = this.isStress();
+      if (this.map && this._lastW !== this.state.w) {
+        this._lastW = this.state.w;
+        requestAnimationFrame(() => { if (!this.map) return; this.map.resize(); this.map.fitBounds(CH_BOUNDS, { padding: this.fitPad(), duration: 0 }); });
+      }
+      this.refresh();
+    } catch (e) { console.warn(e); }
+  }
+
+  isStress() { return (this.props.density ?? 'stress') === 'stress'; }
+  resorts() { return this.isStress() ? SEEDS.concat(stressPoints()) : SEEDS; }
+  strategy() { return this.props.strategy ?? 'priority'; }
+  mode() { const w = this.state.w; return w >= 860 ? 'wide' : w >= 520 ? 'mid' : 'mobile'; }
+
+  loadWeather() {
+    this._lastDensity = this.isStress();
+    loadWx(this.resorts()).then(({ wx, time }) => this.setState({ wx, wxStatus: 'ok', wxTime: time })).catch(() => this.setState({ wxStatus: 'error' }));
+  }
+
+  startIO() {
+    const root = this.rootRef.current; if (!root) return;
+    this.io = new IntersectionObserver(([e]) => {
+      clearTimeout(this._ioT);
+      if (e.isIntersecting) { if (!this.map) this._ioT = setTimeout(() => { if (!this.map && this.mapRef.current) this.initMap(); }, 120); }
+      else if (this.map) this._ioT = setTimeout(() => this.destroyMap(), 600);
+    }, { rootMargin: '200px' });
+    this.io.observe(root);
+  }
+  destroyMap() {
+    if (!this.map) return;
+    try { this.map.remove(); } catch (e) {}
+    this.map = null; this.layersReady = false; this.fitted = false; this._key = ''; this.lastKey = ''; this._lastW = undefined; this.markers = {};
+  }
+  initMap() {
+    const gl = window.maplibregl;
+    const map = new gl.Map({
+      container: this.mapRef.current, style: 'https://tiles.openfreemap.org/styles/positron',
+      bounds: CH_BOUNDS, fitBoundsOptions: { padding: this.fitPad() }, attributionControl: false,
+      dragRotate: false, pitchWithRotate: false, touchPitch: false, cooperativeGestures: this.props.cooperative ?? true,
+      maxBounds: [[4.5, 45.2], [11.8, 48.4]],
+    });
+    map.touchZoomRotate.disableRotation();
+    this.map = map;
+    map.on('webglcontextlost', () => { this.destroyMap(); setTimeout(() => { if (!this.map && this.mapRef.current) this.initMap(); }, 300); });
+    (window.__skimaps = window.__skimaps || []).push(this);
+    map.on('error', e => console.warn('map error', e && e.error && e.error.message));
+    map.on('styleimagemissing', e => this.drawImage(e.id));
+    map.on('load', () => {
+      map.resize(); map.fitBounds(CH_BOUNDS, { padding: this.fitPad(), duration: 0 });
+      this.setState({ zoom: map.getZoom() });
+      try {
+        map.getStyle().layers.forEach(l => {
+          if (l.type !== 'symbol') return;
+          if (/country/i.test(l.id)) { map.setLayoutProperty(l.id, 'visibility', 'none'); return; }
+          const tf = map.getLayoutProperty(l.id, 'text-field');
+          if (tf && /name/.test(JSON.stringify(tf))) map.setLayoutProperty(l.id, 'text-field', ['coalesce', ['get', 'name:fr'], ['get', 'name']]);
+        });
+      } catch (e) {}
+      try {
+        map.addSource('dem', { type: 'raster-dem', tiles: ['https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'], encoding: 'terrarium', tileSize: 256, maxzoom: 12 });
+        const firstSymbol = (map.getStyle().layers.find(l => l.type === 'symbol') || {}).id;
+        map.addLayer({ id: 'hill', type: 'hillshade', source: 'dem', paint: { 'hillshade-shadow-color': '#6A6262', 'hillshade-highlight-color': '#FFFFFF', 'hillshade-accent-color': '#A5A1A1', 'hillshade-exaggeration': 0.3, 'hillshade-illumination-direction': 315 } }, firstSymbol);
+      } catch (e) {}
+      this.setupLayers();
+    });
+    map.on('move', () => { this.schedulePlace(); if (this.state.hover || this.state.sel) this.forceUpdate(); });
+    map.on('moveend', () => { this.place(); this.setState({ zoom: map.getZoom() }); });
+    ['pts-layer', 'clu-layer'].forEach(layer => {
+      map.on('mousemove', layer, e => {
+        const f = e.features[0]; map.getCanvas().style.cursor = 'pointer';
+        const id = f && f.properties.id && !f.properties.cluster ? f.properties.id : null;
+        if (id !== this.state.hover) this.setState({ hover: id });
+      });
+      map.on('mouseleave', layer, () => { map.getCanvas().style.cursor = ''; this.setState({ hover: null }); });
+      map.on('click', layer, e => this.onFeatureClick(e.features[0], layer));
+    });
+  }
+
+  async setupLayers() {
+    const map = this.map;
+    try { await Promise.all(['700 13px "Inter Variable"', '500 12px "Inter Variable"', '900 13px "Font Awesome 6 Free"', '400 13px "Font Awesome 6 Free"'].map(f => document.fonts.load(f))); } catch (e) {}
+    if (!this.map) return;
+    map.addSource('pts', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+    map.addSource('clu', { type: 'geojson', data: { type: 'FeatureCollection', features: [] }, cluster: true, clusterRadius: 72, clusterMaxZoom: 11,
+      clusterProperties: { tmin: ['min', ['get', 't']], tmax: ['max', ['get', 't']], smax: ['max', ['get', 's']], hw: ['+', ['get', 'hw']] } });
+    const common = { 'icon-allow-overlap': true, 'icon-ignore-placement': true, 'symbol-z-order': 'source' };
+    map.addLayer({ id: 'pts-layer', type: 'symbol', source: 'pts', layout: { ...common, 'icon-image': ['get', 'img'], 'symbol-sort-key': ['get', 'rank'] } });
+    map.addLayer({ id: 'clu-layer', type: 'symbol', source: 'clu', layout: { ...common,
+      'icon-image': ['step', ['zoom'], ['case', ['has', 'point_count'], CLU_EXPR, ['get', 'img']], 8.6, ['case', ['has', 'point_count'], CLU_EXPR, ['get', 'imgL']]],
+      'symbol-sort-key': ['case', ['has', 'point_count'], 1, ['get', 'z']] } });
+    this.layersReady = true; this._key = '';
+    this.refresh();
+  }
+
+  drawImage(id) {
+    if (!this.map || this.map.hasImage(id)) return;
+    const p = id.split(SEP); let out = null;
+    try { out = p[0] === 'pill' ? drawPill(p) : p[0] === 'clu' ? drawCluster(p) : p[0] === 'reg' ? drawRegion(p) : null; } catch (e) { console.warn('img', e); }
+    if (out) this.map.addImage(id, out.data, { pixelRatio: out.k });
+  }
+
+  onFeatureClick(f, layer) {
+    if (!f || !this.map) return;
+    const pr = f.properties;
+    if (layer === 'clu-layer' && pr.cluster) {
+      const src = this.map.getSource('clu');
+      Promise.resolve(src.getClusterExpansionZoom(pr.cluster_id)).then(z => this.map.easeTo({ center: f.geometry.coordinates, zoom: Math.min(z + 0.3, 12), duration: 600 }));
+      return;
+    }
+    if (pr.region) {
+      const ms = (this.regionMembers || {})[pr.region] || [];
+      if (ms.length) {
+        const b = ms.reduce((a, r) => [[Math.min(a[0][0], r.lng), Math.min(a[0][1], r.lat)], [Math.max(a[1][0], r.lng), Math.max(a[1][1], r.lat)]], [[180, 90], [-180, -90]]);
+        this.map.fitBounds(b, { padding: this.fitPad(), maxZoom: 9.6, duration: 700 });
+      }
+      return;
+    }
+    if (pr.id) this.select(pr.id);
+  }
+
+  fitPad() {
+    const m = this.mode();
+    if (m === 'mobile') return { top: 50, bottom: 170, left: 24, right: 56 };
+    if (m === 'mid') return { top: 60, bottom: 30, left: 30, right: 56 };
+    return { top: 50, bottom: 40, left: 40, right: 60 };
+  }
+
+  basePrio(r) { const w = this.state.wx[r.id]; return w ? (w.snow3 || 0) * 1000 - w.t : -1e6; }
+
+  refresh() {
+    if (!this.map || !this.layersReady) return;
+    const s = this.strategy();
+    const list = this.filtered();
+    const key = [s, this.state.sel, this.state.hover, list.map(r => r.id).join(','), Object.keys(this.state.wx).length, this.mode()].join('|');
+    if (key === this._key) return;
+    this._key = key;
+    this.map.setLayoutProperty('clu-layer', 'visibility', s === 'cluster' ? 'visible' : 'none');
+    this.map.setLayoutProperty('pts-layer', 'visibility', s === 'cluster' ? 'none' : 'visible');
+    if (s === 'cluster') this.syncCluster(list); else this.place();
+  }
+
+  syncCluster(list) {
+    const { wx, sel } = this.state;
+    const feats = list.map(r => {
+      const w = wx[r.id], i = wmo(w && w.code), isSel = r.id === sel, temp = fmtT(w && w.t);
+      return pt(r.lng, r.lat, { id: r.id, t: w ? Math.round(w.t) : 0, hw: w ? 1 : 0, s: w ? Math.round(w.snow3 || 0) : 0, z: isSel ? 3 : 2, img: pillId(i, temp, isSel), imgL: pillId(i, temp, isSel, r.name) });
+    });
+    this.map.getSource('clu').setData({ type: 'FeatureCollection', features: feats });
+  }
+
+  schedulePlace() {
+    if (this.strategy() === 'cluster' || this._pt) return;
+    this._pt = setTimeout(() => { this._pt = null; this.place(); }, 100);
+  }
+
+  place() {
+    const map = this.map; if (!map || !this.layersReady) return;
+    const s = this.strategy(); if (s === 'cluster') return;
+    const list = this.filtered(); const { wx, sel, hover } = this.state;
+    const el = map.getContainer(), W = el.clientWidth, H = el.clientHeight, z = map.getZoom();
+    let feats = [];
+    this.hiddenCount = {}; this.placedCount = 0; this.inView = 0;
+    if (s === 'regions' && z < 8) {
+      const groups = {};
+      list.forEach(r => { const g = REGIONS[r.canton] || r.canton; (groups[g] = groups[g] || []).push(r); });
+      this.regionMembers = groups;
+      const regs = Object.entries(groups).map(([name, rs]) => {
+        const lat = rs.reduce((a, r) => a + r.lat, 0) / rs.length, lng = rs.reduce((a, r) => a + r.lng, 0) / rs.length;
+        const ws = rs.map(r => wx[r.id]).filter(Boolean);
+        const freq = {}; ws.forEach(w => { freq[w.code] = (freq[w.code] || 0) + 1; });
+        const code = ws.length ? +Object.entries(freq).sort((a, b) => b[1] - a[1])[0][0] : null;
+        const i = wmo(code);
+        const tmin = ws.length ? Math.round(Math.min(...ws.map(w => w.t))) : '';
+        const tmax = ws.length ? Math.round(Math.max(...ws.map(w => w.t))) : '';
+        const smax = ws.length ? Math.round(Math.max(...ws.map(w => w.snow3 || 0))) : 0;
+        const w = regionWidth(name, regionRange(tmin, tmax), String(rs.length)) + 8;
+        const p = map.project([lng, lat]);
+        return { name, rs, p: { x: p.x, y: p.y }, w, h: 40, img: ['reg', name, rs.length, i.glyph, i.fa || 's', i.hex, tmin, tmax, smax].join(SEP) };
+      });
+      for (let it = 0; it < 60; it++) {
+        let moved = false;
+        for (let a = 0; a < regs.length; a++) for (let b = a + 1; b < regs.length; b++) {
+          const A = regs[a], B = regs[b];
+          const ox = (A.w + B.w) / 2 - Math.abs(A.p.x - B.p.x), oy = (A.h + B.h) / 2 - Math.abs(A.p.y - B.p.y);
+          if (ox > 0 && oy > 0) {
+            moved = true;
+            if (oy < ox) { const d = (oy / 2 + 0.5) * (A.p.y < B.p.y ? -1 : 1); A.p.y += d; B.p.y -= d; }
+            else { const d = (ox / 2 + 0.5) * (A.p.x < B.p.x ? -1 : 1); A.p.x += d; B.p.x -= d; }
+          }
+        }
+        if (!moved) break;
+      }
+      feats = regs.map(g => { const ll = map.unproject([g.p.x, g.p.y]); return pt(ll.lng, ll.lat, { region: g.name, rank: 0, img: g.img }); });
+    } else {
+      const large = z >= 8.6, isTop = s === 'top';
+      let items = [];
+      const isImp = s === 'importance', off = this.mode() === 'wide' ? 0 : 0.6;
+      const minZ = { 1: 0, 2: 7.4 + off, 3: 8.4 + off };
+      list.forEach(r => {
+        const p = map.project([r.lng, r.lat]);
+        if (p.x < -60 || p.y < -30 || p.x > W + 60 || p.y > H + 30) return;
+        const base = this.basePrio(r);
+        const tier = r.tier || 1;
+        if (isImp && r.id !== sel && r.id !== hover && z < minZ[tier]) return;
+        const prio = base + (isImp ? (4 - tier) * 1e7 : 0) + (r.id === sel ? 1e9 : 0) + (!isTop && r.id === hover ? 1e8 : 0);
+        items.push({ r, p, base, prio, w: wx[r.id] });
+      });
+      items.sort((a, b) => b.prio - a.prio);
+      const maxN = isTop ? (this.mode() === 'wide' ? 10 : this.mode() === 'mid' ? 8 : 6) : Infinity;
+      const placed = [];
+      if (isImp) {
+        const main = items.filter(it => (it.r.tier || 1) === 1).sort((a, b) => a.r.id.localeCompare(b.r.id));
+        items = items.filter(it => (it.r.tier || 1) !== 1);
+        const P = main.map(it => {
+          const temp = fmtT(it.w && it.w.t), name = large ? it.r.name : '';
+          const wd = pillWidth(temp, name, false) + 6;
+          return { ...it, temp, name, hidden: 0, q: { x: it.p.x, y: it.p.y }, pw: wd, h: 34 };
+        });
+        for (let n = 0; n < 80; n++) {
+          let moved = false;
+          for (let a = 0; a < P.length; a++) for (let b = a + 1; b < P.length; b++) {
+            const A = P[a], B = P[b];
+            const ox = (A.pw + B.pw) / 2 - Math.abs(A.q.x - B.q.x), oy = (A.h + B.h) / 2 - Math.abs(A.q.y - B.q.y);
+            if (ox > 0 && oy > 0) {
+              moved = true;
+              if (oy <= ox) { const d = (oy / 2 + 0.5) * (A.q.y <= B.q.y ? -1 : 1); A.q.y += d; B.q.y -= d; }
+              else { const d = (ox / 2 + 0.5) * (A.q.x <= B.q.x ? -1 : 1); A.q.x += d; B.q.x -= d; }
+            }
+          }
+          if (!moved) break;
+        }
+        P.forEach(it => {
+          const ll = map.unproject([it.q.x, it.q.y]);
+          placed.push({ r: it.r, w: it.w, base: it.base, temp: it.temp, name: it.name, hidden: 0, at: [ll.lng, ll.lat], rect: { x: it.q.x - it.pw / 2, y: it.q.y - 17, w: it.pw, h: 34 } });
+        });
+      }
+      for (const it of items) {
+        const temp = fmtT(it.w && it.w.t), name = large ? it.r.name : '';
+        const wd = pillWidth(temp, name, isTop);
+        const rect = { x: it.p.x - wd / 2 - 3, y: it.p.y - 17, w: wd + 6, h: 34 };
+        const hit = placed.find(q => rect.x < q.rect.x + q.rect.w && rect.x + rect.w > q.rect.x && rect.y < q.rect.y + q.rect.h && rect.y + rect.h > q.rect.y);
+        if (hit) { hit.hidden++; continue; }
+        if (placed.filter(q => q.r.id !== sel).length >= maxN && it.r.id !== sel) continue;
+        placed.push({ ...it, rect, hidden: 0, temp, name });
+      }
+      if (isTop) placed.slice().sort((a, b) => b.base - a.base).forEach((q, k) => { q.rankN = k + 1; });
+      this.inView = items.length; this.placedCount = placed.length;
+      feats = placed.map((q, idx) => {
+        const i = wmo(q.w && q.w.code), isSel = q.r.id === sel;
+        if (!isImp) this.hiddenCount[q.r.id] = q.hidden;
+        const badge = !isTop && !isImp && q.hidden ? '+' + q.hidden : '';
+        const at = q.at || [q.r.lng, q.r.lat];
+        return pt(at[0], at[1], { id: q.r.id, rank: q.r.tier === 1 && isImp ? 1e6 : placed.length - idx, img: pillId(i, q.temp, isSel, q.name, badge, isTop ? String(q.rankN) : '') });
+      });
+    }
+    const src = map.getSource('pts'); if (src) src.setData({ type: 'FeatureCollection', features: feats });
+  }
+
+  hint(isMobile, sheet) {
+    const s = this.strategy(), z = this.state.zoom;
+    let text = '', icon = 'fa-solid fa-magnifying-glass-plus';
+    if (s === 'priority' && z < 8.6) text = isMobile ? '+N = domaines proches' : '+N = domaines proches · zoome pour les voir';
+    if (s === 'cluster' && z < 9) text = isMobile ? 'Touche un groupe pour zoomer' : 'Clique un groupe pour zoomer';
+    if (s === 'regions' && z < 8) { text = isMobile ? 'Touche une région' : 'Clique une région pour zoomer'; icon = 'fa-solid fa-map'; }
+    if (s === 'importance' && z < 8.4 + (this.mode() === 'wide' ? 0 : 0.6)) text = isMobile ? 'Zoome pour plus de domaines' : 'Zoome pour découvrir plus de domaines';
+    if (s === 'top') { const n = this.mode() === 'wide' ? 10 : this.mode() === 'mid' ? 8 : 6; text = `Top ${n} neige dans cette vue`; icon = 'fa-solid fa-ranking-star'; }
+    return { showZoomHint: !!text && z > 0 && !(isMobile && sheet === 'list'), hintText: text, hintIcon: icon };
+  }
+
+  filtered() {
+    const q = this.state.q.trim().toLowerCase();
+    let list = this.resorts().filter(r => (this.state.canton === 'Alle' || r.canton === this.state.canton) &&
+      (!q || r.name.toLowerCase().includes(q) || CANTONS[r.canton].toLowerCase().includes(q) || r.canton.toLowerCase() === q));
+    const wx = this.state.wx;
+    if (this.state.sort === 'snow') list = list.slice().sort((a, b) => ((wx[b.id] || {}).snow3 || 0) - ((wx[a.id] || {}).snow3 || 0) || a.name.localeCompare(b.name));
+    else list = list.slice().sort((a, b) => a.name.localeCompare(b.name, 'fr'));
+    return list;
+  }
+
+  select(id) {
+    const m = this.mode();
+    const r = this.resorts().find(x => x.id === id);
+    this.setState({ sel: id, hover: null, sheet: m === 'mobile' ? 'detail' : this.state.sheet, panelOpen: m === 'mid' ? false : this.state.panelOpen });
+    if (this.map && r) {
+      const offset = m === 'wide' ? [-150, 0] : m === 'mid' ? [-150, -20] : [0, -130];
+      this.map.flyTo({ center: [r.lng, r.lat], zoom: Math.max(this.map.getZoom(), 9), offset, duration: 900, essential: true });
+    }
+  }
+
+  project(r) { return this.map ? this.map.project([r.lng, r.lat]) : null; }
+
+  renderVals() {
+    const m = this.mode();
+    const isMobile = m === 'mobile', isMid = m === 'mid', isWide = m === 'wide';
+    const { wx, sel, hover, sheet, panelOpen } = this.state;
+    const list = this.filtered();
+    const cantonKeys = ['Alle', ...Object.keys(CANTONS).filter(k => this.resorts().some(r => r.canton === k))];
+
+    const rows = list.map(r => {
+      const w = wx[r.id], i = wmo(w && w.code);
+      return {
+        id: r.id, name: r.name, cantonName: `${CANTONS[r.canton]} · ${r.canton}`,
+        icon: i.icon, iconColor: i.color, temp: fmtT(w && w.t), snow: fmtS(w && w.snow3),
+        bg: r.id === sel ? 'var(--color-fill-weak)' : 'transparent',
+        nameColor: r.id === sel ? 'var(--color-text-brand)' : 'var(--color-text-default)',
+        onClick: () => this.select(r.id),
+        onEnter: () => { if (!isMobile) this.setState({ hover: r.id }); },
+        onLeave: () => { if (!isMobile) this.setState({ hover: null }); },
+      };
+    });
+
+    let panelStyle;
+    const panelBase = { display: 'flex', flexDirection: 'column', background: 'var(--color-fill-default)', overflow: 'hidden', zIndex: 3 };
+    if (isWide) panelStyle = { ...panelBase, position: 'relative', width: 312, flex: 'none', borderRight: '1px solid var(--color-stroke-weak)' };
+    else if (isMid) panelStyle = { ...panelBase, position: 'absolute', left: 12, top: 12, bottom: 12, width: 300, borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-menu)', transform: panelOpen ? 'translateX(0)' : 'translateX(calc(-100% - 24px))', transition: 'transform .22s ease' };
+    else {
+      const showDet = sel && sheet === 'detail';
+      const h = sheet === 'list' ? '82%' : 142;
+      panelStyle = { ...panelBase, position: 'absolute', left: 0, right: 0, bottom: 0, height: h, borderRadius: '16px 16px 0 0', boxShadow: 'var(--shadow-up)', transition: 'height .25s ease, transform .25s ease', transform: showDet ? 'translateY(110%)' : 'translateY(0)' };
+    }
+
+    const hr = hover && !isMobile ? this.resorts().find(r => r.id === hover) : null;
+    let tip = {}, tipStyle = {}, showTip = false;
+    if (hr && hr.id !== sel && this.map) {
+      const p = this.project(hr), w = wx[hr.id], i = wmo(w && w.code);
+      const more = (this.hiddenCount || {})[hr.id] || 0;
+      tip = { name: hr.name, cantonName: CANTONS[hr.canton], icon: i.icon, iconColor: i.color, temp: fmtT(w && w.t), desc: i.desc, hasMore: more > 0, more: `+${more} domaine${more > 1 ? 's' : ''} à proximité · zoome` };
+      tipStyle = { position: 'absolute', left: p.x, top: p.y, transform: 'translate(-50%, calc(-100% - 20px))', display: 'flex', flexDirection: 'column', gap: 3, padding: '9px 12px', background: 'var(--color-fill-default)', borderRadius: 'var(--radius-md)', boxShadow: 'var(--shadow-menu)', pointerEvents: 'none', zIndex: 4 };
+      showTip = true;
+    }
+
+    const sr = sel ? this.resorts().find(r => r.id === sel) : null;
+    let det = { days: [] }, detailStyle = {}, showDetail = false;
+    if (sr && (!isMobile || sheet === 'detail')) {
+      const w = wx[sr.id], i = wmo(w && w.code);
+      const fmtDay = (d, k) => k === 0 ? 'Aujourd’hui' : k === 1 ? 'Demain' : new Date(d + 'T12:00').toLocaleDateString('fr-CH', { weekday: 'short' }).replace('.', '');
+      det = {
+        name: sr.name, cantonName: `${CANTONS[sr.canton]} · ${sr.canton}`, icon: i.icon, iconColor: i.color, desc: i.desc,
+        temp: fmtT(w && w.t), wind: w ? `${Math.round(w.wind)} km/h` : '–', host: sr.url ? sr.url.replace(/^https?:\/\/(www\.)?/, '') : 'Point test · pas de site',
+        days: (w ? w.days : [0, 1, 2].map(() => null)).map((d, k) => {
+          const di = wmo(d && d.code);
+          return { label: d ? fmtDay(d.date, k) : '–', icon: di.icon, iconColor: di.color, range: d ? `${fmtT(d.max)} / ${fmtT(d.min)}` : '–', snow: fmtS(d && d.snow) };
+        }),
+      };
+      const base = { display: 'flex', flexDirection: 'column', gap: 14, padding: 16, background: 'var(--color-fill-default)', zIndex: 5 };
+      detailStyle = isMobile
+        ? { ...base, position: 'absolute', left: 0, right: 0, bottom: 0, paddingTop: 14, borderRadius: '16px 16px 0 0', boxShadow: 'var(--shadow-up)' }
+        : { ...base, position: 'absolute', right: 60, bottom: 16, width: 300, borderRadius: 'var(--radius-lg)', boxShadow: 'var(--shadow-menu)' };
+      showDetail = true;
+    }
+
+    const t = this.state.wxTime ? this.state.wxTime.slice(11, 16) : null;
+    const wxStamp = this.state.wxStatus === 'ok' ? (isMobile ? `Direct · ${t}` : `Météo en direct · ${t}`) : this.state.wxStatus === 'error' ? 'Météo indisponible' : 'Chargement météo…';
+
+    return {
+      rootRef: this.rootRef, mapRef: this.mapRef,
+      isMobile, isMid,
+      titleSize: isMobile ? '19px' : isMid ? '22px' : '28px',
+      searchPad: isMid ? '10px 16px 4px' : isMobile ? '2px 16px 4px' : '14px 16px 4px',
+      wxStamp, wxDot: this.state.wxStatus === 'ok' ? 'var(--color-success)' : this.state.wxStatus === 'error' ? 'var(--color-fill-brand)' : 'var(--color-stroke-weak)',
+      q: this.state.q,
+      onQuery: e => this.setState({ q: e.target.value }),
+      onSearchFocus: () => { if (isMobile) this.setState({ sheet: 'list' }); },
+      chips: cantonKeys.map(k => ({ label: k === 'Alle' ? 'Tous' : k, active: this.state.canton === k, onClick: () => this.setState({ canton: k }) })),
+      sorts: [['snow', 'Neige 3 j'], ['az', 'A–Z']].map(([k, l]) => ({ label: l, color: this.state.sort === k ? 'var(--color-text-default)' : 'var(--color-text-weak)', deco: this.state.sort === k ? 'underline' : 'none', onClick: () => this.setState({ sort: k }) })),
+      countLabel: `${list.length} domaines`,
+      rows, isEmpty: rows.length === 0,
+      panelStyle,
+      toggleSheet: () => this.setState({ sheet: sheet === 'list' ? 'peek' : 'list' }),
+      openPanel: () => this.setState({ panelOpen: true }),
+      closePanel: () => this.setState({ panelOpen: false }),
+      showListToggle: isMid && !panelOpen,
+      ...this.hint(isMobile, sheet),
+      footRight: this.isStress() ? `Carte © OpenStreetMap · Densité simulée : 16 domaines réels + ${stressPoints().length} points test` : 'Carte © OpenStreetMap · Données d’exemple, non vérifiées',
+      listToggleLabel: `Liste · ${list.length}`,
+      showTip, tip, tipStyle,
+      showDetail, det, detailStyle,
+      closeIcon: isMobile ? 'fa-solid fa-arrow-left' : 'fa-solid fa-xmark',
+      clearSel: () => this.setState({ sel: null, sheet: isMobile ? 'peek' : sheet }),
+      openSite: () => { if (sr) window.open(sr.url, '_blank', 'noopener'); },
+      zoomIn: () => this.map && this.map.zoomIn(),
+      zoomOut: () => this.map && this.map.zoomOut(),
+      resetView: () => this.map && this.map.fitBounds(CH_BOUNDS, { padding: this.fitPad(), duration: 700 }),
+    };
+  }
+}
+</script>
+</body>
+</html>

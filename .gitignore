@@ -1,3 +1,6 @@
 node_modules
 dist
+.vite
 .env
+# Généré par `npm run weather` (cron serveur en production)
+public/data/weather.json

@@ -1,17 +1,14 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  base: "./", // Remplace par '/ton-dossier/' si ton site est dans un sous-dossier
-  plugins: [react()],
-  css: {
-    postcss: './postcss.config.cjs',
-  },
-  server: {
-    open: true,
-  },
+  base: './', // chemins relatifs : le build peut être servi depuis n'importe quel dossier
+  plugins: [react(), tailwindcss()],
   build: {
-    outDir: 'dist', // Définit le répertoire de sortie des builds
-    assetsDir: "assets", // Où les fichiers générés (CSS, JS) sont stockés
+    outDir: 'dist',
+    assetsDir: 'assets',
+    // Le moteur de carte (≈ 1 Mo) est chargé à part, en import dynamique.
+    chunkSizeWarningLimit: 2000,
   },
 });

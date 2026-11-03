@@ -1,0 +1,944 @@
+{
+  "source": "https://www.skiinfo.fr/suisse/stations-de-ski",
+  "retrievedAt": "2026-10-05",
+  "note": "Liste brute skiinfo.fr (nom + URL). Régions skiinfo ≠ cantons. Coordonnées, canton, site officiel et niveau à compléter (ETAT-DU-PROJET.md § 3.5).",
+  "count": 156,
+  "stations": [
+    {
+      "name": "Adelboden",
+      "slug": "adelboden",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/adelboden/station-de-ski"
+    },
+    {
+      "name": "Aeschi",
+      "slug": "aeschi",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/aeschi/station-de-ski"
+    },
+    {
+      "name": "Airolo",
+      "slug": "airolo",
+      "skiinfoRegion": "tessin",
+      "url": "https://www.skiinfo.fr/tessin/airolo/station-de-ski"
+    },
+    {
+      "name": "Aletsch Arena",
+      "slug": "aletsch-arena",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/aletsch-arena/station-de-ski"
+    },
+    {
+      "name": "Amden",
+      "slug": "amden",
+      "skiinfoRegion": "suisse-orientale",
+      "url": "https://www.skiinfo.fr/suisse-orientale/amden/station-de-ski"
+    },
+    {
+      "name": "Andermatt",
+      "slug": "andermatt-sedrun",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/andermatt-sedrun/station-de-ski"
+    },
+    {
+      "name": "Anzère",
+      "slug": "anzere",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/anzere/station-de-ski"
+    },
+    {
+      "name": "Arolla",
+      "slug": "arolla",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/arolla/station-de-ski"
+    },
+    {
+      "name": "Arosa Lenzerheide",
+      "slug": "arosa-lenzerheide",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/arosa-lenzerheide/station-de-ski"
+    },
+    {
+      "name": "Atzmännig Goldingen",
+      "slug": "atzmannig-goldingen",
+      "skiinfoRegion": "suisse-orientale",
+      "url": "https://www.skiinfo.fr/suisse-orientale/atzmannig-goldingen/station-de-ski"
+    },
+    {
+      "name": "Avers",
+      "slug": "avers",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/avers/station-de-ski"
+    },
+    {
+      "name": "Beatenberg",
+      "slug": "beatenberg",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/beatenberg/station-de-ski"
+    },
+    {
+      "name": "Beckenried - Klewenalp",
+      "slug": "beckenried-klewenalp",
+      "skiinfoRegion": "suisse-centrale",
+      "url": "https://www.skiinfo.fr/suisse-centrale/beckenried-klewenalp/station-de-ski"
+    },
+    {
+      "name": "Belalp - Blatten - Naters",
+      "slug": "belalp",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/belalp/station-de-ski"
+    },
+    {
+      "name": "Bellwald",
+      "slug": "bellwald",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/bellwald/station-de-ski"
+    },
+    {
+      "name": "Bergün - Filisur",
+      "slug": "berguen",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/berguen/station-de-ski"
+    },
+    {
+      "name": "Bivio",
+      "slug": "bivio",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/bivio/station-de-ski"
+    },
+    {
+      "name": "Boltigen",
+      "slug": "boltigen",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/boltigen/station-de-ski"
+    },
+    {
+      "name": "Bosco Gurin",
+      "slug": "bosco-gurin",
+      "skiinfoRegion": "tessin",
+      "url": "https://www.skiinfo.fr/tessin/bosco-gurin/station-de-ski"
+    },
+    {
+      "name": "Braunwald",
+      "slug": "braunwald",
+      "skiinfoRegion": "suisse-orientale",
+      "url": "https://www.skiinfo.fr/suisse-orientale/braunwald/station-de-ski"
+    },
+    {
+      "name": "Brienz - Axalp",
+      "slug": "brienz-axalp",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/brienz-axalp/station-de-ski"
+    },
+    {
+      "name": "Brigels - Breil",
+      "slug": "brigels-breil",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/brigels-breil/station-de-ski"
+    },
+    {
+      "name": "Brunni - Alpthal",
+      "slug": "brunni-holzegg",
+      "skiinfoRegion": "suisse-centrale",
+      "url": "https://www.skiinfo.fr/suisse-centrale/brunni-holzegg/station-de-ski"
+    },
+    {
+      "name": "Bruson et Val de Bagnes",
+      "slug": "bruson",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/bruson/station-de-ski"
+    },
+    {
+      "name": "Bugnenets - Savagnières",
+      "slug": "bugnenets-savagnieres",
+      "skiinfoRegion": "neuchatel",
+      "url": "https://www.skiinfo.fr/neuchatel/bugnenets-savagnieres/station-de-ski"
+    },
+    {
+      "name": "Bulle - La Chia",
+      "slug": "bulle-la-chia",
+      "skiinfoRegion": "fribourg",
+      "url": "https://www.skiinfo.fr/fribourg/bulle-la-chia/station-de-ski"
+    },
+    {
+      "name": "Bumbach Schangnau",
+      "slug": "bumbach-schangnau",
+      "skiinfoRegion": "region-de-bern",
+      "url": "https://www.skiinfo.fr/region-de-bern/bumbach-schangnau/station-de-ski"
+    },
+    {
+      "name": "Bürchen - Törbel",
+      "slug": "buerchen-toerbel",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/buerchen-toerbel/station-de-ski"
+    },
+    {
+      "name": "Cari",
+      "slug": "cari",
+      "skiinfoRegion": "tessin",
+      "url": "https://www.skiinfo.fr/tessin/cari/station-de-ski"
+    },
+    {
+      "name": "Champéry",
+      "slug": "champery",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/champery/station-de-ski"
+    },
+    {
+      "name": "Champex - Lac",
+      "slug": "champex-lac",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/champex-lac/station-de-ski"
+    },
+    {
+      "name": "Charmey - Vounetse",
+      "slug": "charmey",
+      "skiinfoRegion": "fribourg",
+      "url": "https://www.skiinfo.fr/fribourg/charmey/station-de-ski"
+    },
+    {
+      "name": "Chäserrugg - Toggenburg",
+      "slug": "toggenburg",
+      "skiinfoRegion": "suisse-orientale",
+      "url": "https://www.skiinfo.fr/suisse-orientale/toggenburg/station-de-ski"
+    },
+    {
+      "name": "Château d'Oex",
+      "slug": "chateau-doex",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/chateau-doex/station-de-ski"
+    },
+    {
+      "name": "Chur",
+      "slug": "chur",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/chur/station-de-ski"
+    },
+    {
+      "name": "Corvatsch - Sils - Silvaplana",
+      "slug": "corvatsch",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/corvatsch/station-de-ski"
+    },
+    {
+      "name": "Crans Montana",
+      "slug": "crans-montana",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/crans-montana/station-de-ski"
+    },
+    {
+      "name": "Dallenwil - Wirzweli",
+      "slug": "dallenwil-wirzweli",
+      "skiinfoRegion": "suisse-centrale",
+      "url": "https://www.skiinfo.fr/suisse-centrale/dallenwil-wirzweli/station-de-ski"
+    },
+    {
+      "name": "Davos Klosters",
+      "slug": "davos-klosters",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/davos-klosters/station-de-ski"
+    },
+    {
+      "name": "Degersheim",
+      "slug": "degersheim",
+      "skiinfoRegion": "suisse-orientale",
+      "url": "https://www.skiinfo.fr/suisse-orientale/degersheim/station-de-ski"
+    },
+    {
+      "name": "Diavolezza - Pontresina",
+      "slug": "diavolezza-lagalb",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/diavolezza-lagalb/station-de-ski"
+    },
+    {
+      "name": "Diemtigtal - Grimmialp",
+      "slug": "diemtigtal-grimmialp",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/diemtigtal-grimmialp/station-de-ski"
+    },
+    {
+      "name": "Diemtigtal - Springenboden",
+      "slug": "diemtigtal-springenboden",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/diemtigtal-springenboden/station-de-ski"
+    },
+    {
+      "name": "Diemtigtal - Wiriehorn",
+      "slug": "diemtigtal-wiriehorn",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/diemtigtal-wiriehorn/station-de-ski"
+    },
+    {
+      "name": "Disentis 3000",
+      "slug": "disentis-3000",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/disentis-3000/station-de-ski"
+    },
+    {
+      "name": "Ebenalp - Appenzellerland",
+      "slug": "ebenalp",
+      "skiinfoRegion": "suisse-orientale",
+      "url": "https://www.skiinfo.fr/suisse-orientale/ebenalp/station-de-ski"
+    },
+    {
+      "name": "Ebnat - Kappel",
+      "slug": "ebnat-kappel",
+      "skiinfoRegion": "suisse-orientale",
+      "url": "https://www.skiinfo.fr/suisse-orientale/ebnat-kappel/station-de-ski"
+    },
+    {
+      "name": "Eischoll",
+      "slug": "eischoll",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/eischoll/station-de-ski"
+    },
+    {
+      "name": "Elm",
+      "slug": "elm",
+      "skiinfoRegion": "suisse-orientale",
+      "url": "https://www.skiinfo.fr/suisse-orientale/elm/station-de-ski"
+    },
+    {
+      "name": "Engadin St. Moritz",
+      "slug": "engadin-st-moritz",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/engadin-st-moritz/station-de-ski"
+    },
+    {
+      "name": "Engelberg",
+      "slug": "engelberg",
+      "skiinfoRegion": "suisse-centrale",
+      "url": "https://www.skiinfo.fr/suisse-centrale/engelberg/station-de-ski"
+    },
+    {
+      "name": "Eriz",
+      "slug": "eriz",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/eriz/station-de-ski"
+    },
+    {
+      "name": "Evolène",
+      "slug": "evolene",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/evolene/station-de-ski"
+    },
+    {
+      "name": "Fideris",
+      "slug": "fideris",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/fideris/station-de-ski"
+    },
+    {
+      "name": "Flumserberg - Heidiland",
+      "slug": "flumserberg",
+      "skiinfoRegion": "suisse-orientale",
+      "url": "https://www.skiinfo.fr/suisse-orientale/flumserberg/station-de-ski"
+    },
+    {
+      "name": "Frutigen",
+      "slug": "frutigen",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/frutigen/station-de-ski"
+    },
+    {
+      "name": "Giswil - Mörlialp",
+      "slug": "giswil-moerlialp",
+      "skiinfoRegion": "suisse-centrale",
+      "url": "https://www.skiinfo.fr/suisse-centrale/giswil-moerlialp/station-de-ski"
+    },
+    {
+      "name": "Glacier 3000",
+      "slug": "gstaad-glacier-3000",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/gstaad-glacier-3000/station-de-ski"
+    },
+    {
+      "name": "Grächen",
+      "slug": "graechen",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/graechen/station-de-ski"
+    },
+    {
+      "name": "Grimentz-Zinal",
+      "slug": "grimentz-zinal",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/grimentz-zinal/station-de-ski"
+    },
+    {
+      "name": "Grindelwald - Wengen",
+      "slug": "grindelwald-wengen",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/grindelwald-wengen/station-de-ski"
+    },
+    {
+      "name": "Grüsch-Danusa",
+      "slug": "gruesch-danusa",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/gruesch-danusa/station-de-ski"
+    },
+    {
+      "name": "Gstaad",
+      "slug": "gstaad",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/gstaad/station-de-ski"
+    },
+    {
+      "name": "Gstaad - Saanen - Rougemont",
+      "slug": "gstaad-saanen-rougemont",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/gstaad-saanen-rougemont/station-de-ski"
+    },
+    {
+      "name": "Gurnigelbad - Gantrisch - Wasserscheide",
+      "slug": "gurnigelbad-gantrisch",
+      "skiinfoRegion": "region-de-bern",
+      "url": "https://www.skiinfo.fr/region-de-bern/gurnigelbad-gantrisch/station-de-ski"
+    },
+    {
+      "name": "Habkern",
+      "slug": "habkern",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/habkern/station-de-ski"
+    },
+    {
+      "name": "Heiden - Bischofsberg - Grub - Oberegg",
+      "slug": "heiden-appenzellerland",
+      "skiinfoRegion": "suisse-orientale",
+      "url": "https://www.skiinfo.fr/suisse-orientale/heiden-appenzellerland/station-de-ski"
+    },
+    {
+      "name": "Hemberg - Bächli",
+      "slug": "hemberg-bachli",
+      "skiinfoRegion": "suisse-orientale",
+      "url": "https://www.skiinfo.fr/suisse-orientale/hemberg-bachli/station-de-ski"
+    },
+    {
+      "name": "Hoch-Ybrig",
+      "slug": "hoch-ybrig",
+      "skiinfoRegion": "suisse-centrale",
+      "url": "https://www.skiinfo.fr/suisse-centrale/hoch-ybrig/station-de-ski"
+    },
+    {
+      "name": "Jakobsbad - Kronberg",
+      "slug": "jakobsbad-kronberg",
+      "skiinfoRegion": "suisse-orientale",
+      "url": "https://www.skiinfo.fr/suisse-orientale/jakobsbad-kronberg/station-de-ski"
+    },
+    {
+      "name": "Jaun",
+      "slug": "jaun",
+      "skiinfoRegion": "fribourg",
+      "url": "https://www.skiinfo.fr/fribourg/jaun/station-de-ski"
+    },
+    {
+      "name": "Kandersteg",
+      "slug": "kandersteg",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/kandersteg/station-de-ski"
+    },
+    {
+      "name": "Kiental",
+      "slug": "kiental",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/kiental/station-de-ski"
+    },
+    {
+      "name": "Krummenau - Wolzenalp/Toggenburg",
+      "slug": "wolzenalp",
+      "skiinfoRegion": "suisse-orientale",
+      "url": "https://www.skiinfo.fr/suisse-orientale/wolzenalp/station-de-ski"
+    },
+    {
+      "name": "La Berra - La Roche",
+      "slug": "la-berra-la-roche",
+      "skiinfoRegion": "fribourg",
+      "url": "https://www.skiinfo.fr/fribourg/la-berra-la-roche/station-de-ski"
+    },
+    {
+      "name": "La Fouly - Val Ferret",
+      "slug": "la-fouly",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/la-fouly/station-de-ski"
+    },
+    {
+      "name": "La Punt",
+      "slug": "la-punt",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/la-punt/station-de-ski"
+    },
+    {
+      "name": "La Robella",
+      "slug": "la-robella",
+      "skiinfoRegion": "jura",
+      "url": "https://www.skiinfo.fr/jura/la-robella/station-de-ski"
+    },
+    {
+      "name": "La Tzoumaz",
+      "slug": "la-tzoumaz",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/la-tzoumaz/station-de-ski"
+    },
+    {
+      "name": "Laax",
+      "slug": "laax",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/laax/station-de-ski"
+    },
+    {
+      "name": "Le Brassus",
+      "slug": "le-brassus",
+      "skiinfoRegion": "jura",
+      "url": "https://www.skiinfo.fr/jura/le-brassus/station-de-ski"
+    },
+    {
+      "name": "Lenk",
+      "slug": "lenk-im-simmental",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/lenk-im-simmental/station-de-ski"
+    },
+    {
+      "name": "Les Avants",
+      "slug": "les-avants",
+      "skiinfoRegion": "lac-leman",
+      "url": "https://www.skiinfo.fr/lac-leman/les-avants/station-de-ski"
+    },
+    {
+      "name": "Les Crosets",
+      "slug": "les-crosets",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/les-crosets/station-de-ski"
+    },
+    {
+      "name": "Les Diablerets",
+      "slug": "les-diablerets",
+      "skiinfoRegion": "lac-leman",
+      "url": "https://www.skiinfo.fr/lac-leman/les-diablerets/station-de-ski"
+    },
+    {
+      "name": "Les Marécottes - Salvan",
+      "slug": "les-marecottes-salvan",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/les-marecottes-salvan/station-de-ski"
+    },
+    {
+      "name": "Les Paccots",
+      "slug": "les-paccots",
+      "skiinfoRegion": "fribourg",
+      "url": "https://www.skiinfo.fr/fribourg/les-paccots/station-de-ski"
+    },
+    {
+      "name": "Les Pléiades",
+      "slug": "les-pleiades",
+      "skiinfoRegion": "lac-leman",
+      "url": "https://www.skiinfo.fr/lac-leman/les-pleiades/station-de-ski"
+    },
+    {
+      "name": "Les Prés d'Orvin",
+      "slug": "les-pres-dorvin",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/les-pres-dorvin/station-de-ski"
+    },
+    {
+      "name": "Leukerbad",
+      "slug": "leukerbad",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/leukerbad/station-de-ski"
+    },
+    {
+      "name": "Leysin - Les Mosses - La Lécherette",
+      "slug": "leysin",
+      "skiinfoRegion": "canton-de-vaud",
+      "url": "https://www.skiinfo.fr/canton-de-vaud/leysin/station-de-ski"
+    },
+    {
+      "name": "Lötschental",
+      "slug": "loetschental",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/loetschental/station-de-ski"
+    },
+    {
+      "name": "Marbach - Marbachegg",
+      "slug": "marbach",
+      "skiinfoRegion": "suisse-centrale",
+      "url": "https://www.skiinfo.fr/suisse-centrale/marbach/station-de-ski"
+    },
+    {
+      "name": "Meiringen - Hasliberg",
+      "slug": "meiringen-hasliberg",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/meiringen-hasliberg/station-de-ski"
+    },
+    {
+      "name": "Melchsee - Frutt",
+      "slug": "melchsee-frutt",
+      "skiinfoRegion": "suisse-centrale",
+      "url": "https://www.skiinfo.fr/suisse-centrale/melchsee-frutt/station-de-ski"
+    },
+    {
+      "name": "Moléson - Gruyères",
+      "slug": "moleson-gruyeres",
+      "skiinfoRegion": "fribourg",
+      "url": "https://www.skiinfo.fr/fribourg/moleson-gruyeres/station-de-ski"
+    },
+    {
+      "name": "Morgins",
+      "slug": "morgins",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/morgins/station-de-ski"
+    },
+    {
+      "name": "Mürren - Schilthorn",
+      "slug": "muerren-schilthorn",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/muerren-schilthorn/station-de-ski"
+    },
+    {
+      "name": "Mythenregion",
+      "slug": "mythenregion",
+      "skiinfoRegion": "suisse-centrale",
+      "url": "https://www.skiinfo.fr/suisse-centrale/mythenregion/station-de-ski"
+    },
+    {
+      "name": "Nara",
+      "slug": "nara",
+      "skiinfoRegion": "tessin",
+      "url": "https://www.skiinfo.fr/tessin/nara/station-de-ski"
+    },
+    {
+      "name": "Nax/Mont-Noble",
+      "slug": "nax",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/nax/station-de-ski"
+    },
+    {
+      "name": "Nendaz",
+      "slug": "nendaz",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/nendaz/station-de-ski"
+    },
+    {
+      "name": "Obergoms",
+      "slug": "obergoms",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/obergoms/station-de-ski"
+    },
+    {
+      "name": "Obersaxen - Val Lumnezia",
+      "slug": "obersaxen-mundaun",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/obersaxen-mundaun/station-de-ski"
+    },
+    {
+      "name": "Ottenleue",
+      "slug": "ottenleue",
+      "skiinfoRegion": "fribourg",
+      "url": "https://www.skiinfo.fr/fribourg/ottenleue/station-de-ski"
+    },
+    {
+      "name": "Ovronnaz",
+      "slug": "ovronnaz",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/ovronnaz/station-de-ski"
+    },
+    {
+      "name": "Pizol - Heidiland",
+      "slug": "pizol-heidiland",
+      "skiinfoRegion": "suisse-orientale",
+      "url": "https://www.skiinfo.fr/suisse-orientale/pizol-heidiland/station-de-ski"
+    },
+    {
+      "name": "Ricken",
+      "slug": "ricken",
+      "skiinfoRegion": "suisse-orientale",
+      "url": "https://www.skiinfo.fr/suisse-orientale/ricken/station-de-ski"
+    },
+    {
+      "name": "Riffenmatt",
+      "slug": "riffenmatt",
+      "skiinfoRegion": "region-de-bern",
+      "url": "https://www.skiinfo.fr/region-de-bern/riffenmatt/station-de-ski"
+    },
+    {
+      "name": "Rigi",
+      "slug": "rigi",
+      "skiinfoRegion": "suisse-centrale",
+      "url": "https://www.skiinfo.fr/suisse-centrale/rigi/station-de-ski"
+    },
+    {
+      "name": "Rochers de Naye - Caux",
+      "slug": "rochers-de-naye-caux",
+      "skiinfoRegion": "lac-leman",
+      "url": "https://www.skiinfo.fr/lac-leman/rochers-de-naye-caux/station-de-ski"
+    },
+    {
+      "name": "Rossberg Oberwil",
+      "slug": "rossberg-oberwil",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/rossberg-oberwil/station-de-ski"
+    },
+    {
+      "name": "Rosswald - Brig",
+      "slug": "rosswald-brig",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/rosswald-brig/station-de-ski"
+    },
+    {
+      "name": "Rothenthurm",
+      "slug": "neusell",
+      "skiinfoRegion": "suisse-centrale",
+      "url": "https://www.skiinfo.fr/suisse-centrale/neusell/station-de-ski"
+    },
+    {
+      "name": "Rüschegg - Eywald",
+      "slug": "rueschegg-eywald",
+      "skiinfoRegion": "region-de-bern",
+      "url": "https://www.skiinfo.fr/region-de-bern/rueschegg-eywald/station-de-ski"
+    },
+    {
+      "name": "Saanenmöser",
+      "slug": "saanenmoeser",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/saanenmoeser/station-de-ski"
+    },
+    {
+      "name": "Saas Almagell",
+      "slug": "saas-almagell",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/saas-almagell/station-de-ski"
+    },
+    {
+      "name": "Saas Balen",
+      "slug": "saas-balen",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/saas-balen/station-de-ski"
+    },
+    {
+      "name": "Saas Fee",
+      "slug": "saas-fee",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/saas-fee/station-de-ski"
+    },
+    {
+      "name": "Saas-Grund",
+      "slug": "saas-grund",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/saas-grund/station-de-ski"
+    },
+    {
+      "name": "Samedan",
+      "slug": "samedan",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/samedan/station-de-ski"
+    },
+    {
+      "name": "Samnaun",
+      "slug": "samnaun",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/samnaun/station-de-ski"
+    },
+    {
+      "name": "Sarn - Heinzenberg",
+      "slug": "sarn-heinzenberg",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/sarn-heinzenberg/station-de-ski"
+    },
+    {
+      "name": "Sattel - Hochstuckli",
+      "slug": "sattel-hochstuckli",
+      "skiinfoRegion": "suisse-centrale",
+      "url": "https://www.skiinfo.fr/suisse-centrale/sattel-hochstuckli/station-de-ski"
+    },
+    {
+      "name": "Savognin",
+      "slug": "savognin",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/savognin/station-de-ski"
+    },
+    {
+      "name": "Schönengrund - Appenzellerland",
+      "slug": "schoenengrund",
+      "skiinfoRegion": "suisse-orientale",
+      "url": "https://www.skiinfo.fr/suisse-orientale/schoenengrund/station-de-ski"
+    },
+    {
+      "name": "Schwanden - Sigriswil",
+      "slug": "schwanden-sigriswil",
+      "skiinfoRegion": "oberland-bernois",
+      "url": "https://www.skiinfo.fr/oberland-bernois/schwanden-sigriswil/station-de-ski"
+    },
+    {
+      "name": "Schwarzenbühl - Selital",
+      "slug": "schwarzenbuehl-selital",
+      "skiinfoRegion": "region-de-bern",
+      "url": "https://www.skiinfo.fr/region-de-bern/schwarzenbuehl-selital/station-de-ski"
+    },
+    {
+      "name": "Schwarzsee",
+      "slug": "schwarzsee",
+      "skiinfoRegion": "fribourg",
+      "url": "https://www.skiinfo.fr/fribourg/schwarzsee/station-de-ski"
+    },
+    {
+      "name": "Schwellbrunn - Appenzellerland",
+      "slug": "schwellbrunn",
+      "skiinfoRegion": "suisse-orientale",
+      "url": "https://www.skiinfo.fr/suisse-orientale/schwellbrunn/station-de-ski"
+    },
+    {
+      "name": "Schwyz - Ibergeregg (Mythen)",
+      "slug": "schwyz-ibergeregg-mythen",
+      "skiinfoRegion": "suisse-centrale",
+      "url": "https://www.skiinfo.fr/suisse-centrale/schwyz-ibergeregg-mythen/station-de-ski"
+    },
+    {
+      "name": "Scuol",
+      "slug": "scuol",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/scuol/station-de-ski"
+    },
+    {
+      "name": "Sörenberg",
+      "slug": "soerenberg",
+      "skiinfoRegion": "suisse-centrale",
+      "url": "https://www.skiinfo.fr/suisse-centrale/soerenberg/station-de-ski"
+    },
+    {
+      "name": "Splügen",
+      "slug": "spluegen",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/spluegen/station-de-ski"
+    },
+    {
+      "name": "St Cergue",
+      "slug": "st-cergue-la-dole",
+      "skiinfoRegion": "jura",
+      "url": "https://www.skiinfo.fr/jura/st-cergue-la-dole/station-de-ski"
+    },
+    {
+      "name": "St-Luc Chandolin",
+      "slug": "st-luc-chandolin",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/st-luc-chandolin/station-de-ski"
+    },
+    {
+      "name": "St. Antönien",
+      "slug": "st-antoenien",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/st-antoenien/station-de-ski"
+    },
+    {
+      "name": "St. Moritz",
+      "slug": "st-moritz",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/st-moritz/station-de-ski"
+    },
+    {
+      "name": "St. Peter - Pagig",
+      "slug": "st-peter-hochwang",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/st-peter-hochwang/station-de-ski"
+    },
+    {
+      "name": "Ste-Croix - Les Rasses",
+      "slug": "ste-croix-les-rasses",
+      "skiinfoRegion": "jura",
+      "url": "https://www.skiinfo.fr/jura/ste-croix-les-rasses/station-de-ski"
+    },
+    {
+      "name": "Stoos",
+      "slug": "stoos",
+      "skiinfoRegion": "suisse-centrale",
+      "url": "https://www.skiinfo.fr/suisse-centrale/stoos/station-de-ski"
+    },
+    {
+      "name": "Thyon 4 Vallées",
+      "slug": "thyon-4-vallees",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/thyon-4-vallees/station-de-ski"
+    },
+    {
+      "name": "Torgon",
+      "slug": "torgon",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/torgon/station-de-ski"
+    },
+    {
+      "name": "Tschappina Heinzenberg",
+      "slug": "tschappina-heinzenberg",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/tschappina-heinzenberg/station-de-ski"
+    },
+    {
+      "name": "Tschiertschen",
+      "slug": "tschiertschen",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/tschiertschen/station-de-ski"
+    },
+    {
+      "name": "Unterbäch",
+      "slug": "unterbach",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/unterbach/station-de-ski"
+    },
+    {
+      "name": "Val Mustair",
+      "slug": "val-muestair",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/val-muestair/station-de-ski"
+    },
+    {
+      "name": "Vals",
+      "slug": "vals",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/vals/station-de-ski"
+    },
+    {
+      "name": "Verbier",
+      "slug": "verbier",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/verbier/station-de-ski"
+    },
+    {
+      "name": "Vercorin",
+      "slug": "vercorin",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/vercorin/station-de-ski"
+    },
+    {
+      "name": "Veysonnaz",
+      "slug": "veysonnaz",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/veysonnaz/station-de-ski"
+    },
+    {
+      "name": "Vichères - Liddes",
+      "slug": "vicheres-liddes",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/vicheres-liddes/station-de-ski"
+    },
+    {
+      "name": "Villars - Gryon",
+      "slug": "villars-gryon",
+      "skiinfoRegion": "lac-leman",
+      "url": "https://www.skiinfo.fr/lac-leman/villars-gryon/station-de-ski"
+    },
+    {
+      "name": "Wildhaus - Toggenburg",
+      "slug": "wildhaus-toggenburg",
+      "skiinfoRegion": "suisse-orientale",
+      "url": "https://www.skiinfo.fr/suisse-orientale/wildhaus-toggenburg/station-de-ski"
+    },
+    {
+      "name": "Zermatt",
+      "slug": "zermatt",
+      "skiinfoRegion": "valais",
+      "url": "https://www.skiinfo.fr/valais/zermatt/station-de-ski"
+    },
+    {
+      "name": "Zuoz",
+      "slug": "zuoz",
+      "skiinfoRegion": "les-grisons",
+      "url": "https://www.skiinfo.fr/les-grisons/zuoz/station-de-ski"
+    }
+  ]
+}

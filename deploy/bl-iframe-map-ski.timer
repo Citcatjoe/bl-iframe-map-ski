@@ -1,0 +1,15 @@
+# Rythme du relevé météo : chaque heure à hh:05 (+ décalage fixe de 0 à 60 s), installé par deploy/deploy.sh.
+# ≈ 154 appels Open-Meteo par heure (2 requêtes groupées), quel que soit le nombre de lecteurs.
+# Un relevé encore en cours n'est pas relancé ; un relevé manqué (serveur éteint) est rattrapé au démarrage.
+[Unit]
+Description=Rythme du relevé météo bl-iframe-map-ski
+
+[Timer]
+OnCalendar=*-*-* *:05:00
+RandomizedDelaySec=60
+FixedRandomDelay=true
+AccuracySec=1s
+Persistent=true
+
+[Install]
+WantedBy=timers.target
