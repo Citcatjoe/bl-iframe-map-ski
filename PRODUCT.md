@@ -12,15 +12,15 @@ React + Vite + Tailwind CSS v4, embedded via iframe. Reuses Blick's shared tooli
 
 ## Users
 
-Blick readers browsing an article or the homepage who want to see what it looks like up in the Swiss ski resorts right now — the conditions at altitude and, above all, the resorts' webcams.
+Blick readers browsing an article or the homepage who want to see what it looks like up in the Swiss ski resorts right now — the weather at the resort and, above all, the resorts' webcams.
 
 ## Product Purpose
 
-An interactive map widget, embedded as an iframe on blick.ch, that is first and foremost **a gateway to the webcams of Swiss ski resorts**. The map shows each resort with its weather **at altitude** (top of the lifts, not the village); selecting a resort opens a card with the conditions up there and a **« Voir les webcams »** button to the resort's webcam page. Goal: let readers check the conditions up the mountain and jump to the webcams without leaving the article/homepage.
+An interactive map widget, embedded as an iframe on blick.ch, that is first and foremost **a gateway to the webcams of Swiss ski resorts**. The map shows each resort with its weather **at the village** (the resort's base, D61: readers expect it to be colder higher up); selecting a resort opens a card with the weather, the measured snow and a **« Voir les webcams »** button to the resort's webcam page. Goal: let readers check the weather at the resort and jump to the webcams without leaving the article/homepage.
 
 ## Positioning
 
-A lightweight, embeddable map of Swiss ski resorts that surfaces conditions at altitude and a direct link to each resort's webcams, inline in editorial content, instead of sending readers to an external ski-resort directory.
+A lightweight, embeddable map of Swiss ski resorts that surfaces the weather at each resort and a direct link to each resort's webcams, inline in editorial content, instead of sending readers to an external ski-resort directory.
 
 ## Operating Context
 
@@ -34,18 +34,17 @@ Because point-and-click on the map alone gets messy at these widths/resort count
 ## Capabilities and Constraints
 
 Confirmed:
-- Map displays Swiss ski resorts (domaines skiables); each has at minimum a name, canton, weather at altitude, and a link to its webcam page.
+- Map displays Swiss ski resorts (domaines skiables); each has at minimum a name, canton, weather (at the village), and a link to its webcam page.
 - Map markers are weather pills (short name, weather icon, temperature); hovering highlights, clicking opens the resort's card in the panel. A search/browse panel keeps the widget usable without the map (D1–D11, D21–D27).
 - Must render usably at 964px, 632px, and mobile-screen iframe widths.
 
 Undecided (do not invent):
 - Exact resort dataset/fields beyond name, canton, weather, webcam link (e.g. prices, open lifts) — not yet defined.
-- Weather data source for production: there is no budget for now; remaining free candidates in `ETAT-DU-PROJET.md` § 4.7 (self-hosted Open-Meteo, which is allowed for commercial use — D56 —, MeteoSwiss open data, SLF measured snow as a complement). Open-Meteo's public API (free for non-commercial use only) runs in development meanwhile.
-- Self-hosting the map tiles: left open (D54). Settled since: map provider (MapLibre + OpenFreeMap, D39), level 1 stations (D40, editable in `src/data/stations-niveau-1.json`, D52), resort list (skiinfo.fr, D42), weather at altitude (D51), webcam links (D50, D53).
+- Self-hosting the map tiles: left open (D54). Settled since: map provider (MapLibre + OpenFreeMap, D39), level 1 stations (D40, editable in `src/data/stations-niveau-1.json`, D52), resort list (skiinfo.fr, D42), weather at the village (D61, replacing weather at altitude, D51), webcam links (D50, D53), production weather sources (MeteoSwiss open-data forecasts + SLF measured snow, both usable commercially, D59).
 
 ## Evidence on Hand
 
-`src/data/resorts.json` holds the 154 real Swiss ski stations shown on the map: the skiinfo.fr list (duplicates removed, no grouping), with coordinates, canton and commune from the official swisstopo gazetteer, a point at altitude (highest lift top station, OpenSkiData lifts + swisstopo elevation), the resort's webcam page (118 official pages, 36 aggregator pages to replace; one page may be shared by several resorts of the same connected area or destination, D55), and ski-area data from OpenSkiData. Built by `scripts/build-resorts.mjs` from `data/sources/`. Weather is real Open-Meteo data at altitude written to `weather.json` by `scripts/fetch-weather.mjs`, pending the production source decision. Do not fabricate specific resort names, cantons, weather figures, or links.
+`src/data/resorts.json` holds the 154 real Swiss ski stations shown on the map: the skiinfo.fr list (duplicates removed, no grouping), with coordinates, canton and commune from the official swisstopo gazetteer, a point at altitude (highest lift top station, OpenSkiData lifts + swisstopo elevation), the resort's webcam page (118 official pages, 36 aggregator pages to replace; one page may be shared by several resorts of the same connected area or destination, D55), and ski-area data from OpenSkiData. Built by `scripts/build-resorts.mjs` from `data/sources/`. Weather is real data written hourly to `weather.json` by `scripts/fetch-weather.mjs` (D59): the MeteoSwiss forecast at the nearest forecast point to each resort's village (D61), and snow depth plus 3-day new snow measured at the nearest SLF IMIS station (none within 25 km for 5 resorts). MeteoSwiss publishes no new-snow forecast, so none is shown. Do not fabricate specific resort names, cantons, weather figures, or links.
 
 ## Product Principles
 

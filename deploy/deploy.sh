@@ -38,6 +38,9 @@ install -m 644 "$arrivee/deploy/bl-iframe-map-ski.service" "$arrivee/deploy/bl-i
 systemctl daemon-reload
 # Relevé immédiat avec le code reçu (oneshot : attend la fin, code de sortie du script). Source en panne : on
 # continue si un weather.json est déjà servi (systemd relance le relevé toutes les 10 min) ; sinon, arrêt.
+# reset-failed d'abord : chaque déploiement compte comme un départ, et 5 départs en 55 min (StartLimitBurst) bloquent
+# l'unité en « start-limit-hit », vue en échec par pegasus-monitor (arrivé le 03/11/2026 après plusieurs déploiements).
+systemctl reset-failed bl-iframe-map-ski.service 2>/dev/null || true
 if ! systemctl start bl-iframe-map-ski.service; then
   [[ -s $dest/data/weather.json ]] || { echo "Premier relevé en échec et aucun weather.json : arrêt" >&2; exit 1; }
   echo "Relevé en échec (source indisponible ?) : l'ancien weather.json reste servi, nouvel essai dans 10 min" >&2

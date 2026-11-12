@@ -35,10 +35,45 @@
   --color-line-strong: var(--color-stroke-strong);
   --color-glyph-weak: var(--color-icon-weak);
   --color-ok: var(--color-success);
-  --color-map: #eeedea;
+  --color-warn: var(--color-yellow-500);
+  --color-map: var(--map-bg);
+  --color-map-control: var(--map-control);
+  --color-map-control-hover: var(--map-control-hover);
+  --color-panel: var(--panel-bg);
+  --color-panel-hover: var(--panel-hover);
+  --color-panel-line: var(--panel-line);
+}
+
+/* Couleurs des pictos météo par rôle (src/lib/weatherIcons.js), clair / sombre ; palettes de la livraison
+ * (src/assets/pictos-meteo/LISEZMOI.md). Mêmes valeurs sur le canvas des pastilles (WX_PALETTES). */
+:root {
+  --wx-sun: var(--is-light-theme, #ffaa00) var(--is-dark-theme, #ffc233);
+  --wx-moon: var(--is-light-theme, #5d6fa3) var(--is-dark-theme, #c7d0e6);
+  --wx-cloud: var(--is-light-theme, #8f8989) var(--is-dark-theme, #c8c6c6);
+  --wx-cloudDark: var(--is-light-theme, #504949) var(--is-dark-theme, #a5a1a1);
+  --wx-drop: var(--is-light-theme, #1f74e8) var(--is-dark-theme, #5ba0ff);
+  --wx-snow: var(--is-light-theme, #9ed8f5) var(--is-dark-theme, #d2eefb);
+  --wx-bolt: var(--is-light-theme, #ffaa00) var(--is-dark-theme, #ffc233);
+  --wx-none: var(--is-light-theme, #a5a1a1) var(--is-dark-theme, #837c7c);
 }
 
 @layer base {
+  :root {
+    /* Fond de la carte avant ses tuiles : hors design system, même bascule que base.css (Positron / Dark). */
+    --map-bg: var(--is-light-theme, #eeedea) var(--is-dark-theme, #1e1a1a);
+    /* Boutons posés sur la carte (zoom, toute la Suisse) : fonds des pastilles de la carte (MAP_THEMES.pill). */
+    --map-control: var(--is-light-theme, var(--color-white)) var(--is-dark-theme, var(--color-grey-800));
+    --map-control-hover: var(--is-light-theme, var(--color-grey-100)) var(--is-dark-theme, var(--color-grey-700));
+    /* Panneau liste / fiche (mode explore) : blanc en clair ; en sombre `fill-strong`, nettement plus clair que la
+       carte. Survol et ligne choisie un cran au-dessus ; filets et barre de défilement relevés d'autant en sombre
+       (les filets et le pouce `stroke-weak` y disparaîtraient). */
+    --panel-bg: var(--is-light-theme, var(--color-fill-default)) var(--is-dark-theme, var(--color-fill-strong));
+    --panel-hover: var(--is-light-theme, var(--color-fill-weak)) var(--is-dark-theme, var(--color-grey-700));
+    --panel-line: var(--is-light-theme, var(--color-stroke-weak)) var(--is-dark-theme, var(--color-grey-700));
+    --panel-thumb: var(--is-light-theme, var(--color-stroke-weak)) var(--is-dark-theme, var(--color-grey-600));
+    /* Pouce des barres de défilement ; le panneau le redéfinit (--panel-thumb). */
+    --scrollbar-thumb: var(--color-stroke-weak);
+  }
   html,
   body {
     margin: 0;
@@ -51,6 +86,45 @@
   }
   input[type='search']::-webkit-search-cancel-button {
     display: none;
+  }
+
+  /*
+   * Barres de défilement discrètes (liste des stations, fiche) : fines, piste invisible, pouce `--scrollbar-thumb`
+   * (gris du thème Blick, relevé dans le panneau en sombre), plus marqué au survol. Deux syntaxes, jamais
+   * ensemble : Chrome (≥ 121) et Safari (≥ 18.2) ignorent `::-webkit-scrollbar` dès que `scrollbar-width` /
+   * `scrollbar-color` sont posés, et retombent alors sur leur barre native (fine et grise sous Windows, sans couleur
+   * dans Safari, qui ne lit pas `scrollbar-color`).
+   * - `::-webkit-scrollbar` sans condition : Chrome, Edge, Safari, Opera, Samsung Internet ;
+   * - standard (`scrollbar-width` / `scrollbar-color`), sous `@supports not selector(::-webkit-scrollbar)` : Firefox.
+   * Sur macOS et iOS (barres flottantes), le système garde la main sur l'apparition au défilement.
+   */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+  ::-webkit-scrollbar-thumb {
+    border: 3px solid transparent;
+    border-radius: 9999px;
+    background: var(--scrollbar-thumb) padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-icon-weak);
+  }
+  @supports not selector(::-webkit-scrollbar) {
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: var(--scrollbar-thumb) transparent;
+    }
+    *:hover {
+      scrollbar-color: var(--color-icon-weak) transparent;
+    }
   }
 }
 

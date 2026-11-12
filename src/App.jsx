@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { CompactView } from './components/CompactView';
 import { Footer } from './components/Footer';
-import { Header } from './components/Header';
+import { HEADER_NARROW_MAX, Header } from './components/Header';
 import { MapView } from './components/MapView';
 import { ResortDock } from './components/ResortDetail';
 import { SidePanel } from './components/SidePanel';
@@ -9,6 +9,7 @@ import { RESORTS } from './data/resorts';
 import { useWeather } from './hooks/useWeather';
 import { HEIGHT, MAX_WIDTH, modeFor, useWidth } from './hooks/useWidth';
 import { filterResorts, selectResorts } from './lib/resortList';
+import { useTheme } from './lib/theme';
 
 // Paramètres d'URL, sur le modèle de bl-iframe-traffic (README § Paramètres d'URL).
 const params = new URLSearchParams(window.location.search);
@@ -20,7 +21,7 @@ if (params.has('mode') && !['compact', 'explore'].includes(params.get('mode'))) 
 }
 // Mode explore : fiche d'une station ouverte d'emblée (`?point=verbier`).
 const POINT = params.get('point');
-// Lien « Tout voir » du mode compact (article contenant le mode explore) ; sans paramètre, pas de lien.
+// Lien « Voir toute la météo » du mode compact (article contenant le mode explore) ; sans paramètre, pas de lien.
 const SEE_ALL_URL = params.get('seeAllUrl');
 // Stations suivies : `?points=verbier,zermatt` (`|` entre colonnes du mode compact). Dans les deux modes, le widget
 // se limite à ces stations ; en explore, elles sont toujours visibles sur la carte (niveau 1, quel que soit le zoom).
@@ -50,24 +51,26 @@ export default function App() {
   const width = useWidth(rootRef);
   const mode = modeFor(width);
   const { wx, status: wxStatus, time: wxTime } = useWeather();
+  // Clair / sombre : l'interface suit seule (variables de base.css) ; la carte a besoin du thème en JS.
+  const theme = useTheme();
 
   const [query, setQuery] = useState('');
-  const [sort, setSort] = useState('snow');
   const [sel, setSel] = useState(PRESELECTED);
   // Dernier domaine affiché : la fiche reste remplie pendant le glissement de retour.
   const [shownId, setShownId] = useState(PRESELECTED);
   const [hover, setHover] = useState(null);
-  // 632 px : la fiche présélectionnée s'ouvre dans le panneau superposé, comme après un choix.
-  const [panelOpen, setPanelOpen] = useState(() => PRESELECTED !== null && mode === 'mid');
+  // 964 et 632 px : la fiche présélectionnée s'ouvre dans le panneau superposé, comme après un choix.
+  const [panelOpen, setPanelOpen] = useState(() => PRESELECTED !== null && mode !== 'mobile');
 
-  const list = useMemo(() => filterResorts(POOL, query, sort, wx), [query, sort, wx]);
+  // Liste du mode explore : ordre alphabétique (05/11/2026, plus de tri « Neige 3 j » / « A–Z »).
+  const list = useMemo(() => filterResorts(POOL, query, 'az', wx), [query, wx]);
 
   const select = useCallback(
     (id) => {
       setSel(id);
       setShownId(id);
       setHover(null);
-      setPanelOpen(mode === 'mid');
+      setPanelOpen(mode !== 'mobile');
       document.activeElement?.blur?.();
     },
     [mode],
@@ -100,18 +103,19 @@ export default function App() {
     return (
       <div
         ref={rootRef}
-        className="relative mx-auto flex w-full flex-col overflow-hidden rounded-md border border-line bg-surface font-body text-ink"
+        className="relative mx-auto flex w-full flex-col overflow-hidden bg-surface font-body text-ink"
         style={{ maxWidth: MAX_WIDTH }}
       >
-        <Header mode={mode} wxStatus={wxStatus} wxTime={wxTime} />
+        <Header narrow={width < HEADER_NARROW_MAX} wxStatus={wxStatus} wxTime={wxTime} compact title="La météo du week-end en station" />
         <CompactView
           resorts={COMPACT_RESORTS}
+          total={POOL.length}
           columns={SELECTION.columns}
           twoColumns={width >= COMPACT_TWO_COLUMNS_MIN}
           wx={wx}
           seeAllUrl={SEE_ALL_URL}
         />
-        <Footer mode={mode} noMap />
+        <Footer noMap />
       </div>
     );
   }
@@ -122,7 +126,7 @@ export default function App() {
       className="relative mx-auto flex w-full flex-col overflow-hidden bg-surface font-body text-ink"
       style={{ height: HEIGHT[mode], maxWidth: MAX_WIDTH }}
     >
-      <Header mode={mode} wxStatus={wxStatus} wxTime={wxTime} />
+      <Header narrow={width < HEADER_NARROW_MAX} wxStatus={wxStatus} wxTime={wxTime} />
       <div className={`relative flex min-h-0 flex-1 ${mobile ? 'flex-col' : 'flex-row'}`}>
         <SidePanel
           mode={mode}
@@ -130,12 +134,10 @@ export default function App() {
           query={query}
           onQuery={setQuery}
           onSearchFocus={onSearchFocus}
-          sort={sort}
-          onSort={setSort}
           list={list}
           sel={sel}
           shown={shown}
-          shownWx={shown ? wx[shown.id] : undefined}
+          wx={wx}
           onSelect={select}
           onHover={setHover}
           onOpen={openPanel}
@@ -149,14 +151,15 @@ export default function App() {
           hover={hover}
           mode={mode}
           width={width}
+          theme={theme}
           findResort={findResort}
           onHover={setHover}
           onSelect={select}
-          listToggle={mode === 'mid' && !panelOpen ? { label: `Liste · ${list.length}`, onClick: openPanel } : null}
+          listToggle={mode !== 'mobile' && !panelOpen ? { label: `Liste · ${list.length}`, onClick: openPanel } : null}
         />
         {mobile && selected && <ResortDock resort={selected} w={wx[selected.id]} onClose={clearSel} />}
       </div>
-      <Footer mode={mode} />
+      <Footer />
     </div>
   );
 }

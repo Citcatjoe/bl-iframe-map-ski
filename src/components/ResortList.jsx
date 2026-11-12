@@ -1,41 +1,52 @@
-import { cantonName } from '../data/cantons';
+import { fmtAltitude, fmtSnow, skyOf } from '../lib/weather';
+import { WxIcon } from './ResortDetail';
 
-const SORTS = [
-  ['snow', 'Neige 3 j'],
-  ['az', 'A–Z'],
-];
+// Lignes reprises de bl-iframe-traffic (PointRow.jsx) : marqueur dans une colonne de 24 px, nom, ligne d'état.
+const ROW_GRID = 'grid grid-cols-[24px_minmax(0,1fr)] items-center gap-4';
+export const CAP_TRIM = '[text-box:trim-both_cap_alphabetic]';
 
-export function SortBar({ count, sort, onSort }) {
+/**
+ * « ❄ 7 cm au sol à 2 953 m » : neige au sol mesurée à la station SLF retenue, en altitude
+ * (docs/METEO.md) ; pas une prévision. Commune à la liste du mode explore et au mode compact.
+ */
+export function SnowNowLine({ snow }) {
   return (
-    <div className="flex flex-none items-center justify-between gap-2 px-4 pt-1 pb-2">
+    <span className={`text-[13px] leading-[1.4] text-ink-weak ${CAP_TRIM}`} title={snow ? `Station ${snow.station}` : undefined}>
+      <i className="fa-regular fa-snowflake mr-1.5" aria-hidden="true" />
+      {snow ? (
+        <>
+          <strong className="text-ink">{fmtSnow(snow.hs)}</strong> au sol{' '}
+          {/* Altitude d'un bloc : si la ligne passe à la ligne, « à 1 852 m » part entier, jamais « 1 852 » / « m ». */}
+          <span className="whitespace-nowrap">à {fmtAltitude(snow.elevation)}</span>
+        </>
+      ) : (
+        'Pas de mesure de neige'
+      )}
+    </span>
+  );
+}
+
+/** Nombre de stations au-dessus de la liste (ordre alphabétique, sans choix de tri depuis le 05/11/2026). */
+export function ListCount({ count }) {
+  return (
+    <div className="flex flex-none items-center px-4 pt-1 pb-2">
       <span className="text-[11px] font-bold tracking-[0.04em] whitespace-nowrap text-ink-weak uppercase">
         {count} {count === 1 ? 'station' : 'stations'}
       </span>
-      <div className="flex items-center gap-1" role="group" aria-label="Trier">
-        {SORTS.map(([key, label]) => {
-          const active = sort === key;
-          return (
-            <button
-              key={key}
-              type="button"
-              aria-pressed={active}
-              onClick={() => onSort(key)}
-              className={`cursor-pointer border-none bg-transparent px-1.5 py-1 font-body text-[12px] font-bold whitespace-nowrap decoration-2 underline-offset-4 ${active ? 'text-ink underline' : 'text-ink-weak no-underline hover:text-ink'}`}
-            >
-              {label}
-            </button>
-          );
-        })}
-      </div>
     </div>
   );
 }
 
-export function ResortList({ resorts, sel, onSelect, onHover }) {
+/**
+ * Liste du mode explore, cliquable : conditions du moment par station (05/11/2026), comme une ligne du trafic.
+ * Picto du temps au village à gauche, centré sur les deux lignes ; nom ; neige au sol mesurée.
+ */
+export function ResortList({ resorts, wx, sel, onSelect, onHover }) {
   return (
-    <div className="min-h-0 flex-1 overflow-y-auto border-t border-line">
+    <div className="min-h-0 flex-1 overflow-y-auto border-t border-panel-line">
       {resorts.map((r) => {
         const active = r.id === sel;
+        const w = wx[r.id];
         return (
           <button
             key={r.id}
@@ -44,12 +55,19 @@ export function ResortList({ resorts, sel, onSelect, onHover }) {
             onMouseEnter={onHover && (() => onHover(r.id))}
             onMouseLeave={onHover && (() => onHover(null))}
             aria-current={active || undefined}
-            className={`grid w-full cursor-pointer grid-cols-[minmax(0,1fr)_auto] items-center gap-3 border-b border-line px-4 py-3.5 text-left font-body text-ink transition-colors duration-150 hover:bg-surface-weak ${active ? 'bg-surface-weak' : 'bg-transparent'}`}
+            className={`${ROW_GRID} w-full cursor-pointer border-b border-panel-line px-4 py-4 text-left font-body text-ink transition-colors duration-150 hover:bg-panel-hover ${active ? 'bg-panel-hover' : 'bg-transparent'}`}
           >
-            <span className={`truncate font-display text-base leading-[1.2] font-bold ${active ? 'text-ink-brand' : ''}`}>{r.name}</span>
-            <abbr title={cantonName(r.canton)} className="text-[12px] leading-[1.2] font-bold tracking-[0.04em] whitespace-nowrap text-ink-weak no-underline">
-              {r.canton}
-            </abbr>
+            <span className="flex justify-center" title={`${skyOf(w?.sky).desc}, au village`}>
+              <WxIcon sky={w?.sky} className="text-[24px]" />
+            </span>
+            <span className="flex min-w-0 flex-col gap-2">
+              {/* `truncate` coupe à la boîte, rognée au cap et à la ligne de base (CAP_TRIM) : sans la marge interne
+                  compensée (py / -my), les jambages (p de Belalp) et les accents des capitales seraient coupés. */}
+              <span className={`truncate py-[0.25em] -my-[0.25em] font-display text-[16px] leading-[1.2] font-bold ${CAP_TRIM} ${active ? 'text-ink-brand' : ''}`}>
+                {r.name}
+              </span>
+              <SnowNowLine snow={w?.snow} />
+            </span>
           </button>
         );
       })}

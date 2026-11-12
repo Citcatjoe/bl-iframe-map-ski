@@ -397,7 +397,7 @@
    "query": "Riedli",
    "osdArea": "143bc287b54d322b788c8099bfb0b664cfa2678a",
    "short": "Wiriehorn",
-   "webcams": "https://www.wiriehorn.ch/fr/info/information/webcams",
+   "webcams": "https://www.wiriehorn.ch/fr/infos-pratiques/meteo-et-webcams/",
    "webcamsSource": "officiel",
    "webcamsGroup": null
   },
@@ -694,7 +694,7 @@
    "query": "La Tzoumaz",
    "osdArea": "fa9477e20c9caa871737f7a1348b911870394799",
    "short": "La Tzoumaz",
-   "webcams": "https://www.latzoumaz.ch/hiver/domaine-skiable/webcams/",
+   "webcams": "https://www.latzoumaz.ch/fr/webcams/",
    "webcamsSource": "officiel",
    "webcamsGroup": null
   },
@@ -1162,7 +1162,7 @@
    "query": "Ibergeregg",
    "osdArea": "87d63457793538ebd00cd90bb5de3ec8076943bc",
    "short": "Ibergeregg",
-   "webcams": "https://www.ibergeregg.ch/sommer/info/webcam/",
+   "webcams": "https://www.ibergeregg.ch/winter/infos/webcam/",
    "webcamsSource": "officiel",
    "webcamsGroup": null
   },
@@ -1261,7 +1261,7 @@
    "query": "Thyon",
    "osdArea": "fa9477e20c9caa871737f7a1348b911870394799",
    "short": "Thyon",
-   "webcams": "https://www.thyon.ch/ete/en-live/webcam/",
+   "webcams": "https://www.thyon.ch/hiver/en-live-2/webcam/",
    "webcamsSource": "officiel",
    "webcamsGroup": null
   },

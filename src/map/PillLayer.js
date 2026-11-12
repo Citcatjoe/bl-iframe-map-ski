@@ -6,7 +6,13 @@ import {
 } from '../config/mapConfig';
 import { drawPill, isPillImageId, PILL_FONTS, pillImageId, pillSize } from '../lib/pill';
 import { placePills } from '../lib/placePills';
-import { fmtTemp, wmo } from '../lib/weather';
+import { fmtTemp, skyOf } from '../lib/weather';
+
+/** Texte de température de la pastille : « min / max » du jour, au village (D61, D63). */
+function pillTemp(w) {
+  const d = w?.days?.[0];
+  return d ? `${fmtTemp(d.min)} / ${fmtTemp(d.max)}` : '–';
+}
 
 const SOURCE = 'pills';
 const LAYER = 'pills';
@@ -20,12 +26,12 @@ const point = (lng, lat, properties) => ({ type: 'Feature', geometry: { type: 'P
 
 /**
  * Couche des pastilles : placement JS (pas la collision native), fondus en rAF.
- * Les entrées (domaines filtrés, météo, sélection, survol, mode) arrivent via `update()`.
+ * Les entrées (domaines filtrés, météo, sélection, survol, mode, thème) arrivent via `update()`.
  */
 export class PillLayer {
   constructor(map) {
     this.map = map;
-    this.state = { resorts: [], wx: {}, sel: null, hover: null, mode: 'wide' };
+    this.state = { resorts: [], wx: {}, sel: null, hover: null, mode: 'wide', theme: 'light' };
     this.anim = new Map(); // id → { ll, props, o, target, gone }
     this.ready = false;
     this.destroyed = false;
@@ -58,9 +64,17 @@ export class PillLayer {
       // police indisponible : on dessine quand même avec le repli
     }
     if (this.destroyed) return;
-    const map = this.map;
-    map.addSource(SOURCE, { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
-    map.addLayer({
+    this.map.on('move', this.onMove);
+    this.map.on('moveend', this.onMoveEnd);
+    this.ready = true;
+    this.attach();
+  }
+
+  /** Source et couche des pastilles ; à rappeler après un changement de style (thème), qui les retire. */
+  attach() {
+    if (!this.ready || this.destroyed || this.map.getSource(SOURCE)) return;
+    this.map.addSource(SOURCE, { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+    this.map.addLayer({
       id: LAYER,
       type: 'symbol',
       source: SOURCE,
@@ -73,16 +87,13 @@ export class PillLayer {
       },
       paint: { 'icon-opacity': ['get', 'o'] },
     });
-    map.on('move', this.onMove);
-    map.on('moveend', this.onMoveEnd);
-    this.ready = true;
     this.place();
   }
 
   update(next) {
     const s = { ...this.state, ...next };
     this.state = s;
-    const inputs = [s.resorts, s.wx, s.sel, s.hover, s.mode];
+    const inputs = [s.resorts, s.wx, s.sel, s.hover, s.mode, s.theme];
     if (this.lastInputs && inputs.every((v, i) => v === this.lastInputs[i])) return;
     this.lastInputs = inputs;
     this.place();
@@ -90,7 +101,7 @@ export class PillLayer {
 
   /** Domaine sous le point (px), la pastille la plus haute l'emporte. */
   pick(pt, tolerance) {
-    if (!this.ready) return null;
+    if (!this.ready || !this.map.getLayer(LAYER)) return null;
     const features = this.map.queryRenderedFeatures(
       [
         [pt.x - tolerance, pt.y - tolerance],
@@ -106,7 +117,7 @@ export class PillLayer {
   place() {
     if (!this.ready || this.destroyed) return;
     const map = this.map;
-    const { resorts, wx, sel, hover, mode } = this.state;
+    const { resorts, wx, sel, hover, mode, theme } = this.state;
     const z = map.getZoom();
     const offset = mode === 'wide' ? 0 : NARROW_ZOOM_OFFSET;
     const withName = mode === 'wide' || z >= NAME_MIN_ZOOM;
@@ -119,10 +130,10 @@ export class PillLayer {
       const level = levelOf(r);
       if (z < minZoom(level) - (wasVisible(r.id) ? HYSTERESIS : 0)) continue;
       const w = wx[r.id];
-      const icon = wmo(w?.code);
-      const temp = fmtTemp(w?.t);
+      const icon = skyOf(w?.sky);
+      const temp = pillTemp(w);
       const name = withName ? r.short || r.name : '';
-      const size = pillSize(temp, name);
+      const size = pillSize(icon.icon, temp, name);
       const p = map.project([r.lng, r.lat]);
       candidates.push({
         id: r.id,
@@ -131,7 +142,7 @@ export class PillLayer {
         y: p.y,
         w: size.w + COLLISION_PAD,
         h: size.h + COLLISION_PAD,
-        draw: { glyph: icon.glyph, weight: icon.weight, color: icon.color, temp, name },
+        draw: { icon: icon.icon, temp, name },
       });
     }
 
@@ -146,7 +157,7 @@ export class PillLayer {
       const props = {
         id: it.id,
         z: selected ? 3 : hovered ? 2 : 1,
-        img: pillImageId({ ...it.draw, selected, hovered }),
+        img: pillImageId({ ...it.draw, selected, hovered, theme }),
       };
       const e = this.anim.get(it.id);
       if (e) Object.assign(e, { ll: [ll.lng, ll.lat], props, target: 1, gone: null });

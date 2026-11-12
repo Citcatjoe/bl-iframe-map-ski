@@ -2,7 +2,8 @@ import { cantonName } from '../data/cantons';
 
 /**
  * Recherche insensible à la casse sur le nom, le nom du canton (« vaud ») et le code exact (« VD »).
- * Tri « snow » : neige 3 j décroissante, puis niveau, puis nom. Tri « az » : nom (fr).
+ * Tri « snow » : neige tombée en 3 jours (estimation SLF) décroissante, puis neige au sol, niveau et nom.
+ * Tri « az » : nom (fr).
  */
 export function filterResorts(resorts, query, sort, wx) {
   const q = query.trim().toLowerCase();
@@ -16,8 +17,11 @@ export function filterResorts(resorts, query, sort, wx) {
     : resorts.slice();
 
   if (sort === 'snow') {
-    const snow = (r) => wx[r.id]?.snow3 || 0;
-    return list.sort((a, b) => snow(b) - snow(a) || (a.level || 3) - (b.level || 3) || a.name.localeCompare(b.name, 'fr'));
+    const fresh = (r) => wx[r.id]?.snow?.hn3 || 0;
+    const depth = (r) => wx[r.id]?.snow?.hs || 0;
+    return list.sort(
+      (a, b) => fresh(b) - fresh(a) || depth(b) - depth(a) || (a.level || 3) - (b.level || 3) || a.name.localeCompare(b.name, 'fr'),
+    );
   }
   return list.sort((a, b) => a.name.localeCompare(b.name, 'fr'));
 }

@@ -1,14 +1,14 @@
-# Relevé météo (Open-Meteo → weather.json) sur le VPS pegasus, lancé chaque heure par bl-iframe-map-ski.timer.
+# Relevé météo (MétéoSuisse + SLF → weather.json) sur le VPS pegasus, lancé chaque heure par bl-iframe-map-ski.timer.
 # Installé par deploy/deploy.sh. Pas de [Install] : seul le timer est activé (un oneshot « activé » serait vu
 # comme un service arrêté par pegasus-monitor). L'ancien weather.json reste servi tant qu'un relevé échoue.
 #
-# Échecs : le script réessaie lui-même 4 fois en ≈ 20 s (503 passagers). S'il échoue encore, systemd le relance
+# Échecs : le script réessaie lui-même chaque requête 4 fois en ≈ 20 s. S'il échoue encore, systemd le relance
 # toutes les 10 min (Restart) ; l'unité reste « activating (auto-restart) », donc sans alerte. Au 5e départ en
-# 55 min (relevé de hh:05 + relances de hh:15, :25, :35, :45), la limite est atteinte : l'unité passe en échec,
+# 55 min (relevé de hh:15 + relances de hh:25, :35, :45, :55), la limite est atteinte : l'unité passe en échec,
 # `systemctl --failed` la liste et pegasus-monitor alerte. Le relevé de l'heure suivante repart normalement (les
 # départs de l'heure précédente sortent de la fenêtre de 55 min).
 [Unit]
-Description=bl-iframe-map-ski (relevé météo Open-Meteo)
+Description=bl-iframe-map-ski (relevé météo MétéoSuisse et enneigement SLF)
 After=network-online.target
 Wants=network-online.target
 StartLimitIntervalSec=55min
@@ -21,7 +21,8 @@ Group=skimap
 WorkingDirectory=/srv/bl-iframe-map-ski
 # Écriture atomique (weather.json.tmp puis renommage) : Caddy ne sert jamais un fichier à moitié écrit.
 ExecStart=/usr/bin/node scripts/fetch-weather.mjs data/weather.json
-# 2 lots × (4 essais de 20 s au plus + 22 s d'attente) ≈ 3,5 min au pire.
+# ≈ 6–7 s mesurées (7 fichiers MétéoSuisse, ≈ 100 Mo en flux, + 3 appels SLF) ; au pire, essais et délais (2 min par
+# fichier) restent sous 5 min.
 TimeoutStartSec=300
 Restart=on-failure
 RestartSec=10min

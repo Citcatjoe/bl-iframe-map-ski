@@ -6,31 +6,77 @@ const env = import.meta.env;
 /** 'maplibre' (défaut, sans token) | 'mapbox' (style Studio Blick + token). */
 export const MAP_ENGINE = env.VITE_MAP_ENGINE === 'mapbox' ? 'mapbox' : 'maplibre';
 
-export const MAP_STYLE_URL = env.VITE_MAP_STYLE_URL || 'https://tiles.openfreemap.org/styles/positron';
-
 export const MAPBOX_TOKEN = env.VITE_MAPBOX_TOKEN || '';
 
 /**
- * Attribution affichée dans le pied de page (contrôle d'attribution natif désactivé).
- * OpenFreeMap exige « OpenFreeMap © OpenMapTiles © OpenStreetMap » ; le relief (tuiles Terrarium) exige Mapzen.
+ * Crédits de la carte, affichés dans le pied de page (contrôle d'attribution natif désactivé). Groupes séparés par
+ * « · », chaque mention liée à sa page de droits :
+ * - OpenFreeMap exige « OpenFreeMap © OpenMapTiles © OpenStreetMap » ; OSM demande, sur une carte interactive, un
+ *   lien vers sa page de copyright ;
+ * - le relief (AWS Terrain Tiles, Mapzen / Tilezen) exige de citer Mapzen et les sources des modèles de terrain
+ *   (EU-DEM Copernicus, SRTM / GMTED de l'USGS, ETOPO1 de la NOAA pour la Suisse et ses abords) : lien vers la page
+ *   d'attribution officielle, faute de place pour le texte complet (vérifié le 05/11/2026).
  */
-export const MAP_ATTRIBUTION =
+const RELIEF = { label: 'Relief Mapzen', href: 'https://github.com/tilezen/joerd/blob/master/docs/attribution.md' };
+const OSM = { label: '© OpenStreetMap', href: 'https://www.openstreetmap.org/copyright' };
+export const MAP_CREDITS =
   MAP_ENGINE === 'mapbox'
-    ? 'Carte © Mapbox © OpenStreetMap · Relief Mapzen'
-    : 'Carte OpenFreeMap © OpenMapTiles © OpenStreetMap · Relief Mapzen';
+    ? [[{ label: 'Carte © Mapbox', href: 'https://www.mapbox.com/about/maps' }, OSM], [RELIEF]]
+    : [
+        [
+          { label: 'Carte OpenFreeMap', href: 'https://openfreemap.org' },
+          { label: '© OpenMapTiles', href: 'https://www.openmaptiles.org' },
+          OSM,
+        ],
+        [RELIEF],
+      ];
 
-/** Relief ombré (AWS Terrarium, dataset public sans SLA). */
+/** Relief ombré (AWS Terrarium, dataset public sans SLA) ; teintes par thème dans MAP_THEMES. */
 export const HILLSHADE = {
   tiles: ['https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'],
   encoding: 'terrarium',
   tileSize: 256,
   maxzoom: 12,
-  paint: {
-    'hillshade-shadow-color': '#6A6262',
-    'hillshade-highlight-color': '#FFFFFF',
-    'hillshade-accent-color': '#A5A1A1',
-    'hillshade-exaggeration': 0.3,
-    'hillshade-illumination-direction': 315,
+};
+
+/**
+ * Couleurs de la carte par thème, comme bl-iframe-traffic (le moteur et le canvas des pastilles ne lisent pas les
+ * variables CSS). Fond OpenFreeMap : Positron en clair, Dark en sombre, remplaçables via .env (style Studio Blick en
+ * mode mapbox). Teintes reprises de base.css.
+ */
+export const MAP_THEMES = {
+  light: {
+    style: env.VITE_MAP_STYLE_LIGHT || 'https://tiles.openfreemap.org/styles/positron',
+    hillshade: {
+      'hillshade-shadow-color': '#6A6262',
+      'hillshade-highlight-color': '#FFFFFF',
+      'hillshade-accent-color': '#A5A1A1',
+      'hillshade-exaggeration': 0.3,
+      'hillshade-illumination-direction': 315,
+    },
+    place: { color: '#A5A1A1', halo: 'rgba(255,255,255,0.9)' }, // localités
+    places: ['label_city_capital', 'label_city', 'label_town', 'label_village', 'label_other', 'label_state'],
+    hidden: [], // couches du style masquées
+    outside: { color: '#121010', opacity: 0.13 }, // trame hors de Suisse
+    pill: { bg: '#FFFFFF', hover: '#F0EFEF', name: '#121010', temp: '#504949', shadow: 'rgba(18,16,16,0.2)' },
+  },
+  dark: {
+    style: env.VITE_MAP_STYLE_DARK || 'https://tiles.openfreemap.org/styles/dark',
+    hillshade: {
+      'hillshade-shadow-color': '#000000',
+      'hillshade-highlight-color': '#504949',
+      'hillshade-accent-color': '#1E1A1A',
+      'hillshade-exaggeration': 0.4,
+      'hillshade-illumination-direction': 315,
+    },
+    place: { color: '#837C7C', halo: 'rgba(18,16,16,0.9)' },
+    places: ['place_city_large', 'place_city', 'place_town', 'place_village', 'place_suburb', 'place_other', 'place_state'],
+    // Noms et sens uniques des routes : absents de Positron aux zooms du widget, masqués pour un rendu identique.
+    hidden: ['highway_name_motorway', 'highway_name_other', 'road_oneway', 'road_oneway_opposite'],
+    outside: { color: '#000000', opacity: 0.35 },
+    // Fond des pastilles = celui du panneau liste / fiche (`fill-strong`, grey-800), survol un cran au-dessus (grey-700) :
+    // plus sombres, elles se confondaient avec le fond de carte.
+    pill: { bg: '#3B3535', hover: '#504949', name: '#F5F5F5', temp: '#C8C6C6', shadow: 'rgba(0,0,0,0.55)' },
   },
 };
 
@@ -38,16 +84,14 @@ export const HILLSHADE = {
 export const CH_OUTLINE_URL = 'data/ch.geojson'; // filtre `within` des localités
 export const CH_PRECISE_URL = 'data/ch-precise.geojson'; // trame extérieure
 
-export const CH_BOUNDS = [[5.95, 45.82], [10.49, 47.81]];
+export const CH_BOUNDS = [[5.96, 45.82], [10.49, 47.81]];
 export const MAX_BOUNDS = [[4.5, 45.2], [11.8, 48.4]];
 
-/** Couches de localités du style Positron (ignorées si absentes du style). */
-export const PLACE_LAYERS = ['label_city_capital', 'label_city', 'label_town', 'label_village', 'label_other', 'label_state'];
-
+/** Vue d'ensemble : la Suisse entière. Mobile : mêmes réglages que bl-iframe-traffic (OVERVIEW.mobile). */
 export const FIT_PADDING = {
-  wide: { top: 40, bottom: 30, left: 30, right: 60 },
+  wide: { top: 56, bottom: 30, left: 30, right: 60 },
   mid: { top: 56, bottom: 24, left: 24, right: 56 },
-  mobile: { top: 24, bottom: 16, left: 16, right: 50 },
+  mobile: { top: 12, bottom: 12, left: 12, right: 12 },
 };
 
 /** Gestes coopératifs (Ctrl/⌘ + molette, 2 doigts) : la carte ne capture pas le scroll de l'article. */
@@ -56,8 +100,8 @@ export const COOPERATIVE_GESTURES = true;
 export const FLY = { speed: 1.1, curve: 1.5 };
 /** Zoom minimal d'un vol vers un domaine, selon son niveau. */
 export const FOCUS_ZOOM = { 1: 9.2, 2: 9.2, 3: 9.8 };
-/** Décalage du vol en 632 px pour ne pas passer sous le panneau. */
-export const MID_FLY_OFFSET = [156, 0];
+/** Décalage du vol en 964 et 632 px pour que la station ne passe pas sous le panneau superposé. */
+export const PANEL_FLY_OFFSET = [156, 0];
 
 /** Seuils de révélation par niveau (D3) ; les « stations de niveau 1 » sont toujours visibles. */
 export const LEVEL_MIN_ZOOM = { 1: 0, 2: 7.6, 3: 8.6 };

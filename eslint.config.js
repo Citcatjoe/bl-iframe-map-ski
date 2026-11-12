@@ -4,7 +4,7 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 
 export default [
-  { ignores: ['dist', 'reference', '.claude', '.cursor', '.gemini', '.impeccable', 'public/js/iframeHeightAdjustment.js'] },
+  { ignores: ['dist', 'reference', '.claude', '.cursor', '.gemini', '.impeccable', 'public/js/iframeHeightAdjustment.js', 'src/assets/pictos-meteo'] },
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {

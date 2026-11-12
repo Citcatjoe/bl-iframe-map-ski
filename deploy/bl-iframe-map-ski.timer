@@ -1,11 +1,13 @@
-# Rythme du relevé météo : chaque heure à hh:05 (+ décalage fixe de 0 à 60 s), installé par deploy/deploy.sh.
-# ≈ 154 appels Open-Meteo par heure (2 requêtes groupées), quel que soit le nombre de lecteurs.
+# Rythme du relevé météo : chaque heure à hh:15 (+ décalage fixe de 0 à 60 s), installé par deploy/deploy.sh.
+# hh:15 et pas plus tôt : MétéoSuisse publie son relevé horaire vers hh:02–hh:04 et le catalogue le liste quelques
+# minutes plus tard ; à hh:05, on recevait encore la prévision de l'heure précédente (mesuré le 03/11/2026).
+# Par relevé : 7 fichiers CSV MétéoSuisse (≈ 100 Mo) et 3 appels à l'API du SLF, quel que soit le nombre de lecteurs.
 # Un relevé encore en cours n'est pas relancé ; un relevé manqué (serveur éteint) est rattrapé au démarrage.
 [Unit]
 Description=Rythme du relevé météo bl-iframe-map-ski
 
 [Timer]
-OnCalendar=*-*-* *:05:00
+OnCalendar=*-*-* *:15:00
 RandomizedDelaySec=60
 FixedRandomDelay=true
 AccuracySec=1s

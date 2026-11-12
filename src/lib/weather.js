@@ -1,41 +1,23 @@
-// Mapping code WMO → picto Font Awesome, couleur et libellé FR.
-// `glyph`/`weight` servent au rendu canvas des pastilles (police FA 6 Free).
-
-const SUN = '#E0A800';
-const GREY = '#6A6262';
-const SNOW = '#2E7BD6';
-const DARK = '#121010';
+// Famille de temps (`sky` de weather.json, déduite du pictogramme MétéoSuisse par scripts/fetch-weather.mjs) →
+// picto du widget (`icon`, clé de src/lib/weatherIcons.js) et libellé FR. Averses et pluie partagent le picto de
+// la pluie ; seul le libellé les distingue.
 
 const W = {
-  none: { icon: 'fa-solid fa-circle-question', glyph: '\uf059', weight: 900, color: GREY, desc: 'Pas de données' },
-  sun: { icon: 'fa-solid fa-sun', glyph: '\uf185', weight: 900, color: SUN, desc: 'Ensoleillé' },
-  partly: { icon: 'fa-solid fa-cloud-sun', glyph: '\uf6c4', weight: 900, color: SUN, desc: 'Peu nuageux' },
-  cloud: { icon: 'fa-solid fa-cloud', glyph: '\uf0c2', weight: 900, color: GREY, desc: 'Couvert' },
-  fog: { icon: 'fa-solid fa-smog', glyph: '\uf75f', weight: 900, color: GREY, desc: 'Brouillard' },
-  snow: { icon: 'fa-regular fa-snowflake', glyph: '\uf2dc', weight: 400, color: SNOW, desc: 'Chutes de neige' },
-  storm: { icon: 'fa-solid fa-cloud-bolt', glyph: '\uf76c', weight: 900, color: DARK, desc: 'Orage' },
-  showers: { icon: 'fa-solid fa-cloud-showers-heavy', glyph: '\uf740', weight: 900, color: DARK, desc: 'Averses' },
-  rain: { icon: 'fa-solid fa-cloud-rain', glyph: '\uf73d', weight: 900, color: DARK, desc: 'Pluie' },
+  none: { icon: 'none', desc: 'Pas de données' },
+  sun: { icon: 'sun', desc: 'Ensoleillé' },
+  partly: { icon: 'partly', desc: 'En partie ensoleillé' },
+  'clear-night': { icon: 'clear-night', desc: 'Ciel dégagé' },
+  'partly-night': { icon: 'partly-night', desc: 'Peu nuageux' },
+  cloud: { icon: 'cloud', desc: 'Couvert' },
+  fog: { icon: 'fog', desc: 'Brouillard' },
+  snow: { icon: 'snow', desc: 'Chutes de neige' },
+  sleet: { icon: 'sleet', desc: 'Pluie et neige' },
+  storm: { icon: 'storm', desc: 'Orage' },
+  showers: { icon: 'rain', desc: 'Averses' },
+  rain: { icon: 'rain', desc: 'Pluie' },
 };
 
-export function wmo(code) {
-  if (code == null) return W.none;
-  if (code === 0) return W.sun;
-  if (code <= 2) return W.partly;
-  if (code === 3) return W.cloud;
-  if (code === 45 || code === 48) return W.fog;
-  if ((code >= 71 && code <= 77) || code === 85 || code === 86) return W.snow;
-  if (code >= 95) return W.storm;
-  if (code >= 80) return W.showers;
-  return W.rain;
-}
-
-/** Couleur du picto dans l'UI HTML : les gris/noirs suivent le thème. */
-export function uiIconColor(w) {
-  if (w.color === GREY) return 'var(--color-icon-weak)';
-  if (w.color === DARK) return 'var(--color-icon-default)';
-  return w.color;
-}
+export const skyOf = (sky) => W[sky] ?? W.none;
 
 export const fmtTemp = (t) => (t == null || Number.isNaN(t) ? '–' : `${Math.round(t)}°`.replace('-', '−'));
 export const fmtSnow = (s) => (s == null ? '–' : `${Math.round(s)} cm`);
@@ -49,5 +31,43 @@ export function dayLabel(date, index, short = false) {
   if (index === 1) return short ? 'Dem.' : 'Demain';
   return new Date(`${date}T12:00`).toLocaleDateString('fr-CH', { weekday: 'short' }).replace('.', '');
 }
+
+const TZ = 'Europe/Zurich';
+const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+/** Date du jour à l'heure suisse, AAAA-MM-JJ (même format que `days[].date`). */
+export const todayKey = (now = Date.now()) => new Date(now).toLocaleDateString('sv-SE', { timeZone: TZ });
+
+/**
+ * Libellés d'un jour du bandeau 7 jours : initiale (« A » aujourd'hui, puis L, M, M, J, V, S, D), abréviation à
+ * 3 lettres pour une fiche large (« Auj. », « Ven »…) et nom complet pour `title` / `aria-label` (lève M / M).
+ */
+export function weekDayLabels(date, today) {
+  const d = new Date(`${date}T12:00`);
+  if (date === today) return { initial: 'A', short: 'Auj.', full: 'Aujourd’hui' };
+  const short = d.toLocaleDateString('fr-CH', { weekday: 'short' }).replace('.', '');
+  return {
+    initial: short[0].toUpperCase(),
+    short: short[0].toUpperCase() + short.slice(1, 3),
+    full: d.toLocaleDateString('fr-CH', { weekday: 'long', day: 'numeric', month: 'long' }),
+  };
+}
+
+/**
+ * Jours du week-end montré par le mode compact (AAAA-MM-JJ, heure suisse) : du lundi au samedi, le samedi et le
+ * dimanche qui viennent (le samedi : aujourd'hui et demain) ; le dimanche, ce dimanche seul. Le week-end suivant
+ * apparaît à minuit, dans la nuit du dimanche au lundi (décision du product owner, 05/11/2026).
+ */
+export function weekendDates(now = Date.now()) {
+  const d = new Date(now);
+  const [y, m, day] = d.toLocaleDateString('sv-SE', { timeZone: TZ }).split('-').map(Number);
+  const i = WEEKDAYS.indexOf(d.toLocaleDateString('en-US', { weekday: 'short', timeZone: TZ }));
+  // Calcul à midi UTC : pas de décalage de date au passage à l'heure d'été ou d'hiver.
+  const at = (offset) => new Date(Date.UTC(y, m - 1, day + offset, 12)).toISOString().slice(0, 10);
+  return i === 6 ? [at(0)] : [at(5 - i), at(6 - i)];
+}
+
+/** « sam. 8 » (fr-CH). */
+export const weekendLabel = (date) => new Date(`${date}T12:00`).toLocaleDateString('fr-CH', { weekday: 'short', day: 'numeric' });
 
 export const hostOf = (url) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');

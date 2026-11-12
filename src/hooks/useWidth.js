@@ -11,8 +11,11 @@ export const MAX_WIDTH = 964;
 /** Largeur → mode de layout : wide ≥ 860 (cible 964), mid ≥ 520 (cible 632), sinon mobile. */
 export const modeFor = (w) => (w >= 860 ? 'wide' : w >= 520 ? 'mid' : 'mobile');
 
-/** Hauteur fixe de l'iframe par mode (le mobile ne se redimensionne pas). */
-export const HEIGHT = { wide: 600, mid: 540, mobile: 520 };
+/**
+ * Hauteur fixe de l'iframe par mode (le mobile ne se redimensionne pas). Mobile : carte de 249 px, comme celle de
+ * bl-iframe-traffic (400 px de haut, avec une zone basse et un pied de page de hauteurs différentes).
+ */
+export const HEIGHT = { wide: 600, mid: 540, mobile: 393 };
 
 /** Largeur observée d'un élément (celle de l'iframe, plafonnée à MAX_WIDTH). */
 export function useWidth(ref) {

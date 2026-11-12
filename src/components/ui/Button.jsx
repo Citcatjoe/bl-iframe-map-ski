@@ -2,7 +2,8 @@
 // Rendu en <a> quand `href` est fourni (lien sortant).
 
 const COLORS = {
-  red: 'bg-brand text-ink-inverse hover:bg-brand-hover',
+  // Rouge dans les deux thèmes : contenu toujours blanc (`text-inverse` deviendrait noir en sombre).
+  red: 'bg-brand text-[var(--color-static-white)] hover:bg-brand-hover',
   black: 'bg-inverse text-ink-inverse hover:bg-inverse-hover',
 };
 
