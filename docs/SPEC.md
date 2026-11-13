@@ -122,9 +122,9 @@ Les fichiers de `reference/` sont des **références de design créées en HTML*
 - **Fondu** : boucle rAF. o varie de ±dt/200 ms. Ease `1-(1-o)^3`, scale 0,85 + 0,15·k. Délai de 220 ms avant la disparition. Pas de fondu au premier placement.
 - **Survol carte** : `queryRenderedFeatures` (tolérance 2 px, 8 px au toucher). Curseur pointer. État hover.
 - **Sélection** (clic sur une pastille ou sur une ligne) :
-  - `flyTo` : zoom max(actuel, 9,2), ou 9,8 pour une station de niveau 3 ; speed 1,1, curve 1,5. En 964 et 632 px, offset [156, 0] (`PANEL_FLY_OFFSET`), pour que la station ne passe pas sous le panneau.
+  - `easeTo` en 600 ms (`FRAME_MS`, comme `bl-iframe-traffic` depuis le 13/11/2026 ; avant `flyTo` speed 1,1 / curve 1,5, plus lent) : zoom max(actuel, 9,2), ou 9,8 pour une station de niveau 3. En 964 et 632 px, offset [156, 0] (`PANEL_FLY_OFFSET`), pour que la station ne passe pas sous le panneau ; en mobile, au milieu de la carte visible au-dessus du panneau bas. Aucune animation si `prefers-reduced-motion`.
   - Le panneau passe en fiche (en 964 et 632 px, il s'ouvre).
-- **Retour / fermeture** : `flyTo(cameraForBounds(CH, padding))`, mêmes speed et curve.
+- **Retour / fermeture** (fiche, panneau, « Afficher toute la Suisse ») : `fitBounds(CH, padding)` en 600 ms, même mouvement dans tous les cas.
 - **Recherche** : filtre insensible à la casse sur le nom, le nom du canton et le code exact.
 - **Ordre de la liste** (mode explore) : alphabétique (05/11/2026). Le mode compact trie encore sur la neige tombée en 3 jours (`snow.hn3`), puis la neige au sol, le niveau et le nom.
 - **Gestes coopératifs** activés par défaut. Pas de rotation ni de pitch.

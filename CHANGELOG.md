@@ -57,6 +57,7 @@ Format : [Keep a Changelog](https://keepachangelog.com/fr/1.1.0/). Versions : `0
 - En-tête : un relevé de plus de 2 h s'affiche « Relevé ancien : 3 nov., 16:19 » avec un point jaune (le point restait vert quel que soit l'âge du fichier) ; le widget relit `weather.json` tous les quarts d'heure, et garde les données affichées si une relecture échoue.
 - `npm run dev` lit la météo du VPS (`.env.development`, ancien `.env.vps`) ; `npm run dev:local` (`.env.localcopy`) lit la copie locale produite par `npm run weather`. `npm run dev:vps` supprimé. La copie locale, qui ne se met pas à jour seule, avait fait afficher des données de l'avant-veille.
 ### Modifié
+- Mouvements de la carte (vol vers une station, retour à la vue Suisse) en 600 ms, comme `bl-iframe-traffic` (`FRAME_MS`, `easeTo` / `fitBounds`) ; avant, `flyTo` à durée variable selon la distance, plus lent. Aucune animation si le lecteur préfère réduire les animations.
 - Bouton « Afficher toute la Suisse » : icône maison (`fa-house`, 13 px, opacité 75 %, pour ne pas peser plus que le + et le −) au lieu de `fa-expand` ; à toutes les largeurs, il ferme le panneau ouvert, vide la recherche (toutes les stations, même depuis une fiche) et recadre la vue de base.
 - Vue Suisse en 632 px : marges 30 / 30 / 24 / 24 (haut / bas / gauche / droite) au lieu de 56 / 24 / 24 / 56 ; la Suisse est un peu plus grande et centrée (elle était décalée vers le bas et la gauche).
 - Carte en 964 et 632 px au format 3:2 au lieu de 4:3 (643 px de haut à 964 px, 421 à 632), jugé un peu haut ; mobile inchangé (4:3).

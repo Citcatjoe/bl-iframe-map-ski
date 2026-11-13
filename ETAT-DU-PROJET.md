@@ -57,7 +57,7 @@ Widget cartographique embarqué en `<iframe>` sur blick.ch. **C'est avant tout u
 | D24 | ~~Tri : « Neige 3 j » (défaut) / « A–Z ».~~ **Remplacée le 05/11/2026** : liste du mode explore en ordre alphabétique, sans boutons de tri ; plus de code du canton en bout de ligne. |
 | D25 | **Survol d'une ligne** = met en évidence la pastille si elle est déjà visible (fond gris). Sans plus. |
 | D26 | **Retour / fermeture** (« Tous les domaines », croix, fermeture de la fiche mobile) : la carte **revient à la vue initiale** (fit Suisse) par un vol animé. |
-| D27 | **Sélection** : `flyTo` animé (speed 1,1, curve 1,5) vers le domaine, zoom ≥ 9,2. En 632 px, offset `[156, 0]` pour ne pas passer sous le panneau. |
+| D27 | **Sélection** : mouvement animé vers le domaine, zoom ≥ 9,2 (`flyTo` speed 1,1 / curve 1,5 jusqu'au 13/11/2026, puis `easeTo` en 600 ms comme `bl-iframe-traffic`). En 964 et 632 px, offset `[156, 0]` pour ne pas passer sous le panneau. |
 
 ### 2.4 Layouts par largeur
 | Largeur | Layout |

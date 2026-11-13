@@ -3,7 +3,7 @@ import {
   CH_BOUNDS,
   COOPERATIVE_GESTURES,
   FIT_PADDING,
-  FLY,
+  FRAME_MS,
   FOCUS_ZOOM,
   MAP_THEMES,
   MAX_BOUNDS,
@@ -15,13 +15,15 @@ import { PillLayer } from '../map/PillLayer';
 import { Button } from './ui/Button';
 import { IconButton } from './ui/IconButton';
 
+/** Durée d'un mouvement de la carte : FRAME_MS, ou aucune si l'utilisateur préfère réduire les animations. */
+const frameDuration = () => (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ? 0 : FRAME_MS);
+
 /**
- * Retour à la vue Suisse, même vol dans tous les cas (fermeture de la fiche ou du panneau, « Afficher toute la
- * Suisse ») : `flyTo` aux réglages FLY, avec les marges données (panneau bas compris en mobile).
+ * Retour à la vue Suisse, même mouvement dans tous les cas (fermeture de la fiche ou du panneau, « Afficher toute la
+ * Suisse ») : `fitBounds` en FRAME_MS, comme bl-iframe-traffic, avec les marges données (panneau bas compris en mobile).
  */
-function flyToOverview(map, padding) {
-  const cam = map?.cameraForBounds(CH_BOUNDS, { padding });
-  if (cam) map.flyTo({ ...cam, ...FLY, essential: true });
+function frameOverview(map, padding) {
+  map?.fitBounds(CH_BOUNDS, { padding, duration: frameDuration(), essential: true });
 }
 
 /**
@@ -210,22 +212,22 @@ export function MapView({ resorts, wx, sel, hover, mode, width, theme, findResor
     if (sel) {
       const r = find(sel);
       if (!r) return;
-      map.flyTo({
+      map.easeTo({
         center: [r.lng, r.lat],
         zoom: Math.max(map.getZoom(), FOCUS_ZOOM[r.level || 3]),
         offset: flyOffset(),
-        ...FLY,
+        duration: frameDuration(),
         essential: true,
       });
     } else {
-      flyToOverview(map, overviewPadding());
+      frameOverview(map, overviewPadding());
     }
   }, [sel]);
 
   // Retour à la vue Suisse depuis le bouton, même vol que ci-dessus. Lu à l'image suivante : la fermeture des panneaux
   // (onShowAll) est alors rendue et la hauteur du panneau bas mobile à jour (recherche ouverte → 68 px). Calculé dans le
   // clic, le cadrage visait encore l'ancienne hauteur.
-  const resetView = () => requestAnimationFrame(() => flyToOverview(instance.current?.map, overviewPadding()));
+  const resetView = () => requestAnimationFrame(() => frameOverview(instance.current?.map, overviewPadding()));
 
   const zoomBy = (fn) => instance.current && instance.current.map[fn]();
   // « Afficher toute la Suisse » : ferme les panneaux ouverts (et vide la recherche sans station choisie). Station

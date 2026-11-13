@@ -109,7 +109,12 @@ export const FIT_PADDING = {
 /** Gestes coopératifs (Ctrl/⌘ + molette, 2 doigts) : la carte ne capture pas le scroll de l'article. */
 export const COOPERATIVE_GESTURES = true;
 
-export const FLY = { speed: 1.1, curve: 1.5 };
+/**
+ * Durée des mouvements de la carte (vol vers une station, retour à la vue Suisse), en ms, comme bl-iframe-traffic
+ * (13/11/2026 ; avant `flyTo` à speed 1,1 / curve 1,5, durée selon la distance, plus lent) ; aucune si l'utilisateur
+ * préfère réduire les animations.
+ */
+export const FRAME_MS = 600;
 /** Zoom minimal d'un vol vers un domaine, selon son niveau. */
 export const FOCUS_ZOOM = { 1: 9.2, 2: 9.2, 3: 9.8 };
 /** Décalage du vol en 964 et 632 px pour que la station ne passe pas sous le panneau superposé. */
