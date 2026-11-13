@@ -10,8 +10,9 @@ function panelClass(mode, panelOpen, hidden) {
   if (mode !== 'mobile') {
     return `${BASE} absolute top-3 bottom-3 left-3 w-[300px] rounded-lg shadow-menu transition-transform duration-[220ms] ease-in-out ${panelOpen ? 'translate-x-0' : '-translate-x-[calc(100%+24px)]'}`;
   }
-  if (panelOpen) return `${BASE} absolute inset-0 z-[6]`;
-  return `${BASE} relative order-2 flex-none border-t border-panel-line ${hidden ? 'hidden' : ''}`;
+  // Mobile : fond `fill-weak` (classe panel-mobile, index.css), pour détacher la barre et la liste des crédits.
+  if (panelOpen) return `${BASE} panel-mobile absolute inset-0 z-[6]`;
+  return `${BASE} panel-mobile relative order-2 flex-none border-t border-panel-line ${hidden ? 'hidden' : ''}`;
 }
 
 /**
@@ -39,7 +40,7 @@ export function SidePanel({
   const mobileList = mobile && panelOpen;
   const reduced = mobile && !panelOpen;
   const focused = !!sel && !mobile;
-  const searchPad = reduced ? 'px-3.5 py-2.5' : 'px-4 pt-2.5 pb-1';
+  const searchPad = mobile ? 'px-3.5 py-2.5' : 'px-4 pt-2.5 pb-1';
 
   return (
     <aside className={panelClass(mode, panelOpen, !!sel)} inert={!mobile && !panelOpen} aria-label="Stations de ski">
@@ -51,7 +52,9 @@ export function SidePanel({
         >
           {/* Page liste */}
           <div className="flex h-full min-h-0 w-1/2 flex-col" inert={focused}>
-            {(!mobile || mobileList) && (
+            {/* 964 / 632 px : titre et croix. Mobile : pas de titre, la barre garde sa disposition ouverte ou fermée
+                (recherche + bouton rond : « liste » fermée, croix ouverte). */}
+            {!mobile && (
               <div className="flex flex-none items-center justify-between pt-2.5 pr-3 pl-4">
                 <span className="font-display text-[19px] font-bold">Toutes les stations</span>
                 <IconButton icon="fa-solid fa-xmark" label="Fermer la liste" onClick={onClose} />
@@ -60,6 +63,7 @@ export function SidePanel({
             <div className={`flex flex-none items-center gap-2 ${searchPad}`}>
               <SearchBox value={query} onChange={onQuery} onFocus={onSearchFocus} compact={mobile} />
               {reduced && <IconButton icon="fa-solid fa-list" color="grey" label="Voir toutes les stations" onClick={onOpen} />}
+              {mobileList && <IconButton icon="fa-solid fa-xmark" color="grey" label="Fermer la liste" onClick={onClose} />}
             </div>
             {!reduced && (
               <>

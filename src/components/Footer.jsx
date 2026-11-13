@@ -34,11 +34,13 @@ function Credits({ items, sep }) {
 /**
  * Pied de page, seul endroit des crédits (rien en surimpression sur la carte depuis le 05/11/2026). Ils ne doivent
  * jamais être tronqués : sur les largeurs étroites, ils passent à la ligne. Chaque source mène à sa page.
+ * Style des légendes de bl-tool-timeline-r (13/11/2026) : 12 px, line-height 16 px, graisse normale, `text-weak`,
+ * sans fond ni retrait latéral (aligné sur les bords du widget).
  * `noMap` : mode compact, pas de carte, donc pas de crédits de carte.
  */
 export function Footer({ noMap = false }) {
   return (
-    <footer className="flex flex-none flex-wrap justify-between gap-x-3 border-t border-line bg-surface-weak px-3 py-1.5 text-[10.5px] leading-[1.4] text-ink-weak">
+    <footer className="flex flex-none flex-wrap justify-between gap-x-3 border-t border-line py-1.5 text-xs font-normal text-ink-weak">
       <span className="whitespace-nowrap">
         {WEATHER_CREDIT.weather.label}{' '}
         <Credit label={WEATHER_CREDIT.weather.source} href={WEATHER_CREDIT.weather.href} /> ·{' '}

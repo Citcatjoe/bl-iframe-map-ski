@@ -5,17 +5,11 @@ const DOT = { ok: 'bg-ok', stale: 'bg-warn', error: 'bg-brand', loading: 'bg-lin
 /** Sous ce seuil (largeur du widget), en-tête réduit : heure seule dans l'état du relevé (comme bl-iframe-traffic). */
 export const HEADER_NARROW_MAX = 480;
 
-const TITLE = {
-  explore: 'font-display text-[19px] leading-[1.2] text-balance text-ink antialiased',
-  // Mode compact : titre traité en surtitre (petit, capitales, rouge Blick).
-  compact: 'truncate font-body text-[13px] leading-none tracking-[0.04em] whitespace-nowrap text-ink-brand uppercase',
-};
-
 /**
- * En-tête commun aux deux modes, mêmes styles que bl-iframe-traffic : titre et état du relevé sur une ligne, à
- * toutes les largeurs. Fond `fill-weak` et petit retrait intérieur : les bords du widget restent lisibles dans
- * l'article.
- * `compact` : titre en surtitre, sans filet dessous (la liste suit) ; sinon (explore) grand titre et filet sur la carte.
+ * En-tête commun aux deux modes : titre et état du relevé sur une ligne, à toutes les largeurs. Fond `fill-weak` et
+ * petit retrait intérieur : les bords du widget restent lisibles dans l'article. Titre traité en surtitre dans les
+ * deux modes (petit, capitales, rouge Blick ; essai du 13/11/2026 en explore, à la place du titre Blick 19 px).
+ * `compact` : sans filet dessous (la liste suit) ; sinon (explore) filet sur la carte.
  */
 export function Header({ narrow, wxStatus, wxTime, compact = false, title = 'Jette un œil sur ta station' }) {
   const now = useNow();
@@ -36,7 +30,9 @@ export function Header({ narrow, wxStatus, wxTime, compact = false, title = 'Jet
 
   return (
     <header className={`flex flex-none items-center justify-between gap-3 bg-surface-weak px-3 py-2.5 ${compact ? '' : 'border-b border-line'}`}>
-      <h2 className={`m-0 min-w-0 font-bold ${TITLE[compact ? 'compact' : 'explore']}`}>{title}</h2>
+      <h2 className="m-0 min-w-0 truncate font-body text-[13px] leading-none font-bold tracking-[0.04em] whitespace-nowrap text-ink-brand uppercase">
+        {title}
+      </h2>
       <span className="flex flex-none items-center gap-1.5 text-[12px] leading-none whitespace-nowrap text-ink-weak" aria-live="polite">
         <span className={`size-2 rounded-full ${DOT[stale ? 'stale' : wxStatus]}`} aria-hidden="true" />
         {stamp}

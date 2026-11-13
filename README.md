@@ -1,6 +1,6 @@
 # Carte des domaines skiables (Blick)
 
-Widget carte embarqué en `<iframe>` sur blick.ch, **centré sur les webcams des stations de ski suisses** : les stations en pastilles avec la météo **du village**, recherche, fiche avec météo sur 3 jours et bouton **« Voir les webcams »**. Trois largeurs d'embed : **964 px** (largeur max), **632 px** (colonne d'article, slot homepage / rubrique), **mobile < 400 px** (hauteur fixe 393 px).
+Widget carte embarqué en `<iframe>` sur blick.ch, **centré sur les webcams des stations de ski suisses** : les stations en pastilles avec la météo **du village**, recherche, fiche avec météo sur 3 jours et bouton **« Voir les webcams »**. Trois largeurs d'embed : **964 px** (largeur max), **632 px** (colonne d'article, slot homepage / rubrique), **mobile < 400 px**. Zone de carte au format 4:3.
 
 | Document | Rôle |
 | --- | --- |
@@ -53,7 +53,7 @@ Identifiants des stations : champ `id` de `src/data/resorts.json` (`zermatt`, `v
 
 | URL | Contenu |
 | --- | --- |
-| `/` ou `/?mode=explore` | carte + panneau liste / fiche (hauteur fixe par largeur) |
+| `/` ou `/?mode=explore` | carte + panneau liste / fiche (carte au format 4:3 de la largeur) |
 | `/?mode=compact[&points=…][&seeAllUrl=…]` | quelques lignes sans carte ni interaction (haut de rubrique, homepage) : 6 stations au plus, triées par neige fraîche mesurée sur 3 jours (température et hauteur de neige par ligne), deux colonnes à partir de 480 px, une en dessous ; le pied compte les stations non listées et porte « Voir toute la météo » (lien vers `seeAllUrl`, page parente, sinon libellé seul). Sans `points` : les stations de niveau 1. Hauteur selon le contenu |
 | `/?points=verbier,zermatt,bruson` | **stations suivies**, dans les deux modes : le widget se limite à ces stations (liste, recherche, carte, compteur). En explore, elles sont toutes visibles sur la carte quel que soit le zoom. En compact, `\|` sépare des colonnes, chacune triée (`?mode=compact&points=verbier,zermatt\|davos-klosters,laax`) ; sous 480 px, les groupes se suivent |
 | `/?point=zermatt` | mode explore : fiche de la station ouverte d'emblée, carte cadrée dessus (combinable avec `points`, la station doit alors en faire partie) |
@@ -62,10 +62,11 @@ Valeurs inconnues (`mode`, identifiants de `points` ou `point`) : ignorées, ave
 aucun identifiant de `points` n'est connu, toutes les stations sont affichées. Dans l'URL d'une iframe, `|` peut
 s'écrire `%7C`.
 
-Intégration : fondu dans l'article, dans les deux modes : ni cadre, ni arrondi, ni marge extérieure. L'en-tête et les
-crédits ont un fond `--color-fill-weak` et un petit retrait intérieur (12 px), pour que les bords du widget se lisent
-dans l'article. En-tête sur une ligne, à toutes les largeurs : titre à gauche (mode explore : « Jette un œil sur ta
-station », Blick 19 px ; mode compact : « La météo du week-end en station », en surtitre 13 px, capitales, rouge),
+Intégration : fondu dans l'article, dans les deux modes : ni cadre, ni arrondi, ni marge extérieure. L'en-tête a un
+fond `--color-fill-weak` et un petit retrait intérieur (12 px), pour que les bords du widget se lisent dans l'article ;
+les crédits, en dessous, n'ont ni fond ni retrait (12 px, `--color-text-weak`, comme les légendes de
+`bl-tool-timeline-r`). En-tête sur une ligne, à toutes les largeurs : titre à gauche, en surtitre 13 px, capitales, rouge
+(mode explore : « Jette un œil sur ta station » ; mode compact : « La météo du week-end en station »),
 état du relevé à droite (heure seule sous 480 px).
 - **Mode explore** : la carte va d'un bord à l'autre, entre l'en-tête et les crédits ; elle suit le thème Blick
   (Positron en clair, OpenFreeMap Dark en sombre, pastilles et boutons de la carte assortis) ; panneau liste / fiche
@@ -75,9 +76,9 @@ station », Blick 19 px ; mode compact : « La météo du week-end en station »
 
 | Largeur | Mise en page (mode explore) |
 | --- | --- |
-| ≥ 860 px (cible 964) | comme en 632 px : carte pleine largeur, panneau superposé replié par défaut, ouvert par « Liste » ou un clic sur la carte (600 px) |
-| 520–859 px (cible 632) | carte pleine largeur, panneau superposé replié par défaut, ouvert par « Liste » ou un clic sur la carte (540 px) |
-| < 520 px (mobile) | en-tête, carte, barre de recherche + bouton liste ; liste plein cadre, fiche compacte de 168 px sous la carte (393 px) |
+| ≥ 860 px (cible 964) | comme en 632 px : carte pleine largeur, panneau superposé replié par défaut, ouvert par « Liste » ou un clic sur la carte (carte 4:3 : 723 px de haut à 964 px) |
+| 520–859 px (cible 632) | carte pleine largeur, panneau superposé replié par défaut, ouvert par « Liste » ou un clic sur la carte (carte 4:3 : 474 px à 632 px) |
+| < 520 px (mobile) | en-tête, carte (4:3 : 270 px à 360 px), barre de recherche + bouton liste ; liste plein cadre, fiche compacte de 168 px à la place de la barre, la carte rétrécit d'autant (hauteur du widget inchangée) |
 
 Différences avec `bl-iframe-traffic` : `?points=` s'applique aussi au mode explore (le trafic ne le lit qu'en
 compact) ; pas encore de suivi d'audience, donc pas de `?track=`.

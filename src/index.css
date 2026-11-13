@@ -42,6 +42,7 @@
   --color-panel: var(--panel-bg);
   --color-panel-hover: var(--panel-hover);
   --color-panel-line: var(--panel-line);
+  --color-panel-field: var(--panel-field);
 }
 
 /* Couleurs des pictos météo par rôle (src/lib/weatherIcons.js), clair / sombre ; palettes de la livraison
@@ -71,8 +72,20 @@
     --panel-hover: var(--is-light-theme, var(--color-fill-weak)) var(--is-dark-theme, var(--color-grey-700));
     --panel-line: var(--is-light-theme, var(--color-stroke-weak)) var(--is-dark-theme, var(--color-grey-700));
     --panel-thumb: var(--is-light-theme, var(--color-stroke-weak)) var(--is-dark-theme, var(--color-grey-600));
+    /* Champs et boutons gris du panneau (recherche, bouton liste) : ici le fond du survol. */
+    --panel-field: var(--is-light-theme, var(--color-fill-weak)) var(--is-dark-theme, var(--color-grey-700));
     /* Pouce des barres de défilement ; le panneau le redéfinit (--panel-thumb). */
     --scrollbar-thumb: var(--color-stroke-weak);
+  }
+  /* Essai du 13/11/2026 : en mobile, barre de recherche et liste plein cadre sur `fill-weak`, pour les détacher des
+     crédits en dessous. Survol et ligne choisie un cran plus foncé (clair) ou plus clair (sombre) ; champ de recherche
+     et bouton liste sur `fill-default`, qui ressortent du gris. */
+  .panel-mobile {
+    --panel-bg: var(--color-fill-weak);
+    --panel-hover: var(--color-fill-strong);
+    --panel-line: var(--color-stroke-weak);
+    --panel-thumb: var(--is-light-theme, var(--color-stroke-weak)) var(--is-dark-theme, var(--color-grey-700));
+    --panel-field: var(--color-fill-default);
   }
   html,
   body {

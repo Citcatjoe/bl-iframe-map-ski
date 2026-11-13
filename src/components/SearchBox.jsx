@@ -13,7 +13,7 @@ export function SearchBox({ value, onChange, onFocus, compact }) {
         placeholder="Quelle station veux-tu voir ?"
         aria-label="Quelle station veux-tu voir ?"
         autoComplete="off"
-        className={`w-full rounded-pill border border-line bg-panel-hover pr-3.5 pl-[38px] font-body text-base text-ink outline-none placeholder:text-ink-weak focus:border-line-strong focus:bg-surface ${compact ? 'h-10' : 'h-11'}`}
+        className={`w-full rounded-pill border border-line bg-panel-field pr-3.5 pl-[38px] font-body text-base text-ink outline-none placeholder:text-ink-weak focus:border-line-strong focus:bg-surface ${compact ? 'h-10' : 'h-11'}`}
       />
     </div>
   );

@@ -7,7 +7,7 @@ import { ResortDock } from './components/ResortDetail';
 import { SidePanel } from './components/SidePanel';
 import { RESORTS } from './data/resorts';
 import { useWeather } from './hooks/useWeather';
-import { HEIGHT, MAX_WIDTH, modeFor, useWidth } from './hooks/useWidth';
+import { MAX_WIDTH, MOBILE_BAR_HEIGHT, mapHeight, modeFor, useWidth } from './hooks/useWidth';
 import { filterResorts, selectResorts } from './lib/resortList';
 import { useTheme } from './lib/theme';
 
@@ -124,10 +124,14 @@ export default function App() {
     <div
       ref={rootRef}
       className="relative mx-auto flex w-full flex-col overflow-hidden bg-surface font-body text-ink"
-      style={{ height: HEIGHT[mode], maxWidth: MAX_WIDTH }}
+      style={{ maxWidth: MAX_WIDTH }}
     >
       <Header narrow={width < HEADER_NARROW_MAX} wxStatus={wxStatus} wxTime={wxTime} />
-      <div className={`relative flex min-h-0 flex-1 ${mobile ? 'flex-col' : 'flex-row'}`}>
+      {/* Zone carte au format 4:3 (+ barre de recherche en mobile) : hauteur fixe à l'usage, voir mapHeight. */}
+      <div
+        className={`relative flex flex-none ${mobile ? 'flex-col' : 'flex-row'}`}
+        style={{ height: mapHeight(width) + (mobile ? MOBILE_BAR_HEIGHT : 0) }}
+      >
         <SidePanel
           mode={mode}
           panelOpen={panelOpen}

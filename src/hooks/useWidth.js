@@ -12,10 +12,15 @@ export const MAX_WIDTH = 964;
 export const modeFor = (w) => (w >= 860 ? 'wide' : w >= 520 ? 'mid' : 'mobile');
 
 /**
- * Hauteur fixe de l'iframe par mode (le mobile ne se redimensionne pas). Mobile : carte de 249 px, comme celle de
- * bl-iframe-traffic (400 px de haut, avec une zone basse et un pied de page de hauteurs différentes).
+ * Hauteur de la zone de carte : format 4:3 de la largeur du widget (13/11/2026 ; avant, hauteur fixe de l'iframe par
+ * mode, 600 / 540 / 393 px). 964 px → 723 px de carte, 632 → 474, 360 → 270. Le widget prend la hauteur de son
+ * contenu (iframeHeightAdjustment.js suit), mais elle ne bouge pas à l'usage : en mobile, la fiche compacte (168 px)
+ * remplace la barre de recherche dans la même zone, et la carte rétrécit d'autant.
  */
-export const HEIGHT = { wide: 600, mid: 540, mobile: 393 };
+export const mapHeight = (width) => Math.round((width * 3) / 4);
+
+/** Mobile : barre de recherche sous la carte (padding 10 px × 2, champ de 40 px, filet haut de 1 px). */
+export const MOBILE_BAR_HEIGHT = 61;
 
 /** Largeur observée d'un élément (celle de l'iframe, plafonnée à MAX_WIDTH). */
 export function useWidth(ref) {
