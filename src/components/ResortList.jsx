@@ -8,11 +8,15 @@ export const CAP_TRIM = '[text-box:trim-both_cap_alphabetic]';
 /**
  * « ❄ 7 cm au sol à 2 953 m » : neige au sol mesurée à la station SLF retenue, en altitude
  * (docs/METEO.md) ; pas une prévision. Commune à la liste du mode explore et au mode compact.
+ * `small` : liste du panneau mobile (8d), 12,5 px / 1,3, flocon 13 px, sans rognage au cap.
  */
-export function SnowNowLine({ snow }) {
+export function SnowNowLine({ snow, small = false }) {
   return (
-    <span className={`text-[13px] leading-[1.4] text-ink-weak ${CAP_TRIM}`} title={snow ? `Station ${snow.station}` : undefined}>
-      <i className="fa-regular fa-snowflake mr-1.5" aria-hidden="true" />
+    <span
+      className={`text-ink-weak ${small ? 'text-[12.5px] leading-[1.3]' : `text-[13px] leading-[1.4] ${CAP_TRIM}`}`}
+      title={snow ? `Station ${snow.station}` : undefined}
+    >
+      <i className={`fa-regular fa-snowflake mr-1.5 ${small ? 'text-[13px]' : ''}`} aria-hidden="true" />
       {snow ? (
         <>
           <strong className="text-ink">{fmtSnow(snow.hs)}</strong> au sol{' '}
@@ -27,10 +31,10 @@ export function SnowNowLine({ snow }) {
 }
 
 /** Nombre de stations au-dessus de la liste (ordre alphabétique, sans choix de tri depuis le 05/11/2026). */
-export function ListCount({ count }) {
+export function ListCount({ count, mobile = false }) {
   return (
-    <div className="flex flex-none items-center px-4 pt-1 pb-2">
-      <span className="text-[11px] font-bold tracking-[0.04em] whitespace-nowrap text-ink-weak uppercase">
+    <div className={`flex flex-none items-center px-4 pb-2 ${mobile ? '' : 'pt-1'}`}>
+      <span className={`text-[11px] font-bold tracking-[0.04em] whitespace-nowrap text-ink-weak uppercase ${mobile ? 'leading-[1.2]' : ''}`}>
         {count} {count === 1 ? 'station' : 'stations'}
       </span>
     </div>
@@ -40,13 +44,35 @@ export function ListCount({ count }) {
 /**
  * Liste du mode explore, cliquable : conditions du moment par station (05/11/2026), comme une ligne du trafic.
  * Picto du temps au village à gauche, centré sur les deux lignes ; nom ; neige au sol mesurée.
+ * `mobile` : lignes du panneau bas (maquette 8d), sur fond blanc, filet haut `fill-strong` (grey-200), plus serrées.
  */
-export function ResortList({ resorts, wx, sel, onSelect, onHover }) {
+export function ResortList({ resorts, wx, sel, onSelect, onHover, mobile = false }) {
   return (
-    <div className="min-h-0 flex-1 overflow-y-auto border-t border-panel-line">
+    <div className={`min-h-0 flex-1 overflow-y-auto ${mobile ? '' : 'border-t border-panel-line'}`}>
       {resorts.map((r) => {
         const active = r.id === sel;
         const w = wx[r.id];
+        if (mobile) {
+          return (
+            <button
+              key={r.id}
+              type="button"
+              onClick={() => onSelect(r.id)}
+              className="flex w-full cursor-pointer items-center gap-3 border-t border-surface-strong bg-transparent px-4 py-2.5 text-left font-body text-ink transition-colors duration-150 hover:bg-surface-weak"
+            >
+              {/* 26 px de haut (WxIcon : 1,2 em). */}
+              <span className="flex flex-none" title={`${skyOf(w?.sky).desc}, au village`}>
+                <WxIcon sky={w?.sky} className="text-[21.5px]" />
+              </span>
+              <span className="flex min-w-0 flex-col">
+                <span className="truncate font-display text-[16px] leading-[1.2] font-bold">{r.name}</span>
+                <span className="mt-0.5 text-[12.5px] leading-[1.3]">
+                  <SnowNowLine snow={w?.snow} small />
+                </span>
+              </span>
+            </button>
+          );
+        }
         return (
           <button
             key={r.id}

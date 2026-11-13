@@ -1,13 +1,14 @@
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CompactView } from './components/CompactView';
 import { Footer } from './components/Footer';
 import { HEADER_NARROW_MAX, Header } from './components/Header';
 import { MapView } from './components/MapView';
-import { ResortDock } from './components/ResortDetail';
+import { MobileSheet } from './components/MobileSheet';
 import { SidePanel } from './components/SidePanel';
 import { RESORTS } from './data/resorts';
 import { useWeather } from './hooks/useWeather';
-import { MAX_WIDTH, MOBILE_BAR_HEIGHT, mapHeight, modeFor, useWidth } from './hooks/useWidth';
+import { MAX_WIDTH, MOBILE_EXTRA_HEIGHT, mapHeight, modeFor, useWidth } from './hooks/useWidth';
+import { trackClick, trackImpression } from './lib/analytics';
 import { filterResorts, selectResorts } from './lib/resortList';
 import { useTheme } from './lib/theme';
 
@@ -78,14 +79,44 @@ export default function App() {
 
   const clearSel = useCallback(() => setSel(null), []);
 
+  // Suivi d'audience : l'affichage, puis les actions de l'utilisateur (pas la présélection ?point=).
+  useEffect(() => trackImpression(), []);
+  const selectFromList = useCallback(
+    (id) => {
+      trackClick('resort', { resort: id, source: 'list' });
+      select(id);
+    },
+    [select],
+  );
+  const selectFromMap = useCallback(
+    (id) => {
+      trackClick('resort', { resort: id, source: 'map' });
+      select(id);
+    },
+    [select],
+  );
+
+  // Bouton « Liste · N » (964 / 632 px) ou bouton liste du panneau bas (mobile).
   const openPanel = useCallback(() => {
     setPanelOpen(true);
     if (mode === 'mobile') setSel(null);
+    trackClick('list');
   }, [mode]);
 
+  // Fermeture de la recherche / du panneau. Sans station choisie, la recherche est vidée : sinon la carte, recadrée,
+  // ne montrerait que les pastilles filtrées.
   const closePanel = useCallback(() => {
     setPanelOpen(false);
+    if (!sel) setQuery('');
     setSel(null);
+  }, [sel]);
+
+  // Bouton « maison » de la carte (toutes largeurs) : ferme le panneau (liste, recherche, fiche), revient à toutes les
+  // stations (recherche vidée, même avec une station choisie) ; MapView recadre ensuite la Suisse.
+  const resetAll = useCallback(() => {
+    setPanelOpen(false);
+    setSel(null);
+    setQuery('');
   }, []);
 
   const onSearchFocus = useCallback(() => {
@@ -97,6 +128,9 @@ export default function App() {
   const shown = shownId ? findResort(shownId) : null;
   const selected = sel ? findResort(sel) : null;
   const mobile = mode === 'mobile';
+  // Hauteur du panneau bas mobile, tenue à jour par MobileSheet : la carte place la station au-dessus de lui.
+  const sheetHeightRef = useRef(0);
+  const zoneHeight = mapHeight(width, mode) + (mobile ? MOBILE_EXTRA_HEIGHT : 0);
 
   // Hauteur selon le contenu : ajustée par iframeHeightAdjustment.js.
   if (COMPACT) {
@@ -127,27 +161,24 @@ export default function App() {
       style={{ maxWidth: MAX_WIDTH }}
     >
       <Header narrow={width < HEADER_NARROW_MAX} wxStatus={wxStatus} wxTime={wxTime} />
-      {/* Zone carte au format 4:3 (+ barre de recherche en mobile) : hauteur fixe à l'usage, voir mapHeight. */}
-      <div
-        className={`relative flex flex-none ${mobile ? 'flex-col' : 'flex-row'}`}
-        style={{ height: mapHeight(width) + (mobile ? MOBILE_BAR_HEIGHT : 0) }}
-      >
-        <SidePanel
-          mode={mode}
-          panelOpen={panelOpen}
-          query={query}
-          onQuery={setQuery}
-          onSearchFocus={onSearchFocus}
-          list={list}
-          sel={sel}
-          shown={shown}
-          wx={wx}
-          onSelect={select}
-          onHover={setHover}
-          onOpen={openPanel}
-          onClose={closePanel}
-          onBack={clearSel}
-        />
+      {/* Zone carte au format 4:3 (+ 61 px en mobile) : hauteur fixe à l'usage, voir mapHeight. En mobile, la carte
+          occupe toute la zone et le panneau bas (recherche, liste, fiche) se pose dessus. */}
+      <div className={`relative flex flex-none ${mobile ? 'flex-col overflow-hidden' : 'flex-row'}`} style={{ height: zoneHeight }}>
+        {!mobile && (
+          <SidePanel
+            panelOpen={panelOpen}
+            query={query}
+            onQuery={setQuery}
+            list={list}
+            sel={sel}
+            shown={shown}
+            wx={wx}
+            onSelect={selectFromList}
+            onHover={setHover}
+            onClose={closePanel}
+            onBack={clearSel}
+          />
+        )}
         <MapView
           resorts={list}
           wx={wx}
@@ -157,13 +188,31 @@ export default function App() {
           width={width}
           theme={theme}
           findResort={findResort}
+          sheetHeightRef={sheetHeightRef}
           onHover={setHover}
-          onSelect={select}
-          listToggle={mode !== 'mobile' && !panelOpen ? { label: `Liste · ${list.length}`, onClick: openPanel } : null}
+          onSelect={selectFromMap}
+          onShowAll={resetAll}
+          listToggle={!mobile && !panelOpen ? { label: `Liste · ${list.length}`, onClick: openPanel } : null}
         />
-        {mobile && selected && <ResortDock resort={selected} w={wx[selected.id]} onClose={clearSel} />}
+        {mobile && (
+          <MobileSheet
+            zoneHeight={zoneHeight}
+            panelOpen={panelOpen}
+            selected={selected}
+            query={query}
+            onQuery={setQuery}
+            onSearchFocus={onSearchFocus}
+            list={list}
+            wx={wx}
+            onSelect={selectFromList}
+            onOpen={openPanel}
+            onCloseSearch={closePanel}
+            onCloseDetail={clearSel}
+            heightRef={sheetHeightRef}
+          />
+        )}
       </div>
-      <Footer />
+      <Footer mobile={mobile} />
     </div>
   );
 }

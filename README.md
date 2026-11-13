@@ -1,6 +1,6 @@
 # Carte des domaines skiables (Blick)
 
-Widget carte embarqué en `<iframe>` sur blick.ch, **centré sur les webcams des stations de ski suisses** : les stations en pastilles avec la météo **du village**, recherche, fiche avec météo sur 3 jours et bouton **« Voir les webcams »**. Trois largeurs d'embed : **964 px** (largeur max), **632 px** (colonne d'article, slot homepage / rubrique), **mobile < 400 px**. Zone de carte au format 4:3.
+Widget carte embarqué en `<iframe>` sur blick.ch, **centré sur les webcams des stations de ski suisses** : les stations en pastilles avec la météo **du village**, recherche, fiche avec météo sur 3 jours et bouton **« Voir les webcams »**. Trois largeurs d'embed : **964 px** (largeur max), **632 px** (colonne d'article, slot homepage / rubrique), **mobile < 400 px**. Zone de carte au format 3:2 (964 / 632 px) ou 4:3 (mobile).
 
 | Document | Rôle |
 | --- | --- |
@@ -53,10 +53,11 @@ Identifiants des stations : champ `id` de `src/data/resorts.json` (`zermatt`, `v
 
 | URL | Contenu |
 | --- | --- |
-| `/` ou `/?mode=explore` | carte + panneau liste / fiche (carte au format 4:3 de la largeur) |
+| `/` ou `/?mode=explore` | carte + panneau liste / fiche (carte au format 3:2 de la largeur, 4:3 en mobile) |
 | `/?mode=compact[&points=…][&seeAllUrl=…]` | quelques lignes sans carte ni interaction (haut de rubrique, homepage) : 6 stations au plus, triées par neige fraîche mesurée sur 3 jours (température et hauteur de neige par ligne), deux colonnes à partir de 480 px, une en dessous ; le pied compte les stations non listées et porte « Voir toute la météo » (lien vers `seeAllUrl`, page parente, sinon libellé seul). Sans `points` : les stations de niveau 1. Hauteur selon le contenu |
 | `/?points=verbier,zermatt,bruson` | **stations suivies**, dans les deux modes : le widget se limite à ces stations (liste, recherche, carte, compteur). En explore, elles sont toutes visibles sur la carte quel que soit le zoom. En compact, `\|` sépare des colonnes, chacune triée (`?mode=compact&points=verbier,zermatt\|davos-klosters,laax`) ; sous 480 px, les groupes se suivent |
 | `/?point=zermatt` | mode explore : fiche de la station ouverte d'emblée, carte cadrée dessus (combinable avec `points`, la station doit alors en faire partie) |
+| `/?track=valais` | suffixe du nom suivi en analytics, dans les deux modes (voir Suivi d'audience) |
 
 Valeurs inconnues (`mode`, identifiants de `points` ou `point`) : ignorées, avec un avertissement dans la console. Si
 aucun identifiant de `points` n'est connu, toutes les stations sont affichées. Dans l'URL d'une iframe, `|` peut
@@ -64,8 +65,8 @@ s'écrire `%7C`.
 
 Intégration : fondu dans l'article, dans les deux modes : ni cadre, ni arrondi, ni marge extérieure. L'en-tête a un
 fond `--color-fill-weak` et un petit retrait intérieur (12 px), pour que les bords du widget se lisent dans l'article ;
-les crédits, en dessous, n'ont ni fond ni retrait (12 px, `--color-text-weak`, comme les légendes de
-`bl-tool-timeline-r`). En-tête sur une ligne, à toutes les largeurs : titre à gauche, en surtitre 13 px, capitales, rouge
+les crédits, en dessous, n'ont ni fond ni retrait (10,5 px, `--color-text-weak`, liens soulignés, comme dans
+`bl-iframe-traffic`). En-tête sur une ligne, à toutes les largeurs : titre à gauche, en surtitre 13 px, capitales, rouge
 (mode explore : « Jette un œil sur ta station » ; mode compact : « La météo du week-end en station »),
 état du relevé à droite (heure seule sous 480 px).
 - **Mode explore** : la carte va d'un bord à l'autre, entre l'en-tête et les crédits ; elle suit le thème Blick
@@ -76,12 +77,38 @@ les crédits, en dessous, n'ont ni fond ni retrait (12 px, `--color-text-weak`, 
 
 | Largeur | Mise en page (mode explore) |
 | --- | --- |
-| ≥ 860 px (cible 964) | comme en 632 px : carte pleine largeur, panneau superposé replié par défaut, ouvert par « Liste » ou un clic sur la carte (carte 4:3 : 723 px de haut à 964 px) |
-| 520–859 px (cible 632) | carte pleine largeur, panneau superposé replié par défaut, ouvert par « Liste » ou un clic sur la carte (carte 4:3 : 474 px à 632 px) |
-| < 520 px (mobile) | en-tête, carte (4:3 : 270 px à 360 px), barre de recherche + bouton liste ; liste plein cadre, fiche compacte de 168 px à la place de la barre, la carte rétrécit d'autant (hauteur du widget inchangée) |
+| ≥ 860 px (cible 964) | comme en 632 px : carte pleine largeur, panneau superposé replié par défaut, ouvert par « Liste » ou un clic sur la carte (carte 3:2 : 643 px de haut à 964 px) |
+| 520–859 px (cible 632) | carte pleine largeur, panneau superposé replié par défaut, ouvert par « Liste » ou un clic sur la carte (carte 3:2 : 421 px à 632 px) |
+| < 520 px (mobile) | en-tête, carte (4:3 : 270 px à 360 px, + 61 px) sur toute la zone, avec un panneau bas posé dessus : recherche en attente (68 px, champ + bouton liste), recherche ouverte (à la hauteur de la fiche ; compteur et liste) ou fiche station (≈ 238 px). Hauteur du widget inchangée |
 
 Différences avec `bl-iframe-traffic` : `?points=` s'applique aussi au mode explore (le trafic ne le lit qu'en
-compact) ; pas encore de suivi d'audience, donc pas de `?track=`.
+compact), et chaque événement de suivi porte alors `points` dans les deux modes.
+
+## Suivi d'audience
+
+Comme `bl-iframe-traffic` (13/11/2026). `src/lib/analytics.js` pousse dans `window.blickDataLayer` (posé dans
+`index.html`, relayé à la page par `iframeHeightAdjustment.js` en message `TRACK`, ou par le pont natif dans les
+apps), selon la convention des widgets Blick : `event`, `iframe_name` (le widget), `iframe_id` (l'action), puis les
+données de l'événement.
+
+| `event` | `iframe_id` | Données | Quand |
+| --- | --- | --- | --- |
+| `iframe_impression` | `iframe_impression` | | chargement du widget, une fois |
+| `iframe_click` | `iframe_resort_clicked` | `resort` (identifiant de la station, champ `id`), `source` (`list` / `map`) | choix d'une station dans la liste (panneau 964 / 632 px ou recherche mobile) ou sur la carte ; pas la présélection `?point=` |
+| `iframe_click` | `iframe_list_clicked` | | ouverture de la liste : bouton « Liste · N » (964 / 632 px) ou bouton liste du panneau bas (mobile) ; pas le focus dans le champ de recherche |
+| `iframe_click` | `iframe_webcams_clicked` | `resort` | bouton « Voir les webcams » (964 / 632 px) ou « Webcams » (fiche mobile) |
+| `iframe_click` | `iframe_see_all_clicked` | | « Voir toute la météo » du mode compact (si `seeAllUrl`) |
+
+`iframe_name` : `storytelling_meteo_ski_explore` ou `storytelling_meteo_ski_compact`, suivi de `_<track>` si l'URL
+porte `?track=` (minuscules, chiffres, tirets ; 40 caractères au plus, sinon ignoré, avec un avertissement en console).
+À utiliser pour chaque vue contextualisée, afin que ses statistiques restent séparées : par exemple
+`?mode=compact&points=verbier,zermatt%7Cdavos-klosters,laax&track=grandes-stations` →
+`storytelling_meteo_ski_compact_grandes-stations`. Avec `?points=`, chaque événement porte aussi `points` (la
+sélection), dans les deux modes.
+
+Pour ajouter ou modifier un événement : `trackClick('<action>', { … })` (`iframe_<action>_clicked`), puis ce tableau.
+Vérifier en local : les événements partent en `postMessage` (`blick_event_type: 'TRACK'`) vers la page, ou vers la
+fenêtre elle-même hors iframe ; les écouter avec `window.addEventListener('message', …)` dans la console.
 
 ## Production : relevé météo sur le VPS
 
@@ -116,7 +143,7 @@ src/
   hooks/                  useWidth (largeur → wide/mid/mobile), useWeather (lecture de weather.json)
   lib/                    placePills (placement écran), pill (rendu canvas), weather (famille de temps → picto), resortList (filtre/tri, sélection ?points=), theme (thème clair / sombre pour la carte)
   map/                    engine (MapLibre | Mapbox), basemap (labels FR, trame CH, relief, par thème), PillLayer (couche, placement, fondus)
-  components/             MapView, SidePanel, SearchBox, ResortList, ResortDetail (+ ResortDock mobile), CompactView (?mode=compact), Header, Footer, ui/
+  components/             MapView, SidePanel (964 / 632 px), MobileSheet (panneau bas mobile), SearchBox, ResortList, ResortDetail (+ MobileResortDetail), CompactView (?mode=compact), Header, Footer, ui/
 scripts/                  fetch-weather.mjs (relevé MétéoSuisse + SLF), fetch-skiinfo-list.mjs, build-resorts.mjs (dataset)
 deploy/                   relevé météo sur le VPS : unités systemd, site Caddy, deploy.sh
 data/sources/             liste skiinfo + mapping des stations (entrées de build-resorts)

@@ -85,13 +85,25 @@ export const CH_OUTLINE_URL = 'data/ch.geojson'; // filtre `within` des localit�
 export const CH_PRECISE_URL = 'data/ch-precise.geojson'; // trame extérieure
 
 export const CH_BOUNDS = [[5.96, 45.82], [10.49, 47.81]];
-export const MAX_BOUNDS = [[4.5, 45.2], [11.8, 48.4]];
+/**
+ * Limite de déplacement de la carte. Elle s'applique à toute la carte, y compris sous les panneaux posés dessus : marge
+ * élargie au sud (panneau bas mobile, jusqu'à ≈ 240 px) et à l'ouest (panneau de 300 px en 964 / 632 px), sinon la
+ * Suisse ne peut pas être remontée ou décalée au-dessus d'eux (13/11/2026 ; avant : [[4.5, 45.2], [11.8, 48.4]]).
+ */
+export const MAX_BOUNDS = [[3.3, 43.8], [11.8, 48.4]];
 
-/** Vue d'ensemble : la Suisse entière. Mobile : mêmes réglages que bl-iframe-traffic (OVERVIEW.mobile). */
+/**
+ * Vue d'ensemble : la Suisse entière. MapView ajoute en bas, en mobile, la hauteur du panneau bas posé sur la carte.
+ * 632 px (13/11/2026) : marges resserrées et égales à gauche et à droite, la Suisse un peu plus grande et centrée
+ * (avant 56 / 24 / 24 / 56 : décalée vers le bas et la gauche) ; la carte y est limitée par sa hauteur, le bouton
+ * « Liste » et les boutons de zoom ne recouvrent que des coins hors de Suisse.
+ * Mobile : 12 px sur les côtés et en haut (comme bl-iframe-traffic) ; 32 px en bas (13/11/2026, 12 avant) : les
+ * pastilles des stations du sud (Zermatt, Saas-Fee), centrées sur leur point, touchaient presque le panneau.
+ */
 export const FIT_PADDING = {
   wide: { top: 56, bottom: 30, left: 30, right: 60 },
-  mid: { top: 56, bottom: 24, left: 24, right: 56 },
-  mobile: { top: 12, bottom: 12, left: 12, right: 12 },
+  mid: { top: 30, bottom: 30, left: 24, right: 24 },
+  mobile: { top: 12, bottom: 32, left: 12, right: 12 },
 };
 
 /** Gestes coopératifs (Ctrl/⌘ + molette, 2 doigts) : la carte ne capture pas le scroll de l'article. */

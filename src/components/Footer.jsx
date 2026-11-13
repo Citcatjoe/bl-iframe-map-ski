@@ -11,11 +11,9 @@ const STATIONS_CREDITS = [
   { label: 'OpenSkiData', href: 'https://openskidata.org' },
 ];
 
-const LINK = 'text-inherit no-underline hover:underline underline-offset-2';
-
 function Credit({ label, href }) {
   return (
-    <a href={href} target="_blank" rel="noopener" className={LINK}>
+    <a href={href} target="_blank" rel="noopener" className="text-inherit underline">
       {label}
     </a>
   );
@@ -34,21 +32,25 @@ function Credits({ items, sep }) {
 /**
  * Pied de page, seul endroit des crédits (rien en surimpression sur la carte depuis le 05/11/2026). Ils ne doivent
  * jamais être tronqués : sur les largeurs étroites, ils passent à la ligne. Chaque source mène à sa page.
- * Style des légendes de bl-tool-timeline-r (13/11/2026) : 12 px, line-height 16 px, graisse normale, `text-weak`,
- * sans fond ni retrait latéral (aligné sur les bords du widget).
+ * Style des crédits de bl-iframe-traffic (13/11/2026), dans les deux modes et à toutes les largeurs : 10,5 px / 1,4,
+ * graisse normale, `text-weak`, filet haut, padding 7px 0 8px, sans fond ni retrait latéral ; liens de la couleur du
+ * texte, soulignés. Texte continu ; `mobile` (mode explore, maquette « Meteo mobile » 8a) : crédits météo puis
+ * crédits de carte sur deux blocs.
  * `noMap` : mode compact, pas de carte, donc pas de crédits de carte.
  */
-export function Footer({ noMap = false }) {
+export function Footer({ noMap = false, mobile = false }) {
   return (
-    <footer className="flex flex-none flex-wrap justify-between gap-x-3 border-t border-line py-1.5 text-xs font-normal text-ink-weak">
-      <span className="whitespace-nowrap">
-        {WEATHER_CREDIT.weather.label}{' '}
-        <Credit label={WEATHER_CREDIT.weather.source} href={WEATHER_CREDIT.weather.href} /> ·{' '}
+    <footer
+      className={`flex-none border-t border-line pt-[7px] pb-2 text-[10.5px] leading-[1.4] font-normal text-ink-weak normal-case ${
+        mobile ? 'flex flex-col' : ''
+      }`}
+    >
+      <span className={mobile ? 'whitespace-nowrap' : ''}>
+        {WEATHER_CREDIT.weather.label} <Credit label={WEATHER_CREDIT.weather.source} href={WEATHER_CREDIT.weather.href} /> ·{' '}
         {/* SLF : référence clairement visible avec un lien vers www.slf.ch (condition de la licence), soulignée. */}
-        <a href={WEATHER_CREDIT.snow.href} target="_blank" rel="noopener" className="text-inherit underline underline-offset-2">
-          {WEATHER_CREDIT.snow.label}
-        </a>
+        <Credit label={WEATHER_CREDIT.snow.label} href={WEATHER_CREDIT.snow.href} />
       </span>
+      {!mobile && ' · '}
       <span>
         {!noMap &&
           MAP_CREDITS.map((group, g) => (

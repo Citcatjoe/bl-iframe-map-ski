@@ -1,4 +1,5 @@
 import { useNow } from '../hooks/useWeather';
+import { trackClick } from '../lib/analytics';
 import { filterResorts } from '../lib/resortList';
 import { fmtTemp, skyOf, weekendDates, weekendLabel } from '../lib/weather';
 import { WxIcon } from './ResortDetail';
@@ -96,7 +97,7 @@ export function CompactView({ resorts, total, columns, twoColumns, wx, seeAllUrl
         )}
         {/* Sans `seeAllUrl`, le libellé reste affiché sans lien. */}
         {seeAllUrl ? (
-          <a href={seeAllUrl} target="_top" className="ml-auto flex items-center gap-1.5 font-bold text-ink-brand no-underline">
+          <a href={seeAllUrl} target="_top" onClick={() => trackClick('see_all')} className="ml-auto flex items-center gap-1.5 font-bold text-ink-brand no-underline">
             {seeAll}
           </a>
         ) : (
